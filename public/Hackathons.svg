@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="140px" height="140px" viewBox="0 0 140 140" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.3 (57544) - http://www.bohemiancoding.com/sketch -->
+    <title>Hackathons</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#FAA21B" offset="0%"></stop>
+            <stop stop-color="#001936" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M39.7881619,109.788162 L39.7881619,75.5423132 L100.222012,75.5423132 L100.222012,109.777988 L70,140 L39.7881619,109.788162 Z M29.7158534,99.7158534 L0,70 L29.7158534,40.2841466 L29.7158534,99.7158534 Z M39.7881619,30.2118381 L70,7.10542736e-15 L100.222012,30.2220124 L100.222012,65.4700048 L39.7881619,65.4700048 L39.7881619,30.2118381 Z M110.294321,40.2943209 L140,70 L110.294321,99.7056791 L110.294321,40.2943209 Z" id="Hackathons" fill="url(#linearGradient-1)" fill-rule="nonzero"></path>
+    </g>
+</svg>

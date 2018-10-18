@@ -11,6 +11,8 @@ body {
   width: 100vw;
   position: fixed;
   z-index: -1;
+  filter: blur(2px) brightness(50%);
+  transform: scale(1.1);
 }
 
 .wrapper {
@@ -61,6 +63,7 @@ h2 {
   padding: 20px;
   box-sizing: border-box;
   border-radius: 20px;
+  object-fit: contain;
 }
 
 .projects section.medium img {
@@ -85,7 +88,7 @@ h2 {
 }
 
 .projects section.medium span {
-  
+  width: 150%;
 } 
 
 .projects section.small span {

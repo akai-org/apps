@@ -12,26 +12,33 @@ const projects = [
   {
     title: "Hackathons collector",
     url: "http://hackathons.akai.org.pl/",
-    image: "https://akai.org.pl/wp-content/themes/akai-new/images/logo.svg",
+    image: "/Hackathons.svg",
     category: "main"
   },
   {
     title: "Rozkład ekrany",
     url: "https://akai-org.github.io/rozklad-ekrany/",
-    image: "",
+    image: "https://github.com/akai-org/rozklad-ekrany/blob/master/images/maps/PP72.png?raw=true",
     category: "main"
   },
   {
     title: "Zdrowieton",
     url: "http://zdrowieton.akai.org.pl/",
-    image: "",
+    image: "http://zdrowieton.akai.org.pl/images/stworek.png",
     category: "poc"
   },
   {
     title: "Symbols",
     url: "http://symbols.rudol.pl/",
+    image: "/symbols.png",
+    category: "members",
+    color: "#F0E5C1"
+  },
+  {
+    title: "Jaki środek transportu",
+    url: "https://jakisrodektransportu.netlify.com",
     image: "",
-    category: "members"
+    category: "newcomers"
   }
 ]
 class App extends Component {
@@ -50,6 +57,12 @@ class App extends Component {
           <h2>Proofs of Concept</h2>
           <section className="medium">
             {projects.filter(project => project.category === 'poc').map((project, i) => <Project key={i} {...project} />)}
+          </section>
+          <br />
+          <br />
+          <h2>New comers</h2>
+          <section className="medium">
+            {projects.filter(project => project.category === 'newcomers').map((project, i) => <Project key={i} {...project} />)}
           </section>
           <br />
           <br />
