@@ -1,25 +1,19 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Project from "./components/project";
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div className="wrapper">
+        <div className="background"></div>
+        <div className="projects">
+          <h2>Production ready</h2>
+          <section>
+            <Project title="Trios" url="http://trios.akai.org.pl/" image="http://trios.akai.org.pl/vectors/trios_logo.svg" />
+            <Project title="Hackathons collector" url="http://hackathons.akai.org.pl/" image="https://akai.org.pl/wp-content/themes/akai-new/images/logo.svg" />
+          </section>
+        </div>
       </div>
     );
   }

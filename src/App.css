@@ -1,32 +1,57 @@
-.App {
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.background {
+  background: url("https://images.unsplash.com/photo-1539813310611-ed86c61f1850?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=d8c719876cfdbca137472910222a5884&auto=format&fit=crop&w=2850&q=80");
+  background-size: cover;
+  height: 100vh;
+  width: 100vw;
+  position: absolute;
+  z-index: -1;
+}
+
+h2 {
+  margin: 0;
+  padding: 20px 0 0;
+  font-weight: 400;
   text-align: center;
+  color: #fff;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.projects section {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  flex-wrap: wrap;
 }
 
-.App-link {
-  color: #61dafb;
+.project {
+  margin: 30px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.project img {
+  width: 100px;
+  height: 100px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 20px;
+}
+
+.project span {
+  display: block;
+  text-align: center;
+  position: absolute;
+  bottom: -20px;
+  transform: translate(-50%, 50%);
+  left: 50%;
+}
+
+.project a {
+  color: #fff;
+  text-decoration: none;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  display: block;
 }
