@@ -5,7 +5,7 @@ class Project extends PureComponent {
     const { title, url, image } = this.props;
     return <div className="project">
       <a href={url} target="_blank" rel="noopener noreferrer">
-        <img src={image} alt={title} />
+        <img src={image ? image : "https://akai.org.pl/wp-content/themes/akai-new/images/logo.svg"} alt={title} />
         <span>{title}</span>
       </a>
     </div>
