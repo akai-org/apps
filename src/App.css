@@ -2,10 +2,11 @@ body {
   margin: 0;
   padding: 0;
   color: #fff;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .background {
-  background: url("https://images.unsplash.com/photo-1539813310611-ed86c61f1850?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=d8c719876cfdbca137472910222a5884&auto=format&fit=crop&w=2850&q=80");
+  background: url("https://images.unsplash.com/photo-1539813310611-ed86c61f1850?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=d8c719876cfdbca137472910222a5884&auto=format&fit=crop&w=1024&q=80");
   background-size: cover;
   height: 100vh;
   width: 100vw;
@@ -21,6 +22,7 @@ body {
 }
 
 h1 {
+  user-select: none;
   margin: 0;
   color: #fff;
   text-align: center;
@@ -32,9 +34,10 @@ h1 {
   text-transform: uppercase;
   border: 1px solid;
   display: inline-block;
+  cursor: pointer;
 }
 
-h1::first-letter {
+h1::first-letter, h1 span {
   color: orange;
 }
 
@@ -44,6 +47,7 @@ h2 {
   font-weight: 400;
   text-align: center;
   color: #fff;
+  font-size: 26px;
 }
 
 .projects section {
@@ -54,6 +58,14 @@ h2 {
 
 .project {
   margin: 30px;
+}
+
+.medium .project {
+  margin: 20px;
+}
+
+.small .project {
+  margin: 10px;
 }
 
 .project img {
@@ -85,6 +97,8 @@ h2 {
   bottom: -20px;
   transform: translate(-50%, 50%);
   left: 50%;
+  font-weight: 600;
+  width: 120%;
 }
 
 .projects section.medium span {
@@ -102,4 +116,14 @@ h2 {
   height: 100%;
   width: 100%;
   display: block;
+}
+
+.marquee .project img {
+  animation: spin 0.5s linear;
+}
+
+/* Make it move */
+@keyframes spin {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

@@ -7,25 +7,29 @@ const projects = [
     title: "Trios",
     url: "http://trios.akai.org.pl/",
     image: "http://trios.akai.org.pl/vectors/trios_logo.svg",
-    category: "main"
+    category: "main",
+    color: "#e2fdff"
   },
   {
     title: "Hackathons collector",
     url: "http://hackathons.akai.org.pl/",
     image: "/Hackathons.svg",
-    category: "main"
+    category: "main",
+    color: "#fff8e2"
   },
   {
     title: "Rozkład ekrany",
     url: "https://akai-org.github.io/rozklad-ekrany/",
     image: "https://github.com/akai-org/rozklad-ekrany/blob/master/images/maps/PP72.png?raw=true",
-    category: "main"
+    category: "main",
+    color: "#3c5082"
   },
   {
     title: "Zdrowieton",
     url: "http://zdrowieton.akai.org.pl/",
     image: "http://zdrowieton.akai.org.pl/images/stworek.png",
-    category: "poc"
+    category: "members",
+    color: "#c4ffd3"
   },
   {
     title: "Symbols",
@@ -42,11 +46,19 @@ const projects = [
   }
 ]
 class App extends Component {
+  constructor() {
+    super();
+    this.state = { aa: 0 };
+    this.increment = this.increment.bind(this);
+  }
+  increment() {
+    this.setState({ aa: this.state.aa + 1 })
+  }
   render() {
     return (
-      <div className="wrapper">
+      <div className={"wrapper " + ((this.state.aa > 5 && this.state.aa % 4) ? "marquee" : "")}>
         <div className="background"></div>
-        <h1>AKAI Apps</h1>
+        <h1 onClick={this.increment}>AKAI <span>A</span>pps</h1>
         <div className="projects">
           <h2>Production ready</h2>
           <section>
@@ -54,13 +66,7 @@ class App extends Component {
           </section>
           <br />
           <br />
-          <h2>Proofs of Concept</h2>
-          <section className="medium">
-            {projects.filter(project => project.category === 'poc').map((project, i) => <Project key={i} {...project} />)}
-          </section>
-          <br />
-          <br />
-          <h2>New comers</h2>
+          <h2>Newcomers' projects - 2018</h2>
           <section className="medium">
             {projects.filter(project => project.category === 'newcomers').map((project, i) => <Project key={i} {...project} />)}
           </section>
