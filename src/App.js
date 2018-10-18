@@ -26,6 +26,12 @@ const projects = [
     url: "http://zdrowieton.akai.org.pl/",
     image: "",
     category: "poc"
+  },
+  {
+    title: "Symbols",
+    url: "http://symbols.rudol.pl/",
+    image: "",
+    category: "members"
   }
 ]
 class App extends Component {
@@ -42,16 +48,17 @@ class App extends Component {
           <br />
           <br />
           <h2>Proofs of Concept</h2>
-          <section>
+          <section className="medium">
             {projects.filter(project => project.category === 'poc').map((project, i) => <Project key={i} {...project} />)}
           </section>
           <br />
           <br />
           <h2>Our members' projects</h2>
-          <section>
-            {projects.filter(project => project.category === 'poc').map((project, i) => <Project key={i} {...project} />)}
+          <section className="small">
+            {projects.filter(project => project.category === 'members').map((project, i) => <Project key={i} {...project} />)}
           </section>
         </div>
+        <small>Created by AKAI</small>
       </div>
     );
   }

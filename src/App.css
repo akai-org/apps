@@ -1,6 +1,7 @@
 body {
   margin: 0;
   padding: 0;
+  color: #fff;
 }
 
 .background {
@@ -56,11 +57,23 @@ h2 {
 .project img {
   width: 140px;
   height: 140px;
-  background: #fff;
+  background: #ffffff;
   padding: 20px;
   box-sizing: border-box;
   border-radius: 20px;
 }
+
+.projects section.medium img {
+  width: 105px;
+  height: 105px;
+  padding: 15px;
+} 
+
+.projects section.small img {
+  width: 70px;
+  height: 70px;
+  padding: 10px;
+} 
 
 .project span {
   display: block;
@@ -70,6 +83,14 @@ h2 {
   transform: translate(-50%, 50%);
   left: 50%;
 }
+
+.projects section.medium span {
+  
+} 
+
+.projects section.small span {
+  display: none;
+} 
 
 .project a {
   color: #fff;
