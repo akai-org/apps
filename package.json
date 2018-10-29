@@ -4,14 +4,18 @@
   "private": true,
   "homepage": "http://apps.akai.org.pl",
   "dependencies": {
-    "react": "^16.5.2",
-    "react-dom": "^16.5.2",
+    "@zeit/next-sass": "^1.0.1",
+    "next": "^7.0.2",
+    "next-routes": "^1.4.2",
+    "node-sass": "^4.9.4",
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0",
     "react-scripts": "2.0.5"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "next start",
+    "dev": "node server",
+    "build": "next build && next export",
     "deploy": "npm run build && node deploy"
   },
   "eslintConfig": {

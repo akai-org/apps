@@ -2,7 +2,7 @@ body {
   margin: 0;
   padding: 0;
   color: #fff;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
 
 .background {
@@ -37,7 +37,8 @@ h1 {
   cursor: pointer;
 }
 
-h1::first-letter, h1 span {
+h1::first-letter,
+h1 span {
   color: orange;
 }
 
@@ -82,13 +83,13 @@ h2 {
   width: 105px;
   height: 105px;
   padding: 15px;
-} 
+}
 
 .projects section.small img {
   width: 70px;
   height: 70px;
   padding: 10px;
-} 
+}
 
 .project span {
   display: block;
@@ -103,11 +104,11 @@ h2 {
 
 .projects section.medium span {
   width: 150%;
-} 
+}
 
 .projects section.small span {
   display: none;
-} 
+}
 
 .project a {
   color: #fff;
@@ -124,6 +125,41 @@ h2 {
 
 /* Make it move */
 @keyframes spin {
-  0%   { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.card {
+  background: #fff;
+  max-width: 600px;
+  margin: 0 auto;
+  border-radius: 10px;
+  padding: 20px 40px;
+  box-sizing: border-box;
+  color: #000;
+
+  h2 {
+    color: inherit;
+    margin-bottom: 20px;
+  }
+
+  img {
+    max-width: 100%;
+    width: 100px;
+    display: block;
+    margin: 0 auto;
+  }
+
+  a {
+    text-decoration: none;
+    border: 1px solid;
+    border-radius: 5px;
+    padding: 10px 20px;
+    display: inline-block;
+    color: darkorange;
+  }
 }
