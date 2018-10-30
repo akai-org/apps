@@ -16,8 +16,7 @@
   "scripts": {
     "start": "next start",
     "dev": "node server",
-    "build": "next build && next export",
-    "deploy": "npm run build && node deploy"
+    "build": "next build && next export"
   },
   "eslintConfig": {
     "extends": "react-app"

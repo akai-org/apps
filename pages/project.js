@@ -18,8 +18,8 @@ const ProjectPage = ({ project }) => (
         <React.Fragment>
           <h3>Authors:</h3>
           <ul className="authors">
-            {project.authors.map(author => (
-              <li>
+            {project.authors.map((author, i) => (
+              <li key={i}>
                 <img
                   alt={author.fullname}
                   src={gravatar.imageUrl({ email: author.email })}
@@ -38,8 +38,8 @@ const ProjectPage = ({ project }) => (
       {project.tech ? (
         <div className="technologies">
           <h3>Technologies:</h3>
-          {project.tech.map(t => (
-            <div>
+          {project.tech.map((t, i) => (
+            <div key={i}>
               <img src={t.image} />
             </div>
           ))}

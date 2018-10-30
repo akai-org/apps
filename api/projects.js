@@ -7,6 +7,29 @@ function getTech(key) {
     {
       key: "mysql",
       image: "https://upload.wikimedia.org/wikipedia/en/6/62/MySQL.svg"
+    },
+    {
+      key: "react",
+      image:
+        "https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg"
+    },
+    {
+      key: "vanillajs",
+      image: "http://zdrowieton.akai.org.pl/images/icons/vanillajs.svg"
+    },
+    {
+      key: "js",
+      image:
+        "https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png"
+    },
+    {
+      key: "socketio",
+      image: "https://cdn-images-1.medium.com/max/2000/0*xAADmPJN52Yy6XJV.jpg"
+    },
+    {
+      key: "nodejs",
+      image:
+        "https://upload.wikimedia.org/wikipedia/commons/7/7e/Node.js_logo_2015.svg"
     }
   ].filter(e => e.key === key)[0];
 }
@@ -42,6 +65,7 @@ function getProjects() {
       color: "#fff8e2",
       slug: "hackathons",
       github: "https://github.com/akai-org/hackathons",
+      tech: [getTech("react")],
       authors: [
         {
           fullname: "Rafał Rudol",
@@ -57,6 +81,7 @@ function getProjects() {
       category: "main",
       color: "#3c5082",
       slug: "rozklady",
+      tech: [getTech("js"), getTech("nodejs")],
       authors: [
         {
           fullname: "Marcin Ławniczak",
@@ -78,6 +103,7 @@ function getProjects() {
       github: "https://github.com/akai-org/zdrowieton2017",
       description:
         "This is the result of 7 hours of work during zdrowieton.js in 2017. \n\n We will clean it up and make available for everyone, once we find time.",
+      tech: [getTech("vanillajs")],
       authors: [
         {
           fullname: "Marcin Ławniczak",
@@ -100,7 +126,8 @@ function getProjects() {
           email: "rafal.rudol@akai.org.pl"
         },
         {
-          fullname: "Tomasz Jeznach"
+          fullname: "Tomasz Jeznach",
+          email: "beater0sao@hotmail.com"
         }
       ]
     },
@@ -111,6 +138,7 @@ function getProjects() {
       category: "members",
       color: "#F0E5C1",
       slug: "symbols",
+      tech: [getTech("socketio"), getTech("nodejs")],
       authors: [
         {
           fullname: "Rafał Rudol",
@@ -137,6 +165,7 @@ function getProjects() {
       image: "https://vworks.netlify.com/logo.svg",
       category: "members",
       slug: "vworks",
+      tech: [getTech("react")],
       authors: [
         {
           fullname: "Piotr Ptak",
