@@ -141,6 +141,7 @@ h2 {
   padding: 20px 40px;
   box-sizing: border-box;
   color: #000;
+  text-align: left;
 
   h2 {
     color: inherit;
@@ -154,12 +155,59 @@ h2 {
     margin: 0 auto;
   }
 
-  a {
+  .button-link {
     text-decoration: none;
     border: 1px solid;
     border-radius: 5px;
     padding: 10px 20px;
     display: inline-block;
     color: darkorange;
+    margin-right: 10px;
+  }
+}
+
+.authors {
+  list-style: none;
+  text-align: left;
+  font-size: 18px;
+  padding: 0;
+
+  li {
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    padding: 20px 0;
+  }
+
+  img {
+    display: inline-block;
+    width: 64px;
+    vertical-align: middle;
+    margin-right: 15px;
+  }
+
+  a {
+    text-decoration: none;
+    color: darkblue;
+    font-size: 14px;
+
+    &::before {
+      content: "<";
+    }
+
+    &::after {
+      content: ">";
+    }
+  }
+}
+
+.technologies {
+  text-align: center;
+  margin-bottom: 20px;
+  h3 {
+    text-align: left;
+  }
+  > div {
+    display: inline-block;
+    margin: 10px;
   }
 }

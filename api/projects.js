@@ -1,3 +1,16 @@
+function getTech(key) {
+  return [
+    {
+      key: "php7",
+      image: "https://upload.wikimedia.org/wikipedia/commons/2/27/PHP-logo.svg"
+    },
+    {
+      key: "mysql",
+      image: "https://upload.wikimedia.org/wikipedia/en/6/62/MySQL.svg"
+    }
+  ].filter(e => e.key === key)[0];
+}
+
 function getProjects() {
   return [
     {
@@ -6,7 +19,20 @@ function getProjects() {
       image: "http://trios.akai.org.pl/vectors/trios_logo.svg",
       category: "main",
       color: "#e2fdff",
-      slug: "trios"
+      slug: "trios",
+      description: "A website for solving trios",
+      github: "https://github.com/akai-org/trios",
+      tech: [getTech("php7"), getTech("mysql")],
+      authors: [
+        {
+          fullname: "Marcin Ławniczak",
+          email: "marcin.lawniczak@akai.org.pl"
+        },
+        {
+          fullname: "Michał Dolata",
+          email: "michal.dolata@akai.org.pl"
+        }
+      ]
     },
     {
       title: "Hackathons collector",
@@ -14,7 +40,14 @@ function getProjects() {
       image: "/static/Hackathons.svg",
       category: "main",
       color: "#fff8e2",
-      slug: "hackathons"
+      slug: "hackathons",
+      github: "https://github.com/akai-org/hackathons",
+      authors: [
+        {
+          fullname: "Rafał Rudol",
+          email: "rafal.rudol@akai.org.pl"
+        }
+      ]
     },
     {
       title: "Rozkład ekrany",
@@ -31,7 +64,32 @@ function getProjects() {
       image: "http://zdrowieton.akai.org.pl/images/stworek.png",
       category: "members",
       color: "#c4ffd3",
-      slug: "zdrowieton"
+      slug: "zdrowieton",
+      github: "https://github.com/akai-org/zdrowieton2017",
+      description:
+        "This is the result of 7 hours of work during zdrowieton.js in 2017. \n\n We will clean it up and make available for everyone, once we find time.",
+      authors: [
+        {
+          fullname: "Marcin Ławniczak",
+          email: "marcin.lawniczak@akai.org.pl"
+        },
+        {
+          fullname: "Mikołaj Rozwadowski",
+          email: "mikolaj.rozwadowski@akai.org.pl"
+        },
+        {
+          fullname: "Tomasz Gil",
+          email: "tomasz.gil@akai.org.pl"
+        },
+        {
+          fullname: "Marta Sitkowska",
+          email: "marta.sitkowska@akai.org.pl"
+        },
+        {
+          fullname: "Rafał Rudol",
+          email: "rafal.rudol@akai.org.pl"
+        }
+      ]
     },
     {
       title: "Symbols",
@@ -39,14 +97,39 @@ function getProjects() {
       image: "/static/symbols.png",
       category: "members",
       color: "#F0E5C1",
-      slug: "symbols"
+      slug: "symbols",
+      authors: [
+        {
+          fullname: "Rafał Rudol",
+          email: "rafal.rudol@akai.org.pl"
+        }
+      ]
     },
     {
       title: "Jaki środek transportu",
       url: "https://jakisrodektransportu.netlify.com",
       image: "",
       category: "newcomers",
-      slug: "transport"
+      slug: "transport",
+      authors: [
+        {
+          fullname: "Tomasz Gil",
+          email: "tomasz.gil@akai.org.pl"
+        }
+      ]
+    },
+    {
+      title: "vworks",
+      url: "https://vworks.netlify.com",
+      image: "https://vworks.netlify.com/logo.svg",
+      category: "members",
+      slug: "vworks",
+      authors: [
+        {
+          fullname: "Piotr Ptak",
+          email: "piotr.ptak@akai.org.pl"
+        }
+      ]
     }
   ];
 }
