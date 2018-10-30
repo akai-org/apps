@@ -157,6 +157,7 @@ function getProjects() {
       image: "",
       category: "newcomers",
       slug: "transport",
+      inprogress: "true",
       authors: [
         {
           fullname: "Tomasz Gil",
@@ -186,7 +187,8 @@ function getProjects() {
       title: "Polifood",
       category: "newcomers",
       slug: "polifood",
-      github: "https://github.com/akai-org/polifood"
+      github: "https://github.com/akai-org/polifood",
+      inprogress: "true"
     },
     {
       title: "Jobs",
