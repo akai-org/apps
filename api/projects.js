@@ -185,7 +185,8 @@ function getProjects() {
     {
       title: "Polifood",
       category: "newcomers",
-      slug: "polifood"
+      slug: "polifood",
+      github: "https://github.com/akai-org/polifood"
     }
   ];
 }
