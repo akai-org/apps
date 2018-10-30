@@ -9,7 +9,10 @@ import "../src/styles.scss";
 const ProjectPage = ({ project }) => (
   <Layout>
     <Card>
-      <h2>{project.title}</h2>
+      <h2>
+        {project.title}{" "}
+        <small>{project.inprogress ? " [in progress]" : ""}</small>
+      </h2>
       <img src={project.image} alt="logo" />
       {project.description
         ? project.description.split("\n").map((p, i) => <p key={i}>{p}</p>)

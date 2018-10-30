@@ -187,6 +187,31 @@ function getProjects() {
       category: "newcomers",
       slug: "polifood",
       github: "https://github.com/akai-org/polifood"
+    },
+    {
+      title: "Jobs",
+      category: "main",
+      inprogress: "true",
+      slug: "jobs",
+      tech: [getTech("react"), getTech("php7")],
+      authors: [
+        {
+          fullname: "Rafał Rudol",
+          email: "rafal.rudol@akai.org.pl"
+        },
+        {
+          fullname: "Tomasz Gil",
+          email: "tomasz.gil@akai.org.pl"
+        },
+        {
+          fullname: "Mateusz Stempniewicz",
+          email: "mateusz.stempniewicz@akai.org.pl"
+        },
+        {
+          fullname: "Dawid Dziedzic",
+          email: "dawid.dziedzic@akai.org.pl"
+        }
+      ]
     }
   ];
 }

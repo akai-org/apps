@@ -5,7 +5,7 @@ import { Link } from "../../routes";
 
 class Project extends PureComponent {
   render() {
-    const { title, url, image, color, slug } = this.props;
+    const { title, url, image, color, slug, inprogress } = this.props;
     return (
       <div className="project">
         <Link route="project" params={{ slug }}>
@@ -19,7 +19,10 @@ class Project extends PureComponent {
               alt={title}
               style={{ background: color }}
             />
-            <span>{title}</span>
+            <span>
+              {title}
+              <small>{inprogress ? " [in progress]" : ""}</small>
+            </span>
           </a>
         </Link>
       </div>
