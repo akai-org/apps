@@ -181,6 +181,11 @@ function getProjects() {
           email: "agata.baczkiewicz@akai.org.pl"
         }
       ]
+    },
+    {
+      title: "Polifood",
+      category: "newcomers",
+      slug: "polifood"
     }
   ];
 }
