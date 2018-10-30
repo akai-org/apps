@@ -56,7 +56,17 @@ function getProjects() {
         "https://github.com/akai-org/rozklad-ekrany/blob/master/images/maps/PP72.png?raw=true",
       category: "main",
       color: "#3c5082",
-      slug: "rozklady"
+      slug: "rozklady",
+      authors: [
+        {
+          fullname: "Marcin Ławniczak",
+          email: "marcin.lawniczak@akai.org.pl"
+        },
+        {
+          fullname: "Marcin Jachymski",
+          email: "marcin.jachymski@akai.org.pl"
+        }
+      ]
     },
     {
       title: "Zdrowieton",
@@ -88,6 +98,9 @@ function getProjects() {
         {
           fullname: "Rafał Rudol",
           email: "rafal.rudol@akai.org.pl"
+        },
+        {
+          fullname: "Tomasz Jeznach"
         }
       ]
     },
@@ -128,6 +141,10 @@ function getProjects() {
         {
           fullname: "Piotr Ptak",
           email: "piotr.ptak@akai.org.pl"
+        },
+        {
+          fullname: "Agata Bączkiewicz",
+          email: "agata.baczkiewicz@akai.org.pl"
         }
       ]
     }
