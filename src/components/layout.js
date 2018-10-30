@@ -3,6 +3,13 @@ import Head from "next/head";
 
 import Header from "./header";
 
+import ReactGA from "react-ga";
+
+ReactGA.initialize("UA-109499574-5", {
+  debug: false,
+  titleCase: false
+});
+
 export default ({ children }) => (
   <div className="wrapper">
     <Head>
