@@ -30,6 +30,11 @@ function getTech(key) {
       key: "nodejs",
       image:
         "https://upload.wikimedia.org/wikipedia/commons/7/7e/Node.js_logo_2015.svg"
+    },
+    {
+      key: "emotion",
+      image:
+        "https://camo.githubusercontent.com/209bdea972b9b6ef90220c59ecbe66d35ffefa8a/68747470733a2f2f63646e2e7261776769742e636f6d2f746b6834342f656d6f74696f6e2f6d61737465722f656d6f74696f6e2e706e67"
     }
   ].filter(e => e.key === key)[0];
 }
@@ -65,7 +70,7 @@ function getProjects() {
       color: "#fff8e2",
       slug: "hackathons",
       github: "https://github.com/akai-org/hackathons",
-      tech: [getTech("react")],
+      tech: [getTech("react"), getTech("emotion")],
       authors: [
         {
           fullname: "Rafał Rudol",
