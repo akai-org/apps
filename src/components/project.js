@@ -11,6 +11,7 @@ class Project extends PureComponent {
         <Link route="project" params={{ slug }}>
           <a href="#">
             <img
+              className="icon"
               src={
                 image
                   ? image
@@ -21,7 +22,7 @@ class Project extends PureComponent {
             />
             <span>
               {title}
-              <small>{inprogress ? " [in progress]" : ""}</small>
+              {inprogress ? <img className="hammer" src="/static/hammer.svg" /> : ""}
             </span>
           </a>
         </Link>

@@ -69,7 +69,7 @@ h2 {
   margin: 10px;
 }
 
-.project img {
+.project .icon {
   width: 140px;
   height: 140px;
   background: #ffffff;
@@ -79,13 +79,20 @@ h2 {
   object-fit: contain;
 }
 
-.projects section.medium img {
+.project .hammer {
+  width: 15px;
+  height: 15px;
+  vertical-align: middle;
+  margin: 0 5px;
+}
+
+.projects section.medium .icon {
   width: 105px;
   height: 105px;
   padding: 15px;
 }
 
-.projects section.small img {
+.projects section.small .icon {
   width: 70px;
   height: 70px;
   padding: 10px;
