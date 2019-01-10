@@ -42,9 +42,7 @@ const ProjectPage = ({ project }) => (
         <div className="technologies">
           <h3>Technologies:</h3>
           {project.tech.map((t, i) => (
-            <div key={i}>
-              <img src={t.image} />
-            </div>
+            <div key={i}>{t ? <img src={t.image} /> : ""}</div>
           ))}
         </div>
       ) : (
