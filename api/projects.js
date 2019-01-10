@@ -214,6 +214,33 @@ function getProjects() {
           email: "dawid.dziedzic@akai.org.pl"
         }
       ]
+    },
+    {
+      title: "Wydziałowe Gwiazdki",
+      url: "https://wydzialowe-gwiazdki.akai.org.pl/",
+      image: "/static/WydzialoweGwiazdki.svg",
+      category: "newcomers",
+      slug: "wydzialowe-gwiazdki",
+      github: "https://github.com/akai-org/wydzialowe-gwiazdki",
+      tech: [getTech("react"), getTech("firebase")],
+      authors: [
+        {
+          fullname: "Magda Skurczyńska",
+          email: "mateusz.stempniewicz@akai.org.pl"
+        },
+        {
+          fullname: "Jarosław Bińczyk",
+          email: "jaroslaw.binczyk@akai.org.pl"
+        },
+        {
+          fullname: "Damian Karbowiak",
+          email: "damian.karbowiak@akai.org.pl"
+        },
+        {
+          fullname: "Mateusz Stempniewicz",
+          email: "mateusz.stempniewicz@akai.org.pl"
+        }
+      ]
     }
   ];
 }
