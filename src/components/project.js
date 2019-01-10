@@ -1,5 +1,5 @@
-import React, { PureComponent } from "react";
-import { Link } from "../../routes";
+import React, { PureComponent } from 'react';
+import { Link } from '../../routes';
 
 // href="/project" as={`/project/${slug}`}
 
@@ -12,17 +12,17 @@ class Project extends PureComponent {
           <a href="#">
             <img
               className="icon"
-              src={
-                image
-                  ? image
-                  : "https://akai.org.pl/wp-content/themes/akai-new/images/logo.svg"
-              }
+              src={image ? image : '/static/logo.svg'}
               alt={title}
               style={{ background: color }}
             />
             <span>
               {title}
-              {inprogress ? <img className="hammer" src="/static/hammer.svg" /> : ""}
+              {inprogress ? (
+                <img className="hammer" src="/static/hammer.svg" />
+              ) : (
+                ''
+              )}
             </span>
           </a>
         </Link>
