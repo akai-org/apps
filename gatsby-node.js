@@ -44,10 +44,12 @@ exports.sourceNodes = async ({ actions, createContentDigest }) => {
     //   }))
     // );
 
+    //
     data = await Promise.all(
       data.map(async repo => ({
         ...repo,
         icon: await fetch(
+          // https://github.com/akai-org/frontend-workshops/raw/master/logo.png
           `https://raw.githubusercontent.com/${repo.full_name}/master/icon.png`
         )
           .then(res => {
