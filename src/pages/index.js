@@ -3,7 +3,7 @@ import { useStaticQuery, graphql } from "gatsby";
 
 import Layout from "../components/layout";
 import SEO from "../components/seo";
-import Icon from "../components/Icon";
+import Icon from "../components/icon";
 
 const IndexPage = () => {
   const { allRepo } = useStaticQuery(
