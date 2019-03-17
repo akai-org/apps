@@ -1,6 +1,5 @@
 {
   "name": "akai-apps",
-  "private": true,
   "description": "Displays best and latest AKAI projects",
   "version": "0.1.0",
   "author": "Rafał Rudol <rrrrudol@gmail.com>",
