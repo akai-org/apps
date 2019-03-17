@@ -33,8 +33,6 @@ const IndexPage = () => {
       icon: node.localImage ? node.localImage.publicURL : "",
     }));
 
-  console.log(repos);
-
   return (
     <Layout>
       <SEO title="Projects" keywords={[`akai`, `politechnika`, `poznańska`, 'koło', 'naukowe', 'projekty', 'it']} />
