@@ -32,9 +32,8 @@ function Icon({ name, background, icon, language, open_issues_count, url }) {
       <Card
         style={{
           background: backgroundColor,
-          border: "none",
+          boxShadow: "none",
           padding: "10px",
-          boxSizing: "border-box",
           marginBottom: "5px",
         }}
       >
