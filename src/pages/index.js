@@ -1,21 +1,50 @@
-import React from "react"
-import { Link } from "gatsby"
+import React from "react";
+import { useStaticQuery, graphql } from "gatsby";
 
-import Layout from "../components/layout"
-import Image from "../components/image"
-import SEO from "../components/seo"
+import Layout from "../components/layout";
+import SEO from "../components/seo";
+import Icon from "../components/Icon";
 
-const IndexPage = () => (
-  <Layout>
-    <SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
-    <h1>Hi people</h1>
-    <p>Welcome to your new Gatsby site.</p>
-    <p>Now go build something great.</p>
-    <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
-      <Image />
-    </div>
-    <Link to="/page-2/">Go to page 2</Link>
-  </Layout>
-)
+const IndexPage = () => {
+  const { allRepo } = useStaticQuery(
+    graphql`
+      query github {
+        allRepo {
+          edges {
+            node {
+              id
+              internal {
+                content
+              }
+              localImage {
+                publicURL
+              }
+            }
+          }
+        }
+      }
+    `
+  );
 
-export default IndexPage
+  const repos = Object.values(allRepo.edges)
+    .map(edge => edge.node)
+    .map(node => ({
+      ...JSON.parse(node.internal.content),
+      icon: node.localImage ? node.localImage.publicURL : "",
+    }));
+
+  console.log(repos);
+
+  return (
+    <Layout>
+      <SEO title="Projects" keywords={[`akai`, `politechnika`, `poznańska`, 'koło', 'naukowe', 'projekty', 'it']} />
+      <div className="IconWrapper">
+        {repos.map(repo => (
+          <Icon key={repo.id} {...repo} />
+        ))}
+      </div>
+    </Layout>
+  );
+};
+
+export default IndexPage;

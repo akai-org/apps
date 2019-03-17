@@ -1,42 +1,17 @@
-import { Link } from "gatsby"
-import PropTypes from "prop-types"
-import React from "react"
+import React from "react";
+import { Header as H } from "semantic-ui-react";
 
-const Header = ({ siteTitle }) => (
-  <header
-    style={{
-      background: `rebeccapurple`,
-      marginBottom: `1.45rem`,
-    }}
-  >
-    <div
-      style={{
-        margin: `0 auto`,
-        maxWidth: 960,
-        padding: `1.45rem 1.0875rem`,
-      }}
-    >
-      <h1 style={{ margin: 0 }}>
-        <Link
-          to="/"
-          style={{
-            color: `white`,
-            textDecoration: `none`,
-          }}
-        >
-          {siteTitle}
-        </Link>
-      </h1>
-    </div>
-  </header>
-)
-
-Header.propTypes = {
-  siteTitle: PropTypes.string,
+function Header({ title, description }) {
+  return (
+    <header style={{ padding: "5px 10px", marginBottom: "25px" }}>
+      <H as="h1" floated="left" style={{ color: "#fff", fontSize: "9px", fontWeight: "700" }}>
+        {title}
+      </H>
+      <H as="h2" floated="right" style={{ color: "#fff", fontSize: "9px", fontWeight: "700" }}>
+        {description}
+      </H>
+    </header>
+  );
 }
 
-Header.defaultProps = {
-  siteTitle: ``,
-}
-
-export default Header
+export default Header;
