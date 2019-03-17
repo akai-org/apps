@@ -3,7 +3,7 @@ import { StaticQuery, graphql } from "gatsby"
 
 const gradient = `linear-gradient(rgba(15, 131,255, 0.45), rgba(5, 0, 0, 0.55))`;
 
-function PageWrapper({ backgroundImage, children }) {
+function PageWrapper({ children }) {
   return (
     <StaticQuery
       query={graphql`
