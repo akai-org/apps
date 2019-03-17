@@ -1,11 +1,15 @@
 import React from "react";
 import { useStaticQuery, graphql } from "gatsby";
 
+import ReactGA from 'react-ga';
+
 import Layout from "../components/layout";
 import SEO from "../components/seo";
 import Icon from "../components/icon";
 
 const IndexPage = () => {
+  ReactGA.pageview(window.location.pathname + window.location.search);
+
   const { allRepo } = useStaticQuery(
     graphql`
       query github {

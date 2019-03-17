@@ -27,23 +27,6 @@ exports.sourceNodes = async ({ actions, createContentDigest }) => {
       })
     );
 
-    // data = await Promise.all(
-    //   data.map(async repo => ({
-    //     ...repo,
-    //     icon: await fetch(
-    //       `https://raw.githubusercontent.com/${repo.full_name}/master/icon.png`
-    //     )
-    //       .then(res =>
-    //         res.status === 200
-    //           ? `https://raw.githubusercontent.com/${
-    //               repo.full_name
-    //             }/master/icon.png`
-    //           : "https://raw.githubusercontent.com/akai-org/akai-assets/master/public/svg/logo-color.svg"
-    //       )
-    //       .catch(() => "https://raw.githubusercontent.com/akai-org/akai-assets/master/public/svg/logo-color.svg"),
-    //   }))
-    // );
-
     //
     data = await Promise.all(
       data.map(async repo => ({

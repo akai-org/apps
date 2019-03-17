@@ -6,6 +6,9 @@ import Header from "./header";
 import PageWrapper from "./pageWrapper";
 import "./layout.css";
 
+import ReactGA from 'react-ga';
+ReactGA.initialize('UA-109499574-5');
+
 const Layout = ({ children }) => (
   <StaticQuery
     query={graphql`

@@ -1,5 +1,6 @@
 import React from "react";
 import { Label, Card, Image } from "semantic-ui-react";
+import ReactGA from "react-ga";
 
 import fallbackIcon from "../images/akai-logo.svg";
 
@@ -28,6 +29,7 @@ function Icon({ name, background, icon, language, open_issues_count, url }) {
         color: "#fff",
         textAlign: "center",
       }}
+      onClick={() => ReactGA.pageview(window.location.pathname + "/" + name)}
     >
       <Card
         style={{
@@ -73,7 +75,7 @@ function Icon({ name, background, icon, language, open_issues_count, url }) {
           fontSize: "1em",
           fontWeight: "400",
           marginTop: "0.3em",
-          marginBottom: "0"
+          marginBottom: "0",
         }}
       >
         {name}
