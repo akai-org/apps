@@ -38,9 +38,9 @@ exports.sourceNodes = async ({ actions, createContentDigest }) => {
     //           ? `https://raw.githubusercontent.com/${
     //               repo.full_name
     //             }/master/icon.png`
-    //           : ""
+    //           : "https://raw.githubusercontent.com/akai-org/akai-assets/master/public/svg/logo-color.svg"
     //       )
-    //       .catch(() => ""),
+    //       .catch(() => "https://raw.githubusercontent.com/akai-org/akai-assets/master/public/svg/logo-color.svg"),
     //   }))
     // );
 
@@ -52,14 +52,14 @@ exports.sourceNodes = async ({ actions, createContentDigest }) => {
         )
           .then(res => {
             if (res.status !== 200) {
+              console.log("nope 200", repo.full_name);
               return "https://raw.githubusercontent.com/akai-org/akai-assets/master/public/svg/logo-color.svg";
             }
-            return `https://raw.githubusercontent.com/${
-              repo.full_name
-            }/master/icon.png`;
+            return `https://github.com/${repo.full_name}/raw/master/icon.png`;
           })
           .catch(
             () =>
+              console.log("catch", repo.full_name) ||
               "https://raw.githubusercontent.com/akai-org/akai-assets/master/public/svg/logo-color.svg"
           ),
       }))
