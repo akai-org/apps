@@ -8,7 +8,7 @@ import SEO from "../components/seo";
 import Icon from "../components/icon";
 
 const IndexPage = () => {
-  ReactGA.pageview(window.location.pathname + window.location.search);
+  ReactGA.pageview("/");
 
   const { allRepo } = useStaticQuery(
     graphql`

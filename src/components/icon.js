@@ -29,7 +29,7 @@ function Icon({ name, background, icon, language, open_issues_count, url }) {
         color: "#fff",
         textAlign: "center",
       }}
-      onClick={() => ReactGA.pageview(window.location.pathname + "/" + name)}
+      onClick={() => ReactGA.pageview("/" + name)}
     >
       <Card
         style={{

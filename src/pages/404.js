@@ -8,7 +8,7 @@ import Layout from "../components/layout";
 import SEO from "../components/seo";
 
 const NotFoundPage = () => {
-  ReactGA.pageview(window.location.pathname + window.location.search);
+  ReactGA.pageview("/404");
   return (
     <Layout>
       <SEO title="404: Not found" />
