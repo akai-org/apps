@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 module.exports = {
   siteMetadata: {
     title: `AKAI Apps - Dashboard`,
@@ -30,12 +32,12 @@ module.exports = {
     {
       resolve: `gatsby-plugin-remote-images`,
       options: {
-        nodeType: 'Repo',
-        imagePath: 'icon',
+        nodeType: "Repo",
+        imagePath: "icon",
       },
     },
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.app/offline
     // 'gatsby-plugin-offline',
   ],
-}
+};
