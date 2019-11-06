@@ -3,6 +3,7 @@
   "description": "Displays best and latest AKAI projects",
   "version": "0.1.0",
   "author": "Rafał Rudol <rrrrudol@gmail.com>",
+  "homepage": "https://apps.akai.org.pl",
   "dependencies": {
     "dotenv": "^8.2.0",
     "gatsby": "^2.1.18",

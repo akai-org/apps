@@ -13,6 +13,7 @@ jobs:
     - name: Build and Deploy
       uses: JamesIves/github-pages-deploy-action@master
       env:
+        REPO: ${{ secrets.REPO }}
         ACCESS_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
         BASE_BRANCH: master
         BRANCH: gh-pages
