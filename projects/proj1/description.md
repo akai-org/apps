@@ -7,6 +7,6 @@ authors: ["Wojtek", "Filip"]
 
 ## Opis projektu 1.
 
-![Krowa](./assets/krowa.png)
+![Krowa](/galleries/proj1/krowa.png)
 
 Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus temporibus voluptatum fugit est, deleniti optio doloremque sed a maiores harum. In ipsum officiis quam porro excepturi deleniti, laboriosam incidunt sapiente?

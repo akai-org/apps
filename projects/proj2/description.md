@@ -7,6 +7,6 @@ authors: ["Przemek", "Filip"]
 
 ## Opis projektu 2.
 
-![Mięso](./assets/mieso.jpg)
+![Mięso](/galleries/proj2/mieso.jpg)
 
 Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus temporibus voluptatum fugit est, deleniti optio doloremque sed a maiores harum. In ipsum officiis quam porro excepturi deleniti, laboriosam incidunt sapiente?
