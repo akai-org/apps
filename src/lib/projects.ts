@@ -81,10 +81,21 @@ export async function getProjectData(projectName: string) {
     .process(matterResult.content);
   const contentHtml = processedContent.toString();
 
+  const parsedMetadata = ProjectMetadataSchema.safeParse(matterResult.data);
+
+  if (!parsedMetadata.success) {
+    console.error(
+      `Type errors in metadata in file projects/${projectName}/description.md, fix them to include this project: \n${parsedMetadata.error.issues
+        .map((issue) => `-> ${issue.path.join(".")}: ${issue.message}`)
+        .join("\n")}`
+    );
+    return null;
+  }
+
   // Combine the data with the projectName and contentHtml
   return {
     projectName,
     contentHtml,
-    ...matterResult.data,
+    ...parsedMetadata.data,
   };
 }
