@@ -2,7 +2,7 @@ import { Fragment } from "react";
 import { getSortedProjectsData } from "../lib/projects";
 
 const HomePage = async () => {
-  const allProjectsData = getSortedProjectsData();
+  const allProjectsData = await getSortedProjectsData();
 
   return (
     <div>

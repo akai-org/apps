@@ -1,4 +1,5 @@
-import { readFileSync, readdirSync } from "node:fs";
+import { notFound } from "next/navigation";
+import { readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 import matter from "gray-matter";
 import { remark } from "remark";
@@ -19,8 +20,8 @@ export interface ProjectMetadataWithName extends ProjectMetadata {
 
 const projectsDirectory = path.join(process.cwd(), "projects");
 
-export function getSortedProjectsData() {
-  const projectNames = getProjectNames();
+export async function getSortedProjectsData() {
+  const projectNames = await getProjectNames();
   const allProjectsData: ProjectMetadataWithName[] = [];
 
   for (const projectName of projectNames) {
@@ -30,7 +31,13 @@ export function getSortedProjectsData() {
       projectName,
       "description.md"
     );
-    const fileContents = readFileSync(fullPath, "utf8");
+
+    let fileContents;
+    try {
+      fileContents = await readFile(fullPath);
+    } catch {
+      continue;
+    }
 
     // Use gray-matter to parse the post metadata section
     const matterResult = matter(fileContents);
@@ -62,15 +69,21 @@ export function getSortedProjectsData() {
   });
 }
 
-export function getProjectNames() {
-  return readdirSync(projectsDirectory, { withFileTypes: true })
+export async function getProjectNames() {
+  return (await readdir(projectsDirectory, { withFileTypes: true }))
     .filter((dirent) => dirent.isDirectory())
     .map((dirent) => dirent.name);
 }
 
 export async function getProjectData(projectName: string) {
   const fullPath = path.join(projectsDirectory, projectName, "description.md");
-  const fileContents = readFileSync(fullPath, "utf8");
+
+  let fileContents;
+  try {
+    fileContents = await readFile(fullPath);
+  } catch {
+    notFound();
+  }
 
   // Use gray-matter to parse the post metadata section
   const matterResult = matter(fileContents);
