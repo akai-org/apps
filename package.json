@@ -24,7 +24,8 @@
     "rehype-attr": "^2.1.4",
     "remark": "^14.0.2",
     "remark-html": "^15.0.2",
-    "tailwindcss": "3.3.1"
+    "tailwindcss": "3.3.1",
+    "zod": "^3.21.4"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "7.0.12",
@@ -39,8 +40,6 @@
     "eslint": "8.39.0",
     "eslint-config-next": "13.4.1",
     "eslint-plugin-storybook": "^0.6.12",
-    "fs": "0.0.1-security",
-    "path": "^0.12.7",
     "storybook": "7.0.12",
     "typescript": "5.0.4"
   }

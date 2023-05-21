@@ -1,14 +1,29 @@
-import { readFileSync, readdirSync } from "fs";
-import path from "path";
+import { readFileSync, readdirSync } from "node:fs";
+import path from "node:path";
 import matter from "gray-matter";
 import { remark } from "remark";
 import html from "remark-html";
-import rehypeAttr from "rehype-attr";
+import { z } from "zod";
+
+const ProjectMetadataSchema = z.object({
+  title: z.string(),
+  technologies: z.array(z.string()),
+  date: z.string(),
+  authors: z.array(z.string()),
+});
+
+export type ProjectMetadata = z.infer<typeof ProjectMetadataSchema>;
+export interface ProjectMetadataWithName extends ProjectMetadata {
+  projectName: string;
+}
 
 const projectsDirectory = path.join(process.cwd(), "projects");
 
 export function getSortedProjectsData() {
-  const allProjectsData = getProjectNames().map((projectName) => {
+  const projectNames = getProjectNames();
+  const allProjectsData: ProjectMetadataWithName[] = [];
+
+  for (const projectName of projectNames) {
     // Read markdown project as string
     const fullPath = path.join(
       projectsDirectory,
@@ -20,12 +35,23 @@ export function getSortedProjectsData() {
     // Use gray-matter to parse the post metadata section
     const matterResult = matter(fileContents);
 
-    // Combine the data with the projectName
-    return {
+    const parsedMetadata = ProjectMetadataSchema.safeParse(matterResult.data);
+
+    if (!parsedMetadata.success) {
+      console.warn(
+        `Type errors in metadata in file projects/${projectName}/description.md, fix them to include this project: \n${parsedMetadata.error.issues
+          .map((issue) => `-> ${issue.path.join(".")}: ${issue.message}`)
+          .join("\n")}`
+      );
+      continue;
+    }
+
+    allProjectsData.push({
       projectName,
-      ...matterResult.data
-    };
-  });
+      ...parsedMetadata.data,
+    });
+  }
+
   // Sort projects by date
   return allProjectsData.sort((a, b) => {
     if (a.date < b.date) {
@@ -42,7 +68,7 @@ export function getProjectNames() {
     .map((dirent) => dirent.name);
 }
 
-export async function getProjectData(projectName) {
+export async function getProjectData(projectName: string) {
   const fullPath = path.join(projectsDirectory, projectName, "description.md");
   const fileContents = readFileSync(fullPath, "utf8");
 
@@ -52,10 +78,6 @@ export async function getProjectData(projectName) {
   // Use remark to convert markdown into HTML string
   const processedContent = await remark()
     .use(html)
-    .use(rehypeAttr, {
-      h2: { className: "text-3xl font-bold" },
-      p: { className: "text-red-500" }
-    })
     .process(matterResult.content);
   const contentHtml = processedContent.toString();
 
@@ -63,6 +85,6 @@ export async function getProjectData(projectName) {
   return {
     projectName,
     contentHtml,
-    ...matterResult.data
+    ...matterResult.data,
   };
 }
