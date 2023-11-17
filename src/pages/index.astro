@@ -1,6 +1,7 @@
 ---
 import { octokit } from "../utilities/github";
 import Project from "../components/Project.astro";
+import MainPageLayout from "../layouts/MainPageLayout.astro";
 import { isProd } from "../utilities/env";
 
 const per_page = isProd ? 100 : 3;
@@ -36,16 +37,7 @@ const projects = await Promise.all(
   }),
 );
 ---
-
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Astro</title>
-  </head>
-  <body>
+<MainPageLayout title="Akai Apps">
     <h1 class="bg-red-500">AKAI Apps</h1>
     <main>
       <ul class="flex flex-col gap-y-3 p-3">
@@ -58,5 +50,4 @@ const projects = await Promise.all(
         }
       </ul>
     </main>
-  </body>
-</html>
+</MainPageLayout>
