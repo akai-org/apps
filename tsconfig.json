@@ -1,3 +1,4 @@
 {
+  "module": "esnext",
   "extends": "astro/tsconfigs/strict"
 }
