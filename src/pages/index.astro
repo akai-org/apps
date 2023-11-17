@@ -1,8 +1,9 @@
 ---
 import { octokit } from "../utilities/github";
 import Project from "../components/Project.astro";
+import { isProd } from "../utilities/env";
 
-const per_page = 3;
+const per_page = isProd ? 100 : 3;
 const res = await octokit.request(
   `GET /orgs/{org}/repos?per_page=${per_page}`,
   {
@@ -12,13 +13,28 @@ const res = await octokit.request(
     },
   },
 );
+console.log(`fetching ${res.data.length} projects`);
 
-const projects = res.data.map((project: any) => {
-  return {
-    name: project.name,
-    url: project.html_url,
-  };
-});
+const projects = await Promise.all(
+  res.data.map(async (repo: any, i: number) => {
+    const { data } = await octokit.request(
+      `GET /repos/{owner}/{repo}/languages`,
+      {
+        owner: "akai-org",
+        repo: repo.name,
+        headers: {
+          "X-GitHub-Api-Version": "2022-11-28",
+        },
+      },
+    );
+    return {
+      index: i + 1,
+      name: repo.name,
+      url: repo.html_url,
+      languages: Object.keys(data),
+    };
+  }),
+);
 ---
 
 <html lang="en">
@@ -30,9 +46,17 @@ const projects = res.data.map((project: any) => {
     <title>Astro</title>
   </head>
   <body>
-    <h1 class="bg-red-500">Astro 2</h1>
+    <h1 class="bg-red-500">AKAI Apps</h1>
     <main>
-      {projects.map((project: any) => <Project {...project} />)}
+      <ul class="flex flex-col gap-y-3 p-3">
+        {
+          projects.map((project: any, i) => (
+            <li>
+              <Project {...project} />
+            </li>
+          ))
+        }
+      </ul>
     </main>
   </body>
 </html>
