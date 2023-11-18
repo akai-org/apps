@@ -11,6 +11,9 @@ dependencies:
   '@astrojs/tailwind':
     specifier: ^5.0.2
     version: 5.0.2(astro@3.5.5)(tailwindcss@3.3.5)
+  '@fontsource/quicksand':
+    specifier: ^5.0.15
+    version: 5.0.15
   '@octokit/plugin-paginate-graphql':
     specifier: ^4.0.0
     version: 4.0.0(@octokit/core@5.0.1)
@@ -820,6 +823,10 @@ packages:
     requiresBuild: true
     dev: false
     optional: true
+
+  /@fontsource/quicksand@5.0.15:
+    resolution: {integrity: sha512-NM6r8vs5nR3TWZgkkXm4s8q+GVhHzE3i7fRzkYE0ixBkCt8Q54QLZ+Hlh2dTgrPi43W+8skVwzDP+Nq+e5Ne6w==}
+    dev: false
 
   /@jridgewell/gen-mapping@0.3.3:
     resolution: {integrity: sha512-HLhSWOLRi875zjjMG/r+Nv0oCW8umGb0BgEhyX3dDX3egwZtB8PqLnjz3yedt8R5StBrzcg4aBpnh8UA9D1BoQ==}
