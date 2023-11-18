@@ -1,12 +1,11 @@
 name: Deploy to GitHub Pages
 
 on:
-  # Trigger the workflow every time you push to the `main` branch
-  # Using a different branch name? Replace `main` with your branch’s name
   push:
     branches: [astro]
-  # Allows you to run this workflow manually from the Actions tab on GitHub.
-  workflow_dispatch:
+  workflow_dispatch: # Allows to run this workflow manually from the Actions tab on GitHub.
+  schedule:
+    - cron: "30 6,14,22 * * *" # at 7:30, 15:30 and 23:30 in GMT+1 (every 8 hours)
 
 # Allow this job to clone the repo and create a page deployment
 permissions:
@@ -18,18 +17,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout your repository using git
+      - name: Checkout repository using git
         uses: actions/checkout@v3
-      - name: Install, build, and upload your site
+      - name: Install, build, and upload
         uses: withastro/action@v1
         env:
           GH_API_TOKEN: ${{ secrets.GH_API_TOKEN }}
-
-        # with:
-        # path: . # The root location of your Astro project inside the repository. (optional)
-        # node-version: 18 # The specific version of Node that should be used to build your site. Defaults to 18. (optional)
-        # package-manager: pnpm@latest # The Node package manager that should be used to install dependencies and build your site. Automatically detected based on your lockfile. (optional)
-
   deploy:
     needs: build
     runs-on: ubuntu-latest
