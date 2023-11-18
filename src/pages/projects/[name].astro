@@ -1,7 +1,36 @@
 ---
-export  function getStaticPaths() {
-  return [
-    { params: { name: "placeholder"}},
-  ]
+import { getProjects } from "@utilities/data";
+import PageLayout from "@layouts/PageLayout.astro";
+import ProjectLayout from "@layouts/ProjectLayout.astro";
+import type { Project } from "@utilities/data";
+
+type Props = Omit<Project, "name">;
+
+export async function getStaticPaths() {
+  const projects = await getProjects();
+  const project_paths = projects.map((project) => {
+    return {
+      params: { name: project.name },
+      props: {
+        description: project.description,
+        stargazerCount: project.stargazerCount,
+        languages: project.languages,
+        url: project.url,
+      },
+    };
+  });
+  return project_paths;
 }
+const { name } = Astro.params;
+const { languages, url, stargazerCount, description } = Astro.props;
 ---
+
+<PageLayout title={name}>
+  <ProjectLayout
+    name={name}
+    languages={languages}
+    url={url}
+    stargazerCount={stargazerCount}
+    description={description}
+  />
+</PageLayout>

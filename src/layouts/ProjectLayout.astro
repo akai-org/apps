@@ -1,0 +1,25 @@
+---
+import type { Project } from "@utilities/data";
+interface Props extends Project {}
+const { name, description, stargazerCount, languages, url } = Astro.props;
+---
+
+<section>
+  <div>
+    <h1>{name}</h1>
+    <div class="flex">
+      <p>Ilość gwiazdek: {stargazerCount}</p>
+      <a href={url} class="text-yellow-500">Sprawdź na githubie</a>
+    </div>
+    <ul class="flex gap-1">
+      {
+        languages.map((lang) => {
+          return <li>{lang}</li>;
+        })
+      }
+    </ul>
+  </div>
+  <article>
+    {description}
+  </article>
+</section>

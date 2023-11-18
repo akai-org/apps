@@ -1,7 +1,13 @@
 ---
-const current_time = new Date().toLocaleString("en-GB", { timeZone: 'Europe/Warsaw' })
+const current_time = new Date().toLocaleString("en-GB", {
+  timeZone: "Europe/Warsaw",
+});
 ---
+
 <header class="p-2">
-  <h1 class="font-bold text-4xl">Akai Apps</h1>
-  <p>Dane aktualizowane ostatni raz: <span class="font-mono" >{current_time}</span></p>
+  <h1 class="text-4xl font-bold"><a href="/">Akai Apps</a></h1>
+  <p>
+    Dane aktualizowane ostatni raz: <span class="font-mono"
+      >{current_time}</span>
+  </p>
 </header>
