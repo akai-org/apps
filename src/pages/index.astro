@@ -1,23 +1,12 @@
 ---
-import { octokit } from "../utilities/github";
+import { getProjects, octokit } from "../utilities/github";
 import Project from "../components/Project.astro";
 import MainPageLayout from "../layouts/MainPageLayout.astro";
 import { isProd } from "../utilities/env";
-
-const per_page = isProd ? 100 : 3;
-const res = await octokit.request(
-  `GET /orgs/{org}/repos?per_page=${per_page}`,
-  {
-    org: "akai-org",
-    headers: {
-      "X-GitHub-Api-Version": "2022-11-28",
-    },
-  },
-);
-console.log(`fetching ${res.data.length} projects`);
-
+const res = await getProjects();
+console.log(res);
 const projects = await Promise.all(
-  res.data.map(async (repo: any, i: number) => {
+  res.map(async (repo: any, i: number) => {
     const { data } = await octokit.request(
       `GET /repos/{owner}/{repo}/languages`,
       {
@@ -39,7 +28,7 @@ const projects = await Promise.all(
 ---
 <MainPageLayout title="Akai Apps">
     <main>
-      <ul class="flex flex-col gap-y-3 p-3">
+      <ul class="grid gap-y-3 p-3">
         {
           projects.map((project: any, i) => (
             <li>
