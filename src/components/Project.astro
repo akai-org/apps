@@ -1,9 +1,14 @@
 ---
+import { isProd } from "@utilities/env";
 import { type Project } from "../utilities/data";
 
 interface Props extends Project {}
 
 const { name, url, languages, stargazerCount } = Astro.props;
+const projectUrl = new URL(
+  `projects/${name}`,
+  isProd ? Astro.site : "http://localhost:4321",
+);
 ---
 
 <div class="w-5/6 rounded-md border-2 border-gray-100 p-3">
@@ -12,5 +17,8 @@ const { name, url, languages, stargazerCount } = Astro.props;
   <ul class="flex flex-row flex-wrap gap-2 text-sm">
     {languages.map((language) => <li>{language}</li>)}
   </ul>
-  <a href={url} class="text-yellow-500">Sprawdź</a>
+  <div>
+    <a href={url} class="text-yellow-500">Sprawdź na Githubie</a>
+    <a href={projectUrl} class="text-sky-500">Więcej</a>
+  </div>
 </div>
