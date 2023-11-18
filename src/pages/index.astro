@@ -3,8 +3,8 @@ import { getProjects, octokit } from "../utilities/github";
 import Project from "../components/Project.astro";
 import MainPageLayout from "../layouts/MainPageLayout.astro";
 import { isProd } from "../utilities/env";
+
 const res = await getProjects();
-console.log(res);
 const projects = await Promise.all(
   res.map(async (repo: any, i: number) => {
     const { data } = await octokit.request(

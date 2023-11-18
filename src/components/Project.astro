@@ -8,11 +8,11 @@ interface Props {
 const { name, url, languages, index } = Astro.props;
 ---
 
-<div>
+<div class="p-3 border-2 border-gray-100 rounded-md w-fit">
   <span>{index}</span>
-  <h2 class="font-bold">{name}</h2>
-  <a href={url}>Sprawdź</a>
-  <ul class="flex flex-row gap-2">
+  <h2 class="font-bold text-xl">{name}</h2>
+  <ul class="flex flex-row gap-2 text-sm">
     {languages.map((language) => <li>{language}</li>)}
   </ul>
+  <a href={url} class="text-yellow-500">Sprawdź</a>
 </div>
