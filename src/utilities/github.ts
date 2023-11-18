@@ -21,9 +21,9 @@ export async function getProjects() {
         },
       },
     );
-    projects.push(data);
+    projects.push(...data);
     page += 1;
-  } while (isProd && projects.length >= per_page * page)
+  } while (isProd && projects.length >= per_page * (page - 1))
 
-  return projects.flat();
+  return projects;
 }
