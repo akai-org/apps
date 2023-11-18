@@ -53,7 +53,7 @@ export async function getOrgRepos() {
     },
   );
 
-  return organization.repositories.nodes.map((repo) => ({
+  return organization.repositories.nodes.map((repo: Repository) => ({
     ...repo,
     languages: repo.languages.nodes.map((lang) => lang.name),
   }));
