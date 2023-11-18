@@ -1,16 +1,14 @@
 ---
-interface Props {
-  name: string;
-  url: string;
-  languages: string[];
-  index: number;
-}
-const { name, url, languages, index } = Astro.props;
+import { type Project } from "../utilities/data";
+
+interface Props extends Project {}
+
+const { name, url, languages, stargazerCount } = Astro.props;
 ---
 
-<div class="p-3 border-2 border-gray-100 rounded-md w-fit">
-  <span>{index}</span>
-  <h2 class="font-bold text-xl">{name}</h2>
+<div class="w-fit rounded-md border-2 border-gray-100 p-3">
+  <h2 class="text-xl font-bold">{name}</h2>
+  <span>{stargazerCount} gwiazdek</span>
   <ul class="flex flex-row gap-2 text-sm">
     {languages.map((language) => <li>{language}</li>)}
   </ul>
