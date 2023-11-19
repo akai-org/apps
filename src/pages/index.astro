@@ -18,10 +18,15 @@ const languages = new Set(projects.map((project) => project.languages).flat());
           {
             [...languages].map((lang) => {
               return (
-              <div>
-                <input type="checkbox" name="language" value={lang} id={`lang-${lang}`}/>
-                <label for={`lang-${lang}`}>{lang}<label>
-              </div>
+                <div>
+                  <input
+                    type="checkbox"
+                    name="language"
+                    value={lang}
+                    id={`lang-${lang}`}
+                  />
+                  <label for={`lang-${lang}`}>{lang}</label>
+                </div>
               );
             })
           }
