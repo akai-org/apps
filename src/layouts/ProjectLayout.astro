@@ -1,25 +1,32 @@
 ---
 import type { Project } from "@utilities/data";
+import LanguageTag from "@components/LanguageTag.astro";
 interface Props extends Project {}
 const { name, description, stargazerCount, languages, url } = Astro.props;
 ---
 
-<section>
-  <div>
-    <h1>{name}</h1>
+<section class="grid w-full grid-cols-[20%_1fr]">
+  <aside class="p-3">
     <div class="flex">
       <p>Ilość gwiazdek: {stargazerCount}</p>
       <a href={url} class="text-yellow-500">Sprawdź na githubie</a>
     </div>
-    <ul class="flex gap-1">
+    <ul class="grid gap-1">
       {
         languages.map((lang) => {
-          return <li>{lang}</li>;
+          return <LanguageTag language={lang} />;
         })
       }
     </ul>
-  </div>
-  <article>
-    {description}
-  </article>
+  </aside>
+  <main class="p-3">
+    <h1 class="text-left text-5xl font-bold">{name}</h1>
+    <article>
+      {
+        description
+          ? description
+          : "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vel eveniet aliquid, magnam nisi tenetur amet vitae neque consectetur molestiae beatae nostrum nemo? Laborum expedita libero harum laudantium nihil. Cum, reiciendis!"
+      }
+    </article>
+  </main>
 </section>
