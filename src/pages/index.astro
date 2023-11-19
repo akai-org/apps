@@ -5,19 +5,40 @@ import PageLayout from "@layouts/PageLayout.astro";
 import HomePageLayout from "@layouts/HomePageLayout.astro";
 
 const projects = await getProjects();
+
+const languages = new Set(projects.map((project) => project.languages).flat());
 ---
 
 <PageLayout title="AKAI Apps">
   <HomePageLayout>
-    <span>Wyświetlono: {projects.length} projekty</span>
-    <ul class="grid gap-3 p-3 grid-cols-3">
-      {
-        projects.map((project) => (
-          <li>
-            <Project {...project} />
-          </li>
-        ))
-      }
-    </ul>
+    <div slot="filters">
+      <form>
+        <label>
+          <span class="font-semibold">Języki programowania</span>
+          {
+            [...languages].map((lang) => {
+              return (
+              <div>
+                <input type="checkbox" name="language" value={lang} id={`lang-${lang}`}/>
+                <label for={`lang-${lang}`}>{lang}<label>
+              </div>
+              );
+            })
+          }
+        </label>
+      </form>
+    </div>
+    <div slot="projects">
+      <span>Wyświetlono: {projects.length} projekty</span>
+      <ul class="grid grid-cols-3 gap-3 p-3">
+        {
+          projects.map((project) => (
+            <li>
+              <Project {...project} />
+            </li>
+          ))
+        }
+      </ul>
+    </div>
   </HomePageLayout>
 </PageLayout>

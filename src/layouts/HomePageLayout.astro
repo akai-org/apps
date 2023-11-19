@@ -1,6 +1,12 @@
-<section>
-  <aside></aside>
+---
+
+---
+
+<section class="grid grid-cols-[20%_1fr]">
+  <aside class="p-3">
+    <slot name="filters" />
+  </aside>
   <main class="p-3">
-    <slot />
+    <slot name="projects" />
   </main>
 </section>
