@@ -3,6 +3,7 @@ import { getProjects } from "../utilities/data";
 import Project from "../components/Project.astro";
 import PageLayout from "@layouts/PageLayout.astro";
 import HomePageLayout from "@layouts/HomePageLayout.astro";
+import FilterForm from "@components/FilterForm.astro";
 
 const projects = await getProjects();
 
@@ -12,26 +13,7 @@ const languages = new Set(projects.map((project) => project.languages).flat());
 <PageLayout title="AKAI Apps">
   <HomePageLayout>
     <div slot="filters">
-      <form>
-        <label>
-          <span class="font-semibold">Języki programowania</span>
-          {
-            [...languages].map((lang) => {
-              return (
-                <div>
-                  <input
-                    type="checkbox"
-                    name="language"
-                    value={lang}
-                    id={`lang-${lang}`}
-                  />
-                  <label for={`lang-${lang}`}>{lang}</label>
-                </div>
-              );
-            })
-          }
-        </label>
-      </form>
+      <FilterForm languages={languages} />
     </div>
     <div slot="projects">
       <span>Wyświetlono: {projects.length} projekty</span>

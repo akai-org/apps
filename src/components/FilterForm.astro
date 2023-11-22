@@ -1,0 +1,11 @@
+---
+import LanguageFilter from "./filters/LanguageFilter.astro";
+
+const { languages } = Astro.props;
+---
+
+<form id="form">
+  <LanguageFilter languages={languages} />
+  <button type="submit">Zastosuj</button>
+</form>
+
