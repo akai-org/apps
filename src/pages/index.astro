@@ -10,41 +10,47 @@ const projects = await getProjects();
 const languages = new Set(projects.map((project) => project.languages).flat());
 ---
 
-<script type="module">
+<script>
+type Filters = {
+  search: string,
+  languages: string[]
+}
   const projects = [...document.getElementsByClassName("project")];
-  const form = document.getElementById("form");
+  const form = document.getElementById("form") as HTMLFormElement | null;
   const shownCounter = document.getElementById("shown-counter");
 // DO UPORZADKOWANIA (kiedys)
   function getHiddenProjects() {
    return [...document.querySelectorAll(`.hidden`)]; 
   }
-  function filterProjects(filters, projects){
+  function filterProjects(filters: Filters, projects: Element[]){
     if(filters.languages.length === 0) {
       const hiddenProjects = getHiddenProjects().map(project => project.classList.remove("hidden"));
-      shownCounter.textContent = projects.length;
+      if(shownCounter)
+        shownCounter.textContent = projects.length.toString();
       return;
     }
     let counter = 0;  
     for(const project of projects) {
-      const projectLangs = [...project.querySelectorAll(`[data-id="language-tag"]`)].map(tag => tag.textContent.trim());
-      const hasLangs = projectLangs.some(lang => filters.languages.includes(lang)); 
+      const projectLangs = [...project.querySelectorAll(`[data-id="language-tag"]`)].map(tag => tag?.textContent?.trim());
+      const hasLangs = projectLangs.some(lang => filters.languages.includes(lang!)); 
       if(!hasLangs) {
-        project.classList.add("hidden"); 
+        project?.classList.add("hidden"); 
       }
       if(hasLangs) {
         counter++;
-        project.classList.remove("hidden"); 
+        project?.classList.remove("hidden"); 
       }
     }
-    shownCounter.textContent = counter;
+    if(shownCounter)
+      shownCounter.textContent = counter.toString();
   }
 
-  form.addEventListener("input", (e) => {
+  form?.addEventListener("input", (e) => {
     const data = new FormData(form);
     const filteredLanguages = new Set([...data].slice(1).map(entry => entry[1]));
-    const filters = {
+    const filters: Filters = {
       search: data.values().next().value,
-      languages: [...filteredLanguages]
+      languages: [...filteredLanguages] as string[]
     };
     filterProjects(filters, projects);
   });
