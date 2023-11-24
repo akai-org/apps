@@ -11,46 +11,59 @@ const languages = new Set(projects.map((project) => project.languages).flat());
 ---
 
 <script>
-type Filters = {
-  search: string,
-  languages: string[]
-}
+  type Filters = {
+    search: string;
+    languages: string[];
+  };
   const projects = [...document.getElementsByClassName("project")];
   const form = document.getElementById("form") as HTMLFormElement | null;
   const shownCounter = document.getElementById("shown-counter");
-// DO UPORZADKOWANIA (kiedys)
+  // DO UPORZADKOWANIA (kiedys)
   function getHiddenProjects() {
-   return [...document.querySelectorAll(`.hidden`)]; 
+    return [...document.querySelectorAll(`.hidden`)];
   }
-  function filterProjects(filters: Filters, projects: Element[]){
-    if(filters.languages.length === 0) {
-      const hiddenProjects = getHiddenProjects().map(project => project.classList.remove("hidden"));
-      if(shownCounter)
-        shownCounter.textContent = projects.length.toString();
+  function filterProjects(filters: Filters, projects: Element[]) {
+    if (filters.languages.length === 0 && filters.search === "") {
+      getHiddenProjects().map((project) => project.classList.remove("hidden"));
+      if (shownCounter) shownCounter.textContent = projects.length.toString();
       return;
     }
-    let counter = 0;  
-    for(const project of projects) {
-      const projectLangs = [...project.querySelectorAll(`[data-id="language-tag"]`)].map(tag => tag?.textContent?.trim());
-      const hasLangs = projectLangs.some(lang => filters.languages.includes(lang!)); 
-      if(!hasLangs) {
-        project?.classList.add("hidden"); 
+    let counter = 0;
+    // cleanup needed
+    for (const project of projects) {
+      const projectLangs = [
+        ...project.querySelectorAll(`[data-id="language-tag"]`),
+      ].map((tag) => tag?.textContent?.trim());
+      const hasLangs =
+        filters.languages.length !== 0
+          ? projectLangs.some((lang) => filters.languages.includes(lang!))
+          : true;
+      const title = project.querySelector("#title")?.textContent?.toLowerCase();
+      const hasTitle = filters.search
+        ? title?.indexOf(filters.search) !== -1
+        : true;
+      if (!hasLangs) {
+        project?.classList.add("hidden");
       }
-      if(hasLangs) {
+      if (!hasTitle) {
+        project?.classList.add("hidden");
+      }
+      if (hasLangs && hasTitle) {
         counter++;
-        project?.classList.remove("hidden"); 
+        project?.classList.remove("hidden");
       }
     }
-    if(shownCounter)
-      shownCounter.textContent = counter.toString();
+    if (shownCounter) shownCounter.textContent = counter.toString();
   }
 
   form?.addEventListener("input", (e) => {
     const data = new FormData(form);
-    const filteredLanguages = new Set([...data].slice(1).map(entry => entry[1]));
+    const filteredLanguages = new Set(
+      [...data].slice(1).map((entry) => entry[1]),
+    );
     const filters: Filters = {
-      search: data.values().next().value,
-      languages: [...filteredLanguages] as string[]
+      search: data.values().next().value.toLowerCase(),
+      languages: [...filteredLanguages] as string[],
     };
     filterProjects(filters, projects);
   });
@@ -62,13 +75,11 @@ type Filters = {
       <FilterForm languages={languages} />
     </div>
     <div slot="projects">
-      <span>Wyświetlono: <span id="shown-counter">{projects.length}</span> projekty</span>
-      <ul class="grid lg:grid-cols-2 xl:grid-cols-3 gap-3 p-3">
-        {
-          projects.map((project) => (
-              <Project {...project} />
-          ))
-        }
+      <span
+        >Wyświetlono: <span id="shown-counter">{projects.length}</span> projekty</span
+      >
+      <ul class="grid gap-3 p-3 lg:grid-cols-2 xl:grid-cols-3">
+        {projects.map((project) => <Project {...project} />)}
       </ul>
     </div>
   </HomePageLayout>
