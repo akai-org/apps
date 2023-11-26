@@ -4,19 +4,21 @@ const { languages } = Astro.props;
 
 <label>
   <span class="font-semibold">Języki programowania</span>
-  {
-    [...languages].map((lang) => {
-      return (
-        <div>
-          <input
-            type="checkbox"
-            name="language"
-            value={lang}
-            id={`lang-${lang}`}
-          />
-          <label for={`lang-${lang}`}>{lang}</label>
-        </div>
-      );
-    })
-  }
+  <div class="grid grid-cols-3 sm:grid-cols-1">
+    {
+      [...languages].map((lang) => {
+        return (
+          <div>
+            <input
+              type="checkbox"
+              name="language"
+              value={lang}
+              id={`lang-${lang}`}
+            />
+            <label for={`lang-${lang}`}>{lang}</label>
+          </div>
+        );
+      })
+    }
+  </div>
 </label>
