@@ -4,9 +4,79 @@ import SearchFilter from "./filters/SearchFilter.astro";
 const { languages } = Astro.props;
 ---
 
+<script>
+  type Filters = {
+    search: string;
+    languages: string[];
+  };
+  type Project = {
+    project: Element;
+    languages: string[] | undefined;
+  };
+  const projects = [...document.getElementsByClassName("project")].map(
+    (project) => {
+      return {
+        project: project,
+        languages: project.getAttribute("data-langs")?.split(","),
+      };
+    },
+  );
+  const form = document.getElementById("form") as HTMLFormElement | null;
+  const shownCounter = document.getElementById("shown-counter");
+  // DO UPORZADKOWANIA (kiedys)
+  function getHiddenProjects() {
+    return [...document.querySelectorAll(`.hidden`)];
+  }
+  function filterProjects(
+    filters: Filters,
+    projects: Project[],
+    areFiltersEmpty: boolean | undefined,
+  ) {
+    if (areFiltersEmpty) {
+      getHiddenProjects().map((project) => project.classList.remove("hidden"));
+      if (shownCounter) shownCounter.textContent = projects.length.toString();
+      return;
+    }
+    let counter = 0;
+    // cleanup needed
+    for (const p of projects) {
+      const project = p.project;
+      const hasLangs =
+        filters.languages.length !== 0
+          ? p.languages?.some((lang) => filters.languages.includes(lang!))
+          : true;
+      const title = project.querySelector("#title")?.textContent?.toLowerCase();
+      const hasTitle = filters.search
+        ? title?.indexOf(filters.search) !== -1
+        : true;
+      if (!hasLangs) {
+        project?.classList.add("hidden");
+      }
+      if (!hasTitle) {
+        project?.classList.add("hidden");
+      }
+      if (hasLangs && hasTitle) {
+        counter++;
+        project?.classList.remove("hidden");
+      }
+    }
+    if (shownCounter) shownCounter.textContent = counter.toString();
+  }
+  function groupFormData(data: FormData): Filters {
+    return {
+      search: data.values().next().value.toLowerCase(),
+      languages: [...data].slice(1).map((entry) => entry[1]) as string[],
+    };
+  }
+  form?.addEventListener("input", () => {
+    const data = new FormData(form);
+    const filters: Filters = groupFormData(data);
+    const areFiltersEmpty = data.entries().next().done;
+    filterProjects(filters, projects, areFiltersEmpty);
+  });
+</script>
 <form id="form" class="grid accent-yellow-500">
   <SearchFilter />
   <LanguageFilter languages={languages} />
   <button type="submit">Zastosuj</button>
 </form>
-
