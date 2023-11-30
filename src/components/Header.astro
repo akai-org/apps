@@ -1,13 +1,21 @@
 ---
+import logo from "@assets/akai_logo.png";
+import { Image } from "astro:assets";
+
 const current_time = new Date().toLocaleString("en-GB", {
   timeZone: "Europe/Warsaw",
 });
 ---
 
 <header class="p-2">
-  <h1 class="text-4xl font-bold"><a href="/">Akai Apps</a></h1>
+  <h1 class="flex items-center gap-10 text-5xl">
+    <a href="/" class="flex items-center gap-2 font-bold">
+      <Image src={logo} alt="Logo AKAI" />Apps</a
+    >
+    <p class="text-lg font-light">Aplikacje stworzone przez członków AKAI.</p>
+  </h1>
   <p>
-    Dane aktualizowane ostatni raz: <span class="font-mono"
-      >{current_time}</span>
+    Dane aktualizowane ostatni raz: <span class="font-mono">{current_time}</span
+    >
   </p>
 </header>
