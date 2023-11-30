@@ -75,7 +75,7 @@ const { languages } = Astro.props;
     filterProjects(filters, projects, areFiltersEmpty);
   });
 </script>
-<form id="form" class="grid accent-yellow-500">
+<form id="form" class="grid gap-y-3 accent-yellow-500">
   <SearchFilter />
   <LanguageFilter languages={languages} />
   <button type="submit">Zastosuj</button>
