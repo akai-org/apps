@@ -12,14 +12,14 @@ const languages = new Set(projects.map((project) => project.languages).flat());
 
 <PageLayout title="AKAI Apps">
   <HomePageLayout>
-    <div slot="filters">
+    <search slot="filters">
       <FilterForm languages={languages} />
-    </div>
+    </search>
     <div slot="projects">
       <span
         >Wyświetlono: <span id="shown-counter">{projects.length}</span> projekty</span
       >
-      <ul class="grid gap-3 p-3 lg:grid-cols-2 xl:grid-cols-3">
+      <ul class="grid gap-3 p-3 lg:grid-cols-2 2xl:grid-cols-3">
         {projects.map((project) => <Project {...project} />)}
       </ul>
     </div>

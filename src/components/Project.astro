@@ -9,16 +9,23 @@ const projectUrl = new URL(
   `projects/${name}`,
   isProd ? Astro.site : "http://localhost:4321",
 );
+const langLimit = 3;
+const tooManyLangs = languages.length > langLimit;
 ---
 
 <div
-  class="project w-5/6 rounded-md border-2 border-gray-100 p-3"
+  class="project grid w-5/6 content-between rounded-md border-2 border-gray-100 p-3"
   data-langs={languages}
 >
-  <h2 id="title" class="text-xl font-bold">{name}</h2>
+  <h2 id="title" class="break-all text-xl font-bold">{name}</h2>
   <span>{stargazerCount} gwiazdek</span>
-  <ul class="flex flex-row flex-wrap gap-2 text-sm">
-    {languages.map((language) => <LanguageTag language={language} />)}
+  <ul class="flex flex-row flex-wrap items-center gap-2 text-sm">
+    {
+      languages
+        .slice(0, langLimit)
+        .map((language) => <LanguageTag language={language} />)
+    }
+    <span>{tooManyLangs && `+${languages.length - langLimit} więcej`}</span>
   </ul>
   <div>
     <a href={url} class="text-yellow-500">Sprawdź na Githubie</a>
