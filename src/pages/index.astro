@@ -16,9 +16,23 @@ const languages = new Set(projects.map((project) => project.languages).flat());
       <FilterForm languages={languages} />
     </search>
     <div slot="projects">
-      <span
-        >Wyświetlono: <span id="shown-counter">{projects.length}</span> projekty</span
-      >
+      <div class="flex gap-2">
+        <form id="sortForm">
+          <label
+            >Sortuj:
+            <select name="sort">
+              <option value="alpha_ascend">Nazwa: od A do Z</option>
+              <option value="alpha_descend">Nazwa: od Z do A</option>
+              <option value="star_ascend">Gwiazdki: rosnąco</option>
+              <option value="star_descend">Gwiazdki: malejąco</option>
+            </select>
+          </label>
+        </form>
+        <span
+          >Wyświetlono: <span id="shown-counter">{projects.length}</span>
+           projekty</span
+        >
+      </div>
       <ul class="grid gap-3 p-3 lg:grid-cols-2 2xl:grid-cols-3">
         {projects.map((project) => <Project {...project} />)}
       </ul>
