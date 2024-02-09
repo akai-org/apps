@@ -1,26 +1,32 @@
 <script>
-  const projects_container = document.getElementById("projects_cont");
-  const sort_input = document.getElementById("sort");
+  const projects_container = document.getElementById("projects_cont")!;
+  const sort_input: HTMLInputElement = document.getElementById(
+    "sort",
+  ) as HTMLInputElement;
 
-  function sortAlpha(a, b) {
-    const a_title = a.querySelector("#title").innerText;
-    const b_title = b.querySelector("#title").innerText;
+  function sortAlpha(a: any, b: any) {
+    const a_title = (a?.querySelector("#title") as HTMLElement)?.innerText;
+    const b_title = (b?.querySelector("#title") as HTMLElement)?.innerText;
 
     if (a_title === b_title) return 0;
     return a_title > b_title ? 1 : -1;
   }
-  function sortStars(a, b) {
-    const a_stars = parseInt(a.querySelector("#stars").innerText);
-    const b_stars = parseInt(b.querySelector("#stars").innerText);
+  function sortStars(a: any, b: any) {
+    const a_stars = parseInt(
+      (a?.querySelector("#stars") as HTMLElement)?.innerText,
+    );
+    const b_stars = parseInt(
+      (b?.querySelector("#stars") as HTMLElement)?.innerText,
+    );
 
     if (a_stars == b_stars) return 0;
     return a_stars > b_stars ? 1 : -1;
   }
 
-  sort.addEventListener("change", (e) => {
-    let projects = [...projects_container.children];
-    const isDescending = sort.value.includes("descend");
-    const sort_type = sort.value.split("_")[0];
+  sort_input.addEventListener("change", (e) => {
+    let projects = [...projects_container?.children];
+    const isDescending = sort_input?.value.includes("descend");
+    const sort_type = sort_input?.value.split("_")[0];
     switch (sort_type) {
       case "alpha":
         projects = projects.toSorted(sortAlpha);
@@ -31,7 +37,7 @@
     }
     if (isDescending) projects.reverse();
     for (const project of projects) {
-      projects_container.appendChild(project);
+      projects_container?.appendChild(project);
     }
   });
 </script>
