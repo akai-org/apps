@@ -1,0 +1,46 @@
+<script>
+  const projects_container = document.getElementById("projects_cont");
+  const sort_input = document.getElementById("sort");
+
+  function sortAlpha(a, b) {
+    const a_title = a.querySelector("#title").innerText;
+    const b_title = b.querySelector("#title").innerText;
+
+    if (a_title === b_title) return 0;
+    return a_title > b_title ? 1 : -1;
+  }
+  function sortStars(a, b) {
+    const a_stars = parseInt(a.querySelector("#stars").innerText);
+    const b_stars = parseInt(b.querySelector("#stars").innerText);
+
+    if (a_stars == b_stars) return 0;
+    return a_stars > b_stars ? 1 : -1;
+  }
+
+  sort.addEventListener("change", (e) => {
+    let projects = [...projects_container.children];
+    const isDescending = sort.value.includes("descend");
+    const sort_type = sort.value.split("_")[0];
+    switch (sort_type) {
+      case "alpha":
+        projects = projects.toSorted(sortAlpha);
+        break;
+      case "star":
+        projects = projects.toSorted(sortStars);
+        break;
+    }
+    if (isDescending) projects.reverse();
+    for (const project of projects) {
+      projects_container.appendChild(project);
+    }
+  });
+</script>
+<label class="grid gap-y-1">
+  <span class="font-semibold">Sortuj</span>
+  <select name="sort" id="sort">
+    <option value="alpha_ascend">Nazwa: od A do Z</option>
+    <option value="alpha_descend">Nazwa: od Z do A</option>
+    <option value="star_ascend">Gwiazdki: rosnąco</option>
+    <option value="star_descend">Gwiazdki: malejąco</option>
+  </select>
+</label>
