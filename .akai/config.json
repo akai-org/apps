@@ -1,0 +1,5 @@
+{
+  "name": "AKAI Apps",
+  "description": "Aplikacje stworzone przez członków AKAI",
+  "technologies": ["Astro", "TailwindCSS", "Vite"]
+}

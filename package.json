@@ -10,20 +10,20 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/check": "^0.3.1",
-    "@astrojs/tailwind": "^5.0.3",
-    "@fontsource/quicksand": "^5.0.15",
+    "@astrojs/check": "^0.3.4",
+    "@astrojs/tailwind": "^5.1.0",
+    "@fontsource/quicksand": "^5.0.16",
     "@octokit/plugin-paginate-graphql": "^4.0.0",
-    "astro": "^4.0.1",
+    "astro": "^4.3.5",
     "octokit": "^3.1.2",
-    "sharp": "^0.33.0",
-    "tailwindcss": "^3.0.24",
-    "typescript": "^5.2.2"
+    "sharp": "^0.33.2",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5.3.3"
   },
   "devDependencies": {
-    "prettier": "^3.1.0",
-    "prettier-plugin-astro": "^0.12.2",
-    "prettier-plugin-tailwindcss": "^0.5.7"
+    "prettier": "^3.2.5",
+    "prettier-plugin-astro": "^0.12.3",
+    "prettier-plugin-tailwindcss": "^0.5.11"
   },
   "packageManager": "pnpm@8.10.0"
 }
