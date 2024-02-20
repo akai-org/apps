@@ -5,6 +5,7 @@ interface Props extends Project {}
 
 const { name, description, stargazerCount, languages, url, metadata } =
   Astro.props;
+console.log(metadata);
 ---
 
 <section class="grid w-full grid-cols-[20%_1fr]">
@@ -23,7 +24,7 @@ const { name, description, stargazerCount, languages, url, metadata } =
   </aside>
   <main class="p-3">
     <h1 class="text-left text-5xl font-bold">
-      {name}
+      {metadata?.name ? metadata.name : name}
     </h1>
     <article>
       {
