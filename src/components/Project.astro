@@ -2,11 +2,10 @@
 import { Image } from "astro:assets";
 import defaultIcon from "@assets/default_icon.png";
 import { isProd } from "@utilities/env";
-import { type Project } from "../utilities/data";
+import { type Project } from "@utilities/data";
 import LanguageTag from "./LanguageTag.astro";
-interface Props extends Project {}
-
-const { name, url, languages, stargazerCount } = Astro.props;
+type Props = Omit<Project, "description">;
+const { name, url, languages, stargazerCount, metadata } = Astro.props;
 const projectUrl = new URL(
   `projects/${name}`,
   isProd ? Astro.site : "http://localhost:4321",
@@ -27,7 +26,9 @@ const tooManyLangs = languages.length > langLimit;
     class="project grid h-4/5 w-5/6 content-between gap-y-1"
     data-langs={languages}
   >
-    <h2 id="title" class="break-all text-xl font-bold">{name}</h2>
+    <h2 id="title" class="break-all text-xl font-bold">
+      {metadata?.name ? metadata.name : name}
+    </h2>
     <span id="stars" class="flex items-center gap-1">
       <!--Star Hero Icon-->
       <svg

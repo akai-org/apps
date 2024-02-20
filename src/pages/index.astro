@@ -1,13 +1,12 @@
 ---
-import { getProjects } from "../utilities/data";
+import { getProjects } from "@utilities/data";
 import Sort from "@components/filters/Sort.astro";
-import Project from "../components/Project.astro";
+import Project from "@components/Project.astro";
 import PageLayout from "@layouts/PageLayout.astro";
 import HomePageLayout from "@layouts/HomePageLayout.astro";
 import FilterForm from "@components/FilterForm.astro";
 
 const projects = await getProjects();
-
 const languages = new Set(projects.map((project) => project.languages).flat());
 ---
 
@@ -21,7 +20,7 @@ const languages = new Set(projects.map((project) => project.languages).flat());
       <div class="flex gap-2">
         <span
           >Wyświetlono: <span id="shown-counter">{projects.length}</span>
-           projekty</span
+          projekty</span
         >
       </div>
       <ul

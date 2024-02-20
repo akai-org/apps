@@ -1,7 +1,13 @@
 import { akaiOrgName } from "./constants";
 import { gql, octokit } from "./github";
 
-interface Repository {
+interface Metadata {
+  name?: string;
+  description?: string;
+  technologies?: string[];
+}
+
+interface RepositoryResponse {
   name: string;
   description: string;
   url: string;
@@ -11,12 +17,27 @@ interface Repository {
       name: string;
     }[];
   };
+  metadata: {
+    entries: {
+      name: string;
+      object: {
+        text?: string;
+      };
+    }[];
+  }
+}
+
+type RepositoryTemp = Omit<RepositoryResponse, "metadata" | "languages">
+
+interface TRepository extends RepositoryTemp {
+  metadata: Metadata;
+  languages: string[];
 }
 
 interface OrgReposResponse {
   organization: {
     repositories: {
-      nodes: Repository[];
+      nodes: RepositoryResponse[];
     };
   };
 }
@@ -30,6 +51,18 @@ const orgReposQuery = gql`
           description
           url
           stargazerCount
+          metadata: object(expression: "main:.akai/"){
+            ... on Tree {
+              entries {
+                name
+                object {
+                  ... on Blob {
+                    text
+                  }
+                }
+              }
+            }
+          }
           languages(first: 100) {
             nodes {
               name
@@ -53,8 +86,22 @@ export async function getOrgRepos() {
     },
   );
 
-  return organization.repositories.nodes.map((repo: Repository) => ({
-    ...repo,
-    languages: repo.languages.nodes.map((lang) => lang.name),
-  }));
+  return organization.repositories.nodes.map((repo: RepositoryResponse) => {
+    let config = {};
+    const object = repo.metadata;
+    if (object) {
+      for (const entry of object.entries) { // entries jest w oryginalnym responsie z githuba
+        if (entry.name == "config.json") {
+          config = JSON.parse(entry.object.text!);
+        }
+      }
+    }
+    return {
+      ...repo,
+      metadata: config,
+      languages: repo.languages.nodes.map((lang) => lang.name),
+    }
+  });
 }
+
+export type Repository = TRepository; 

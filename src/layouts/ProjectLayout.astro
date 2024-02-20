@@ -2,7 +2,9 @@
 import type { Project } from "@utilities/data";
 import LanguageTag from "@components/LanguageTag.astro";
 interface Props extends Project {}
-const { name, description, stargazerCount, languages, url } = Astro.props;
+
+const { name, description, stargazerCount, languages, url, metadata } =
+  Astro.props;
 ---
 
 <section class="grid w-full grid-cols-[20%_1fr]">
@@ -20,12 +22,16 @@ const { name, description, stargazerCount, languages, url } = Astro.props;
     </ul>
   </aside>
   <main class="p-3">
-    <h1 class="text-left text-5xl font-bold">{name}</h1>
+    <h1 class="text-left text-5xl font-bold">
+      {name}
+    </h1>
     <article>
       {
-        description
-          ? description
-          : "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vel eveniet aliquid, magnam nisi tenetur amet vitae neque consectetur molestiae beatae nostrum nemo? Laborum expedita libero harum laudantium nihil. Cum, reiciendis!"
+        metadata?.description
+          ? metadata.description
+          : description
+            ? description
+            : "Lorem ipsum"
       }
     </article>
   </main>
