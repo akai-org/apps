@@ -6,7 +6,7 @@ interface Props extends Project {}
 const { name, description, stargazerCount, languages, url, metadata } =
   Astro.props;
 
-const hasTechnologies = (metadata.technologies?.length > 0 && metadata.technologies);
+const hasTechnologies = (metadata.technologies && metadata.technologies?.length > 0);
 ---
 
 <section class="flex w-full justify-center">

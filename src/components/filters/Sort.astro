@@ -23,7 +23,7 @@
     return a_stars > b_stars ? 1 : -1;
   }
 
-  sort_input.addEventListener("change", (e) => {
+  sort_input.addEventListener("change", () => {
     let projects = [...projects_container?.children];
     const isDescending = sort_input?.value.includes("descend");
     const sort_type = sort_input?.value.split("_")[0];
