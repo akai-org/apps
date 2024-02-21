@@ -5,27 +5,49 @@ interface Props extends Project {}
 
 const { name, description, stargazerCount, languages, url, metadata } =
   Astro.props;
+
+const hasTechnologies = (metadata.technologies?.length > 0 && metadata.technologies);
 console.log(metadata);
 ---
 
-<section class="grid w-full grid-cols-[20%_1fr]">
-  <aside class="p-3">
-    <div class="flex">
-      <p>Ilość gwiazdek: {stargazerCount}</p>
-      <a href={url} class="text-yellow-500">Sprawdź na githubie</a>
+<section class="flex w-full justify-center">
+  <main class="grid w-3/4 p-3">
+    <header>
+      <section class="flex justify-between">
+        <h1 class="text-left text-5xl font-bold">
+          {metadata?.name ? metadata.name : name}
+        </h1>
+        <div class="flex rounded-lg bg-gray-100 p-3">
+          <div>{stargazerCount}</div>
+          <div>
+            <a href={url}>Github</a>
+          </div>
+        </div>
+      </section>
+      <section>
+      <div>
+      <p><strong>Języki</strong></p>
+        <ul class="flex gap-2">
+          {
+            languages.map((lang) => {
+              return <LanguageTag language={lang} />;
+            })
+          }
+        </ul>
     </div>
-    <ul class="grid gap-1">
+    <div>
+      <p><strong>Technologie</strong></p>
+      <ul class="flex gap-2">
       {
-        languages.map((lang) => {
-          return <LanguageTag language={lang} />;
-        })
+        hasTechnologies ? metadata.technologies?.map(tech => {
+          return <li>{tech}</li>;
+        }) : ""
       }
-    </ul>
-  </aside>
-  <main class="p-3">
-    <h1 class="text-left text-5xl font-bold">
-      {metadata?.name ? metadata.name : name}
-    </h1>
+      </ul>
+    </div>
+
+      </section>
+    </header>
     <article>
       {
         metadata?.description
