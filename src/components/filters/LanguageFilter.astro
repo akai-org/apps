@@ -4,7 +4,7 @@ const { languages } = Astro.props;
 
 <label class="grid gap-y-1">
   <span class="font-semibold">Języki programowania</span>
-  <div class="grid grid-cols-3 sm:grid-cols-1">
+  <div class="grid max-h-64 grid-cols-3 overflow-y-scroll sm:grid-cols-1">
     {
       [...languages].map((lang) => {
         return (
@@ -13,7 +13,7 @@ const { languages } = Astro.props;
               type="checkbox"
               name="language"
               value={lang}
-              id={`lang-${lang}`}
+              id={`lang-${lang.toLowerCase()}`}
             />
             <label for={`lang-${lang}`}>{lang}</label>
           </div>

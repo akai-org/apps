@@ -62,18 +62,58 @@ const { languages } = Astro.props;
     }
     if (shownCounter) shownCounter.textContent = counter.toString();
   }
+
   function groupFormData(data: FormData): Filters {
     return {
       search: data.values().next().value.toLowerCase(),
       languages: [...data].slice(1).map((entry) => entry[1]) as string[],
     };
   }
+
+  function handleURLChange(filters: Filters) {
+    if (filters.search.length === 0) {
+      filterParams.delete("search");
+    } else {
+      filterParams.set("search", filters.search);
+    }
+
+    filterParams.delete("language");
+    for (const language of filters.languages) {
+      filterParams.append("language", language);
+    }
+
+    window.history.replaceState({}, "", `${location.pathname}?${filterParams}`);
+  }
+  function handleURLFilters() {
+    const filters: Filters = {
+      search: "",
+      languages: [],
+    };
+    if (filterParams.get("search")) {
+      filters.search = filterParams.get("search")!.toLowerCase();
+      const input: HTMLInputElement = document.querySelector(`#search`)!;
+      input.value = filterParams.get("search")!;
+    }
+    if (filterParams.getAll("language")) {
+      filters.languages = filterParams.getAll("language")!;
+      for (const language of filters.languages) {
+        const inputId = `lang-${language.toLowerCase()}`;
+        const input: HTMLInputElement = document.querySelector(`#${inputId}`)!;
+        input.checked = true;
+      }
+    }
+    filterProjects(filters, projects, false);
+  }
+  const filterParams = new URLSearchParams(window.location.search);
   form?.addEventListener("input", () => {
     const data = new FormData(form);
     const filters: Filters = groupFormData(data);
     const areFiltersEmpty = data.entries().next().done;
+
+    handleURLChange(filters);
     filterProjects(filters, projects, areFiltersEmpty);
   });
+  window.addEventListener("DOMContentLoaded", handleURLFilters);
 </script>
 <form id="filterForm" class="grid gap-y-3 accent-yellow-500">
   <SearchFilter />
