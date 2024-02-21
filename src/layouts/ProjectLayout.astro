@@ -48,13 +48,7 @@ const hasTechnologies = (metadata.technologies && metadata.technologies?.length 
       </section>
     </header>
     <article>
-      {
-        metadata?.description
-          ? metadata.description
-          : description
-            ? description
-            : "Lorem ipsum"
-      }
+    <Fragment set:html={metadata?.description ? metadata.description : description}/>
     </article>
   </main>
 </section>

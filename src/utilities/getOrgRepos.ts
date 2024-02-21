@@ -1,3 +1,4 @@
+import { marked } from "marked";
 import { akaiOrgName } from "./constants";
 import { gql, octokit } from "./github";
 
@@ -87,12 +88,16 @@ export async function getOrgRepos() {
   );
 
   return organization.repositories.nodes.map((repo: RepositoryResponse) => {
-    let config = {};
+    let config: Metadata = {};
     const object = repo.metadata;
     if (object) {
       for (const entry of object.entries) { // entries jest w oryginalnym responsie z githuba
         if (entry.name == "config.json") {
-          config = JSON.parse(entry.object.text!);
+          config = { ...JSON.parse(entry.object.text!) };
+        }
+        if (entry.name.toLowerCase() == "readme.md") {
+          const html = marked.parse(entry.object.text!);
+          config.description = html.toString();
         }
       }
     }
