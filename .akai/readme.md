@@ -9,3 +9,5 @@ Przykładowy tekst Lorem ipsum dolor sit amet, consectetur adipiscing elit. Null
 - Punkt
 - Punkt
 - Punkt
+
+![Przykładowy obrazek z dokumentacji githuba](https://myoctocat.com/assets/images/base-octocat.svg)

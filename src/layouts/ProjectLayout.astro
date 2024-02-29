@@ -6,7 +6,8 @@ interface Props extends Project {}
 const { name, description, stargazerCount, languages, url, metadata } =
   Astro.props;
 
-const hasTechnologies = (metadata.technologies && metadata.technologies?.length > 0);
+const hasTechnologies =
+  metadata.technologies && metadata.technologies?.length > 0;
 ---
 
 <section class="flex w-full justify-center">
@@ -24,31 +25,34 @@ const hasTechnologies = (metadata.technologies && metadata.technologies?.length 
         </div>
       </section>
       <section>
-      <div>
-      <p><strong>Języki</strong></p>
-        <ul class="flex gap-2">
-          {
-            languages.map((lang) => {
-              return <LanguageTag language={lang} />;
-            })
-          }
-        </ul>
-    </div>
-    <div>
-      <p><strong>Technologie</strong></p>
-      <ul class="flex gap-2">
-      {
-        hasTechnologies ? metadata.technologies?.map(tech => {
-          return <li>{tech}</li>;
-        }) : ""
-      }
-      </ul>
-    </div>
-
+        <div>
+          <p><strong>Języki</strong></p>
+          <ul class="flex gap-2">
+            {
+              languages.map((lang) => {
+                return <LanguageTag language={lang} />;
+              })
+            }
+          </ul>
+        </div>
+        <div>
+          <p><strong>Technologie</strong></p>
+          <ul class="flex gap-2">
+            {
+              hasTechnologies
+                ? metadata.technologies?.map((tech) => {
+                    return <li>{tech}</li>;
+                  })
+                : ""
+            }
+          </ul>
+        </div>
       </section>
     </header>
-    <article>
-    <Fragment set:html={metadata?.description ? metadata.description : description}/>
+    <article class="prose max-w-none">
+      <Fragment
+        set:html={metadata?.description ? metadata.description : description}
+      />
     </article>
   </main>
 </section>
