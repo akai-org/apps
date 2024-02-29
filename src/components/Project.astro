@@ -4,6 +4,9 @@ import defaultIcon from "@assets/default_icon.png";
 import { isProd } from "@utilities/env";
 import { type Project } from "@utilities/data";
 import LanguageTag from "./LanguageTag.astro";
+import icon_star from "@assets/icon_star.svg";
+import icon_github_white from "@assets/icon_github_white.png";
+
 type Props = Omit<Project, "description">;
 const { name, url, languages, stargazerCount, metadata } = Astro.props;
 const projectUrl = new URL(
@@ -19,31 +22,38 @@ const tooManyLangs = languages.length > langLimit;
     src={defaultIcon}
     width={150}
     height={150}
-    alt="icon"
+    alt="Domyślne logo projektu"
     class="rounded-lg"
   />
   <div
     class="project grid h-4/5 w-5/6 content-between gap-y-1"
     data-langs={languages}
   >
-    <h2 id="title" class="break-all text-xl font-bold">
-      {metadata?.name ? metadata.name : name}
-    </h2>
-    <span id="stars" class="flex items-center gap-1">
-      <!--Star Hero Icon-->
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="currentColor"
-        class="h-5 w-5"
-      >
-        <path
-          fill-rule="evenodd"
-          d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
-          clip-rule="evenodd"></path>
-      </svg>
-      {stargazerCount} gwiazdek</span
-    >
+    <div class="flex items-start justify-between">
+      <h2 id="title" class="w-4/5 break-all text-xl font-bold">
+        {metadata?.name ? metadata.name : name}
+      </h2>
+      <a href={url} class="flex rounded-lg bg-zinc-800">
+        <div
+          id="stars"
+          class="flex items-center justify-center gap-1 rounded-lg bg-zinc-700 p-1 font-black text-white"
+        >
+          <Image src={icon_star} alt="ikona gwiazdy" height={18} width={18} />
+          {stargazerCount}
+        </div>
+        <div
+          class="flex items-center justify-center rounded-lg bg-zinc-800 p-1"
+        >
+          <Image
+            src={icon_github_white}
+            alt="logo github"
+            width={22}
+            height={22}
+          />
+        </div>
+      </a>
+    </div>
+
     <div>
       <ul class="flex flex-row flex-wrap items-center gap-2 text-sm">
         {
@@ -54,10 +64,7 @@ const tooManyLangs = languages.length > langLimit;
       </ul>
       <span>{tooManyLangs && `+${languages.length - langLimit} więcej`}</span>
     </div>
-    <div class="end">
-      <a href={url} class="rounded-md bg-amber-400 p-2 font-semibold text-white"
-        >Sprawdź na Githubie</a
-      >
+    <div class="">
       <a
         href={projectUrl}
         class="rounded-md bg-sky-400 p-2 font-semibold text-white">Więcej</a

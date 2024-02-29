@@ -12,7 +12,9 @@ const current_time = new Date().toLocaleString("en-GB", {
     <a href="/" class="flex items-center gap-2 font-bold">
       <Image src={logo} alt="Logo AKAI" />Apps</a
     >
-    <p class="text-lg font-light">Aplikacje stworzone przez członków AKAI.</p>
+    <p class="hidden text-lg font-light md:block">
+      Aplikacje stworzone przez członków AKAI.
+    </p>
   </h1>
   <p>
     Dane aktualizowane ostatni raz: <span class="font-mono">{current_time}</span
