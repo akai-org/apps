@@ -30,7 +30,7 @@ const { languages } = Astro.props;
   function filterProjects(
     filters: Filters,
     projects: Project[],
-    areFiltersEmpty: boolean | undefined,
+    areFiltersEmpty: boolean = true,
   ) {
     if (areFiltersEmpty) {
       getHiddenProjects().map((project) => project.classList.remove("hidden"));
@@ -38,7 +38,6 @@ const { languages } = Astro.props;
       return;
     }
     let counter = 0;
-    // cleanup needed
     for (const p of projects) {
       const project = p.project;
       const hasLangs =
@@ -70,7 +69,7 @@ const { languages } = Astro.props;
     };
   }
 
-  function handleURLChange(filters: Filters) {
+  function handleURLChange(filters: Filters = { search: "", languages: [] }) {
     if (filters.search.length === 0) {
       filterParams.delete("search");
     } else {
@@ -109,14 +108,21 @@ const { languages } = Astro.props;
     const data = new FormData(form);
     const filters: Filters = groupFormData(data);
     const areFiltersEmpty = data.entries().next().done;
-
     handleURLChange(filters);
     filterProjects(filters, projects, areFiltersEmpty);
+  });
+  form?.addEventListener("reset", () => {
+    handleURLChange();
+    filterProjects({ search: "", languages: [] }, projects);
   });
   window.addEventListener("DOMContentLoaded", handleURLFilters);
 </script>
 <form id="filterForm" class="grid gap-y-3 accent-yellow-500">
   <SearchFilter />
   <LanguageFilter languages={languages} />
-  <button type="submit">Zastosuj</button>
+  <input
+    type="reset"
+    value="Wyczyść"
+    class="w-fit rounded-lg bg-amber-400 p-3 font-bold text-white hover:cursor-pointer"
+  />
 </form>
