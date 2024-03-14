@@ -12,7 +12,7 @@ const languages = new Set(projects.map((project) => project.languages).flat());
 
 <PageLayout title="AKAI Apps">
   <HomePageLayout>
-    <search slot="filters">
+    <search slot="filters" class="sticky top-0">
       <Sort />
       <FilterForm languages={languages} />
     </search>
