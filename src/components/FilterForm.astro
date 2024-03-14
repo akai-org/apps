@@ -49,14 +49,14 @@ const { languages } = Astro.props;
         ? title?.indexOf(filters.search) !== -1
         : true;
       if (!hasLangs) {
-        project?.parentElement?.classList.add("hidden");
+        project?.classList.add("hidden");
       }
       if (!hasTitle) {
-        project?.parentElement?.classList.add("hidden");
+        project?.classList.add("hidden");
       }
       if (hasLangs && hasTitle) {
         counter++;
-        project?.parentElement?.classList.remove("hidden");
+        project?.classList.remove("hidden");
       }
     }
     if (shownCounter) shownCounter.textContent = counter.toString();

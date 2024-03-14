@@ -7,16 +7,84 @@ import LanguageTag from "./LanguageTag.astro";
 import icon_star from "@assets/icon_star.svg";
 import icon_github_white from "@assets/icon_github_white.png";
 
-type Props = Omit<Project, "description">;
-const { name, url, languages, stargazerCount, metadata } = Astro.props;
+//type Props = Omit<Project, "description">;
+type Props = Project;
+const { name, url, languages, stargazerCount, metadata, description } =
+  Astro.props;
 const projectUrl = new URL(
   `projects/${name}`,
   isProd ? Astro.site : "http://localhost:4321",
 );
+
 const langLimit = 5;
 const tooManyLangs = languages.length > langLimit;
+
+const capitalize = (text: string) =>
+  `${text.charAt(0).toUpperCase().concat(text.slice(1))}`;
+const finalName = metadata?.name
+  ? metadata.name
+  : name.replaceAll("_", " ").replaceAll("-", " ");
 ---
 
+<div
+  class="project box-border flex min-w-0 flex-col justify-between rounded border-2 border-gray-100 p-5"
+  data-langs={languages}
+>
+  <div>
+    <div class="flex w-full items-center justify-between gap-3">
+      <div class="min-w-0 flex-1">
+        <h2 id="title" class="truncate text-2xl font-bold">
+          {capitalize(finalName)}
+        </h2>
+      </div>
+
+      <a href={url} class="flex w-fit rounded-lg bg-zinc-800">
+        <div
+          id="stars"
+          class="flex items-center justify-center gap-1 rounded-lg bg-zinc-700 p-1 font-black text-white"
+        >
+          <Image src={icon_star} alt="ikona gwiazdy" height={18} width={18} />
+          {stargazerCount}
+        </div>
+        <div
+          class="flex items-center justify-center rounded-lg bg-zinc-800 p-1"
+        >
+          <Image
+            src={icon_github_white}
+            alt="logo github"
+            width={22}
+            height={22}
+          />
+        </div>
+      </a>
+    </div>
+    <div class="flex gap-2 overflow-hidden text-xs">
+      <ul class="flex flex-wrap items-center gap-2">
+        {
+          languages
+            .slice(0, langLimit)
+            .map((language) => <LanguageTag language={language} />)
+        }
+      </ul>
+      <div
+        class={tooManyLangs
+          ? `w-fit rounded-xl border-2 border-gray-200 bg-gray-100 p-1 text-sm font-semibold`
+          : ""}
+      >
+        {tooManyLangs && `+${languages.length - langLimit}`}
+      </div>
+    </div>
+    {description && <p class=" line-clamp-2 ">{description}</p>}
+  </div>
+  <div class="flex justify-end">
+    <a
+      href={projectUrl}
+      class="rounded-md bg-blue-400 px-3 py-2 font-bold text-white">Więcej</a
+    >
+  </div>
+</div>
+
+<!-- 
 <div class="flex items-center gap-3 rounded-lg border-2 border-gray-100 p-5">
   <Image
     src={defaultIcon}
@@ -26,18 +94,20 @@ const tooManyLangs = languages.length > langLimit;
     class="rounded-lg"
   />
   <div
-    class="project grid h-4/5 w-5/6 content-between gap-y-1"
+    class="project h-4/5 w-5/6 content-between gap-y-1"
     data-langs={languages}
   >
     <div class="flex items-start justify-between gap-2">
-      <h2 id="title" class="break-word w-4/5 text-2xl font-bold">
-        {
-          metadata?.name
-            ? metadata.name
-            : name.replaceAll("_", " ").replaceAll("-", " ")
-        }
-      </h2>
-      <a href={url} class="flex rounded-lg bg-zinc-800">
+      <div class="min-w-0 flex-1">
+        <h2 id="title" class="truncate text-2xl font-bold">
+          {
+            metadata?.name
+              ? metadata.name
+              : name.replaceAll("_", " ").replaceAll("-", " ")
+          }
+        </h2>
+      </div>
+      <a href={url} class="flex w-fit rounded-lg bg-zinc-800">
         <div
           id="stars"
           class="flex items-center justify-center gap-1 rounded-lg bg-zinc-700 p-1 font-black text-white"
@@ -83,3 +153,4 @@ const tooManyLangs = languages.length > langLimit;
     </div>
   </div>
 </div>
+-->
