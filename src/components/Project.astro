@@ -7,7 +7,6 @@ import LanguageTag from "./LanguageTag.astro";
 import icon_star from "@assets/icon_star.svg";
 import icon_github_white from "@assets/icon_github_white.png";
 
-//type Props = Omit<Project, "description">;
 type Props = Project;
 const { name, url, languages, stargazerCount, metadata, description } =
   Astro.props;
@@ -24,6 +23,9 @@ const capitalize = (text: string) =>
 const finalName = metadata?.name
   ? metadata.name
   : name.replaceAll("_", " ").replaceAll("-", " ");
+
+const hasDescription = description || metadata?.description;
+const defaultIconSize = hasDescription ? 75 : 150;
 ---
 
 <div
@@ -31,47 +33,66 @@ const finalName = metadata?.name
   data-langs={languages}
 >
   <div>
-    <div class="flex w-full items-center justify-between gap-3">
-      <div class="min-w-0 flex-1">
-        <h2 id="title" class="truncate text-2xl font-bold">
-          {capitalize(finalName)}
-        </h2>
+    <div class="flex items-center justify-between gap-2">
+      <div>
+        <Image
+          src={defaultIcon}
+          alt={"domyślne logo"}
+          height={80}
+          width={80}
+          class="rounded-md"
+        />
       </div>
-
-      <a href={url} class="flex w-fit rounded-lg bg-zinc-800">
-        <div
-          id="stars"
-          class="flex items-center justify-center gap-1 rounded-lg bg-zinc-700 p-1 font-black text-white"
-        >
-          <Image src={icon_star} alt="ikona gwiazdy" height={18} width={18} />
-          {stargazerCount}
+      <div class="w-full">
+        <div class="flex w-full items-center justify-between gap-3">
+          <div class="min-w-0 flex-1">
+            <h2 id="title" class="truncate text-2xl font-bold">
+              {capitalize(finalName)}
+            </h2>
+          </div>
+          <a href={url} class="flex w-fit rounded-lg bg-zinc-800">
+            <div
+              id="stars"
+              class="flex items-center justify-center gap-1 rounded-lg bg-zinc-700 p-1 font-black text-white"
+            >
+              <Image
+                src={icon_star}
+                alt="ikona gwiazdy"
+                height={18}
+                width={18}
+                loading="eager"
+              />
+              {stargazerCount}
+            </div>
+            <div
+              class="flex items-center justify-center rounded-lg bg-zinc-800 p-1"
+            >
+              <Image
+                src={icon_github_white}
+                alt="logo github"
+                width={22}
+                height={22}
+                loading="eager"
+              />
+            </div>
+          </a>
         </div>
-        <div
-          class="flex items-center justify-center rounded-lg bg-zinc-800 p-1"
-        >
-          <Image
-            src={icon_github_white}
-            alt="logo github"
-            width={22}
-            height={22}
-          />
+        <div class="flex gap-2 overflow-hidden text-xs">
+          <ul class="flex flex-wrap items-center gap-2">
+            {
+              languages
+                .slice(0, langLimit)
+                .map((language) => <LanguageTag language={language} />)
+            }
+          </ul>
+          <div
+            class={tooManyLangs
+              ? `w-fit rounded-xl border-2 border-gray-200 bg-gray-100 p-1 text-sm font-semibold`
+              : ""}
+          >
+            {tooManyLangs && `+${languages.length - langLimit}`}
+          </div>
         </div>
-      </a>
-    </div>
-    <div class="flex gap-2 overflow-hidden text-xs">
-      <ul class="flex flex-wrap items-center gap-2">
-        {
-          languages
-            .slice(0, langLimit)
-            .map((language) => <LanguageTag language={language} />)
-        }
-      </ul>
-      <div
-        class={tooManyLangs
-          ? `w-fit rounded-xl border-2 border-gray-200 bg-gray-100 p-1 text-sm font-semibold`
-          : ""}
-      >
-        {tooManyLangs && `+${languages.length - langLimit}`}
       </div>
     </div>
     {description && <p class=" line-clamp-2 ">{description}</p>}
