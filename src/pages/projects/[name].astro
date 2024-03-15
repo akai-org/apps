@@ -16,7 +16,7 @@ export async function getStaticPaths() {
         stargazerCount: project.stargazerCount,
         languages: project.languages,
         url: project.url,
-        metadata: project.metadata
+        metadata: project.metadata,
       },
     };
   });
@@ -34,5 +34,7 @@ const { languages, url, stargazerCount, description, metadata } = Astro.props;
     stargazerCount={stargazerCount}
     description={description}
     metadata={metadata}
+  />
+</PageLayout>
   />
 </PageLayout>

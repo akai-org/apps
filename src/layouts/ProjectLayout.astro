@@ -1,8 +1,8 @@
 ---
 import type { Project } from "@utilities/data";
 import LanguageTag from "@components/LanguageTag.astro";
-interface Props extends Project {}
 
+type Props = Omit<Project, "hasData">;
 import { Image } from "astro:assets";
 import icon_star from "@assets/icon_star.svg";
 import icon_github_white from "@assets/icon_github_white.png";
