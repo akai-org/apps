@@ -23,7 +23,7 @@ const languages = new Set(projects.map((project) => project.languages).flat());
           projekty</span
         >
       </div>
-      <ul id="projects_cont" class="grid gap-6 p-5 2xl:grid-cols-2">
+      <ul id="projects_cont" class="grid gap-6 p-1 sm:p-6 2xl:grid-cols-2">
         {projects.map((project) => <Project {...project} />)}
       </ul>
     </div>

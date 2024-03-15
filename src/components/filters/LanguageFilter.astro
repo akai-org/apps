@@ -5,7 +5,7 @@ const { languages } = Astro.props;
 <label class="grid gap-y-1">
   <span class="font-semibold">Języki programowania</span>
   <div
-    class="grid max-h-64 grid-cols-2 overflow-y-scroll sm:grid-cols-3 md:grid-cols-1"
+    class="grid max-h-64 grid-cols-2 overflow-y-scroll rounded-lg border-2 border-zinc-200 bg-gray-100 p-3 sm:grid-cols-3 md:grid-cols-1"
   >
     {
       [...languages].map((lang) => {
@@ -17,7 +17,7 @@ const { languages } = Astro.props;
               value={lang}
               id={`lang-${lang.toLowerCase()}`}
             />
-            <label for={`lang-${lang}`}>{lang}</label>
+            <label for={`lang-${lang.toLowerCase()}`}>{lang}</label>
           </div>
         );
       })
