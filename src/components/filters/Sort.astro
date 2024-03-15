@@ -1,5 +1,7 @@
 <script>
-  const projects_container = document.getElementById("projects_cont")!;
+  const projects_containers = [
+    ...document.getElementsByClassName("projects_cont"),
+  ]!;
   const sort_input: HTMLInputElement = document.getElementById(
     "sort",
   ) as HTMLInputElement;
@@ -24,20 +26,22 @@
   }
 
   sort_input.addEventListener("change", () => {
-    let projects = [...projects_container?.children];
-    const isDescending = sort_input?.value.includes("descend");
-    const sort_type = sort_input?.value.split("_")[0];
-    switch (sort_type) {
-      case "alpha":
-        projects = projects.toSorted(sortAlpha);
-        break;
-      case "star":
-        projects = projects.toSorted(sortStars);
-        break;
-    }
-    if (isDescending) projects.reverse();
-    for (const project of projects) {
-      projects_container?.appendChild(project);
+    for (const projects_container of projects_containers) {
+      let projects = [...projects_container?.children];
+      const isDescending = sort_input?.value.includes("descend");
+      const sort_type = sort_input?.value.split("_")[0];
+      switch (sort_type) {
+        case "alpha":
+          projects = projects.toSorted(sortAlpha);
+          break;
+        case "star":
+          projects = projects.toSorted(sortStars);
+          break;
+      }
+      if (isDescending) projects.reverse();
+      for (const project of projects) {
+        projects_container?.appendChild(project);
+      }
     }
   });
 </script>

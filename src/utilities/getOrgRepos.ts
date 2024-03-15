@@ -33,6 +33,7 @@ type RepositoryTemp = Omit<RepositoryResponse, "metadata" | "languages">
 interface TRepository extends RepositoryTemp {
   metadata: Metadata;
   languages: string[];
+  hasData: boolean;
 }
 
 interface OrgReposResponse {
@@ -89,9 +90,11 @@ export async function getOrgRepos() {
 
   return organization.repositories.nodes.map((repo: RepositoryResponse) => {
     let config: Metadata = {};
-    const object = repo.metadata;
-    if (object) {
-      for (const entry of object.entries) { // entries jest w oryginalnym responsie z githuba
+    const metadata = repo.metadata;
+    let hasData = false;
+    if (metadata) {
+      hasData = true;
+      for (const entry of metadata.entries) { // entries jest w oryginalnym responsie z githuba
         if (entry.name == "config.json") {
           config = { ...JSON.parse(entry.object.text!) };
         }
@@ -104,6 +107,7 @@ export async function getOrgRepos() {
     return {
       ...repo,
       metadata: config,
+      hasData: hasData,
       languages: repo.languages.nodes.map((lang) => lang.name),
     }
   });

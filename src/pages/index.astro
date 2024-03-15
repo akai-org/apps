@@ -7,6 +7,11 @@ import HomePageLayout from "@layouts/HomePageLayout.astro";
 import FilterForm from "@components/FilterForm.astro";
 
 const projects = await getProjects();
+const projectGroups = Object.groupBy(projects, ({ hasData }) =>
+  hasData ? "valid" : "archived",
+);
+const countValidProjects = projectGroups["valid"]?.length;
+const countArchivedProjects = projects.length - countValidProjects!;
 const languages = new Set(projects.map((project) => project.languages).flat());
 ---
 
@@ -23,9 +28,26 @@ const languages = new Set(projects.map((project) => project.languages).flat());
           projekty</span
         >
       </div>
-      <ul id="projects_cont" class="grid gap-6 p-1 sm:p-6 2xl:grid-cols-2">
-        {projects.map((project) => <Project {...project} />)}
-      </ul>
+      <details open>
+        <summary class="cursor-pointer"
+          >Aktualne - {countValidProjects} projekty</summary
+        >
+        <ul class="projects_cont grid gap-6 p-1 sm:p-6 2xl:grid-cols-2">
+          {projectGroups["valid"]?.map((project) => <Project {...project} />)}
+        </ul>
+      </details>
+      <details open>
+        <summary class="cursor-pointer"
+          >Zarchiwizowane - {countArchivedProjects} projekty</summary
+        >
+        <ul class="projects_cont grid gap-6 p-1 sm:p-6 2xl:grid-cols-2">
+          {
+            projectGroups["archived"]?.map((project) => (
+              <Project {...project} />
+            ))
+          }
+        </ul>
+      </details>
     </div>
   </HomePageLayout>
 </PageLayout>
