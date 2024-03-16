@@ -2,16 +2,21 @@
 import type { Project } from "@utilities/data";
 import LanguageTag from "@components/LanguageTag.astro";
 
-type Props = Omit<Project, "hasData">;
+type Props = Omit<Project, "hasData" | "updatedAt">;
 import { Image } from "astro:assets";
 import icon_star from "@assets/icon_star.svg";
 import icon_github_white from "@assets/icon_github_white.png";
+import { capitalize, placeWhitespaces } from "@utilities/stringUtils";
 
 const { name, description, stargazerCount, languages, url, metadata } =
   Astro.props;
 
 const hasTechnologies =
   metadata.technologies && metadata.technologies?.length > 0;
+
+const finalTitle = capitalize(
+  placeWhitespaces(metadata?.name ? metadata.name : name),
+);
 ---
 
 <section class="flex w-full justify-center">
@@ -19,7 +24,7 @@ const hasTechnologies =
     <header>
       <section class="flex items-baseline justify-between">
         <h1 class="text-left text-5xl font-bold">
-          {metadata?.name ? metadata.name : name}
+          {finalTitle}
         </h1><a href={url} class="flex w-fit rounded-lg bg-zinc-800">
           <div
             id="stars"

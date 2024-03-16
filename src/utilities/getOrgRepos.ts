@@ -13,6 +13,7 @@ interface RepositoryResponse {
   description: string;
   url: string;
   stargazerCount: number;
+  updatedAt: string;
   languages: {
     nodes: {
       name: string;
@@ -34,6 +35,7 @@ interface TRepository extends RepositoryTemp {
   metadata: Metadata;
   languages: string[];
   hasData: boolean;
+  updatedAt: string;
 }
 
 interface OrgReposResponse {
@@ -53,6 +55,7 @@ const orgReposQuery = gql`
           description
           url
           stargazerCount
+          updatedAt
           metadata: object(expression: "main:.akai/"){
             ... on Tree {
               entries {

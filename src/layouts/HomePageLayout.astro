@@ -1,5 +1,7 @@
 ---
-
+const current_time = new Date().toLocaleString("en-GB", {
+  timeZone: "Europe/Warsaw",
+});
 ---
 
 <section class="grid gap-3 lg:grid-cols-[20%_1fr]">
@@ -10,3 +12,9 @@
     <slot name="projects" />
   </main>
 </section>
+<footer class="p-2 text-center text-sm">
+  <p>
+    Dane aktualizowane ostatni raz: <span class="font-mono">{current_time}</span
+    >
+  </p>
+</footer>
