@@ -24,7 +24,19 @@
     if (a_stars == b_stars) return 0;
     return a_stars > b_stars ? 1 : -1;
   }
+  function sortUpdateDate(a: any, b: any) {
+    const a_date = (
+      a?.querySelector("#updateDate") as HTMLElement
+    )?.getAttribute("data-updateDate");
+    const b_date = (
+      b?.querySelector("#updateDate") as HTMLElement
+    )?.getAttribute("data-updateDate");
+    const a_time = new Date(a_date!).getTime();
+    const b_time = new Date(b_date!).getTime();
 
+    if (a_time == b_time) return 0;
+    return a_time > b_time ? 1 : -1;
+  }
   sort_input.addEventListener("change", () => {
     for (const projects_container of projects_containers) {
       let projects = [...projects_container?.children];
@@ -36,6 +48,9 @@
           break;
         case "star":
           projects = projects.toSorted(sortStars);
+          break;
+        case "date":
+          projects = projects.toSorted(sortUpdateDate);
           break;
       }
       if (isDescending) projects.reverse();
@@ -52,5 +67,7 @@
     <option value="alpha_descend">Nazwa: od Z do A</option>
     <option value="star_ascend">Gwiazdki: rosnąco</option>
     <option value="star_descend">Gwiazdki: malejąco</option>
+    <option value="date_ascend">Data: od najwcześniejszych</option>
+    <option value="date_descend">Data: od najpóźniejszych</option>
   </select>
 </label>

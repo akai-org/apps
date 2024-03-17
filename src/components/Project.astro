@@ -104,7 +104,11 @@ const finalTitle = placeWhitespaces(metadata?.name ? metadata.name : name);
     </div>
     {description && <p class=" line-clamp-2 ">{description}</p>}
   </div>
-  <div class="flex items-end justify-between">
+  <div
+    class="flex items-end justify-between"
+    id="updateDate"
+    data-updateDate={updatedAt}
+  >
     <p class="cursor-help text-sm" title={updateDate}>
       Ostatnia akutalizacja: <i>{timeFromUpdate}</i>
     </p>
