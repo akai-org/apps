@@ -7,7 +7,7 @@ import LanguageTag from "./LanguageTag.astro";
 import icon_star from "@assets/icon_star.svg";
 import icon_github_white from "@assets/icon_github_white.png";
 import { getTimeFromUpdate } from "@utilities/getTimeFromUpdate";
-import { capitalize, placeWhitespaces } from "@utilities/stringUtils";
+import { placeWhitespaces } from "@utilities/stringUtils";
 
 type Props = Project;
 const {
@@ -32,18 +32,16 @@ const updateDate = new Date(updatedAt).toLocaleDateString("en-GB", {
   timeZone: "Europe/Warsaw",
 });
 
-const finalTitle = capitalize(
-  placeWhitespaces(metadata?.name ? metadata.name : name),
-);
+const finalTitle = placeWhitespaces(metadata?.name ? metadata.name : name);
 ---
 
 <div
-  class="project box-border flex min-w-0 flex-col justify-between rounded border-2 border-gray-100 p-5"
+  class="project box-border flex min-w-0 flex-col justify-between gap-2 rounded border-2 border-gray-100 p-5"
   data-langs={languages}
 >
-  <div>
+  <div class="grid grid-cols-1 gap-y-2">
     <div class="flex items-center justify-between gap-2">
-      <div>
+      <div class="hidden sm:block">
         <Image
           src={defaultIcon}
           alt={"domyślne logo"}
@@ -52,10 +50,10 @@ const finalTitle = capitalize(
           class="rounded-md"
         />
       </div>
-      <div class="w-full">
+      <div class="grid w-full grid-cols-1 gap-y-1">
         <div class="flex w-full items-center justify-between gap-3">
           <div class="min-w-0 flex-1">
-            <h2 id="title" class="truncate text-2xl font-bold">
+            <h2 id="title" class="truncate text-2xl font-bold capitalize">
               {finalTitle}
             </h2>
           </div>
@@ -87,7 +85,7 @@ const finalTitle = capitalize(
           </a>
         </div>
         <div class="flex items-end gap-2 overflow-hidden text-xs">
-          <ul class="flex flex-wrap items-center gap-2">
+          <ul class="line-clamp-1 flex items-center gap-2">
             {
               languages
                 .slice(0, langLimit)
@@ -106,8 +104,8 @@ const finalTitle = capitalize(
     </div>
     {description && <p class=" line-clamp-2 ">{description}</p>}
   </div>
-  <div class="flex items-center justify-between">
-    <p class="text-sm" title={updateDate}>
+  <div class="flex items-end justify-between">
+    <p class="cursor-help text-sm" title={updateDate}>
       Ostatnia akutalizacja: <i>{timeFromUpdate}</i>
     </p>
     <a

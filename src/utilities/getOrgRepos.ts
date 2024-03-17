@@ -35,7 +35,6 @@ interface TRepository extends RepositoryTemp {
   metadata: Metadata;
   languages: string[];
   hasData: boolean;
-  updatedAt: string;
 }
 
 interface OrgReposResponse {

@@ -5,20 +5,23 @@ const { languages } = Astro.props;
 <label class="grid gap-y-1">
   <span class="font-semibold">Języki programowania</span>
   <div
-    class="grid max-h-64 grid-cols-2 overflow-y-scroll rounded-lg border-2 border-zinc-200 bg-gray-100 p-3 sm:grid-cols-3 md:grid-cols-1"
+    class="grid max-h-64 grid-cols-2 gap-1 overflow-y-scroll rounded-lg border-2 border-zinc-200 bg-gray-100 p-3 sm:grid-cols-3 md:grid-cols-1"
   >
     {
       [...languages].map((lang) => {
         return (
-          <div>
+          <label
+            for={`lang-${lang.toLowerCase()}`}
+            class="cursor-pointer rounded-lg border-2 border-neutral-200 bg-white px-3 py-2 has-[:checked]:border-yellow-300 has-[:checked]:bg-yellow-100"
+          >
             <input
               type="checkbox"
               name="language"
               value={lang}
               id={`lang-${lang.toLowerCase()}`}
             />
-            <label for={`lang-${lang.toLowerCase()}`}>{lang}</label>
-          </div>
+            {lang}
+          </label>
         );
       })
     }
