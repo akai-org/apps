@@ -1,12 +1,13 @@
 ---
 import type { Project } from "@utilities/data";
 import LanguageTag from "@components/LanguageTag.astro";
+import TechTag from "@components/TechTag.astro";
 
 type Props = Omit<Project, "hasData" | "updatedAt">;
 import { Image } from "astro:assets";
 import icon_star from "@assets/icon_star.svg";
 import icon_github_white from "@assets/icon_github_white.png";
-import { capitalize, placeWhitespaces } from "@utilities/stringUtils";
+import { placeWhitespaces } from "@utilities/stringUtils";
 
 const { name, description, stargazerCount, languages, url, metadata } =
   Astro.props;
@@ -14,16 +15,14 @@ const { name, description, stargazerCount, languages, url, metadata } =
 const hasTechnologies =
   metadata.technologies && metadata.technologies?.length > 0;
 
-const finalTitle = capitalize(
-  placeWhitespaces(metadata?.name ? metadata.name : name),
-);
+const finalTitle = placeWhitespaces(metadata?.name ? metadata.name : name);
 ---
 
 <section class="flex w-full justify-center">
-  <main class="grid w-11/12 p-3 md:w-3/4">
-    <header>
+  <main class="grid w-11/12 gap-y-3 p-3 md:w-3/4">
+    <header class="grid gap-y-2">
       <section class="flex items-baseline justify-between">
-        <h1 class="text-left text-5xl font-bold">
+        <h1 class="text-left text-5xl font-bold capitalize">
           {finalTitle}
         </h1><a href={url} class="flex w-fit rounded-lg bg-zinc-800">
           <div
@@ -52,7 +51,7 @@ const finalTitle = capitalize(
           </div>
         </a>
       </section>
-      <section>
+      <section class="grid gap-y-1">
         <div>
           <p><strong>Języki</strong></p>
           <ul class="flex gap-2">
@@ -69,7 +68,7 @@ const finalTitle = capitalize(
             {
               hasTechnologies
                 ? metadata.technologies?.map((tech) => {
-                    return <li>{tech}</li>;
+                    return <TechTag technology={tech} color="#FFA500" />;
                   })
                 : ""
             }
@@ -77,7 +76,9 @@ const finalTitle = capitalize(
         </div>
       </section>
     </header>
-    <article class="prose mx-auto max-w-4xl">
+    <article
+      class="prose mx-auto max-w-4xl prose-img:mx-auto prose-img:max-w-sm"
+    >
       <Fragment
         set:html={metadata?.description ? metadata.description : description}
       />

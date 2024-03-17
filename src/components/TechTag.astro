@@ -1,0 +1,13 @@
+---
+interface Props {
+  color: string;
+  technology: string;
+}
+const { technology } = Astro.props;
+---
+
+<li
+  class="w-fit gap-2 rounded-xl border-2 border-gray-100 bg-gray-50 p-1 text-center"
+>
+  {technology}
+</li>
