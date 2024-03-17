@@ -33,6 +33,8 @@ const updateDate = new Date(updatedAt).toLocaleDateString("en-GB", {
 });
 
 const finalTitle = placeWhitespaces(metadata?.name ? metadata.name : name);
+
+const icon = metadata?.logoUrl ? metadata.logoUrl : defaultIcon;
 ---
 
 <div
@@ -43,7 +45,7 @@ const finalTitle = placeWhitespaces(metadata?.name ? metadata.name : name);
     <div class="flex items-center justify-between gap-2">
       <div class="hidden sm:block">
         <Image
-          src={defaultIcon}
+          src={icon as ImageMetadata}
           alt={"domyślne logo"}
           height={80}
           width={80}

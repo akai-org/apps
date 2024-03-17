@@ -6,6 +6,7 @@ interface Metadata {
   name?: string;
   description?: string;
   technologies?: string[];
+  logoUrl?: string;
 }
 
 interface RepositoryResponse {
@@ -97,6 +98,9 @@ export async function getOrgRepos() {
     if (metadata) {
       hasData = true;
       for (const entry of metadata.entries) { // entries jest w oryginalnym responsie z githuba
+        if (entry.name == "logo.png") {
+          config.logoUrl = new URL(`${repo.name}/main/.akai/logo.png`, "https://raw.githubusercontent.com/akai-org/").toString();
+        }
         if (entry.name == "config.json") {
           config = { ...JSON.parse(entry.object.text!) };
         }
