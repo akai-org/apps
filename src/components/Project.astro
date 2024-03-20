@@ -5,7 +5,8 @@ import { isProd } from "@utilities/env";
 import { type Project } from "@utilities/data";
 import LanguageTag from "./LanguageTag.astro";
 import icon_star from "@assets/icon_star.svg";
-import icon_github_white from "@assets/icon_github_white.png";
+import icon_arrow_right from "@assets/icon_chevron_right.svg";
+import icon_github_white from "@assets/icon_github_white.svg";
 import { getTimeFromUpdate } from "@utilities/getTimeFromUpdate";
 import { placeWhitespaces } from "@utilities/stringUtils";
 
@@ -38,7 +39,7 @@ const icon = metadata?.logoUrl ? metadata.logoUrl : defaultIcon;
 ---
 
 <div
-  class="project box-border flex min-w-0 flex-col justify-between gap-2 rounded border-2 border-gray-100 p-5"
+  class="project box-border flex min-w-0 flex-col justify-between gap-2 rounded border-2 border-gray-100 p-5 dark:bg-neutral-700"
   data-langs={languages}
 >
   <div class="grid grid-cols-1 gap-y-2">
@@ -59,7 +60,10 @@ const icon = metadata?.logoUrl ? metadata.logoUrl : defaultIcon;
               {finalTitle}
             </h2>
           </div>
-          <a href={url} class="flex w-fit rounded-lg bg-zinc-800">
+          <a
+            href={url}
+            class="flex w-fit rounded-lg border border-zinc-500 bg-zinc-800"
+          >
             <div
               id="stars"
               class="flex items-center justify-center gap-1 rounded-lg bg-zinc-700 p-1 font-black text-white"
@@ -69,7 +73,6 @@ const icon = metadata?.logoUrl ? metadata.logoUrl : defaultIcon;
                 alt="ikona gwiazdy"
                 height={18}
                 width={18}
-                loading="eager"
               />
               {stargazerCount}
             </div>
@@ -81,7 +84,6 @@ const icon = metadata?.logoUrl ? metadata.logoUrl : defaultIcon;
                 alt="logo github"
                 width={22}
                 height={22}
-                loading="eager"
               />
             </div>
           </a>
@@ -116,7 +118,13 @@ const icon = metadata?.logoUrl ? metadata.logoUrl : defaultIcon;
     </p>
     <a
       href={projectUrl}
-      class="rounded-md bg-blue-400 px-3 py-2 font-bold text-white">Więcej</a
-    >
+      class="flex justify-center gap-0.5 rounded-md bg-blue-400 px-3 py-2 font-bold text-white"
+      >Więcej <Image
+        src={icon_arrow_right}
+        width={20}
+        alt={"strzałka skierowana w prawo"}
+        class="fill-white text-white invert"
+      />
+    </a>
   </div>
 </div>

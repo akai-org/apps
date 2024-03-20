@@ -6,7 +6,7 @@ import TechTag from "@components/TechTag.astro";
 type Props = Omit<Project, "hasData" | "updatedAt">;
 import { Image } from "astro:assets";
 import icon_star from "@assets/icon_star.svg";
-import icon_github_white from "@assets/icon_github_white.png";
+import icon_github_white from "@assets/icon_github_white.svg";
 import { placeWhitespaces } from "@utilities/stringUtils";
 
 const { name, description, stargazerCount, languages, url, metadata } =
@@ -29,13 +29,7 @@ const finalTitle = placeWhitespaces(metadata?.name ? metadata.name : name);
             id="stars"
             class="flex items-center justify-center gap-1 rounded-lg bg-zinc-700 p-1 text-lg font-black text-white"
           >
-            <Image
-              src={icon_star}
-              alt="ikona gwiazdy"
-              height={25}
-              width={25}
-              loading="eager"
-            />
+            <Image src={icon_star} alt="ikona gwiazdy" height={25} width={25} />
             {stargazerCount}
           </div>
           <div
@@ -46,7 +40,6 @@ const finalTitle = placeWhitespaces(metadata?.name ? metadata.name : name);
               alt="logo github"
               width={27}
               height={27}
-              loading="eager"
             />
           </div>
         </a>

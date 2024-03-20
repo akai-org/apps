@@ -1,15 +1,19 @@
 ---
-import logo from "@assets/akai_logo.png";
+import logo from "@assets/akai_logo.svg";
 import { Image } from "astro:assets";
 ---
 
-<header class="p-2 sm:px-10 sm:py-3">
+<header class="flex items-center justify-between p-2 sm:px-10 sm:py-3">
   <h1 class="flex items-center gap-10 text-5xl">
     <a href="/" class="flex items-center gap-2 font-bold">
-      <Image src={logo} alt="Logo AKAI" />Apps</a
+      <Image src={logo} width={70} alt="Logo AKAI" />Apps</a
     >
     <p class="hidden text-lg font-light md:block">
       Aplikacje stworzone przez członków AKAI.
     </p>
   </h1>
+
+  <button id="themeToggle" class="rounded-lg bg-gray-200 px-3 py-2 text-black"
+    >Motyw</button
+  >
 </header>

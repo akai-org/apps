@@ -1,5 +1,6 @@
 ---
 import { getProjects } from "@utilities/data";
+import { capitalize } from "@utilities/stringUtils";
 import PageLayout from "@layouts/PageLayout.astro";
 import ProjectLayout from "@layouts/ProjectLayout.astro";
 import type { Project } from "@utilities/data";
@@ -26,7 +27,7 @@ const { name } = Astro.params;
 const { languages, url, stargazerCount, description, metadata } = Astro.props;
 ---
 
-<PageLayout title={name}>
+<PageLayout title={`Akai Apps | ${capitalize(name)}`}>
   <ProjectLayout
     name={name}
     languages={languages}
