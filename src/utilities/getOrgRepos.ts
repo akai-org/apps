@@ -55,7 +55,7 @@ const orgReposQuery = gql`
           description
           url
           stargazerCount
-          updatedAt
+          updatedAt: pushedAt
           metadata: object(expression: "main:.akai/"){
             ... on Tree {
               entries {
