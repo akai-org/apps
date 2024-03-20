@@ -39,7 +39,7 @@ const icon = metadata?.logoUrl ? metadata.logoUrl : defaultIcon;
 ---
 
 <div
-  class="project box-border flex min-w-0 flex-col justify-between gap-2 rounded border-2 border-gray-100 p-5 dark:bg-neutral-700"
+  class="project box-border flex min-w-0 flex-col justify-between gap-2 rounded border-2 border-gray-100 p-5 dark:border-zinc-600 dark:bg-neutral-700"
   data-langs={languages}
 >
   <div class="grid grid-cols-1 gap-y-2">
@@ -88,7 +88,7 @@ const icon = metadata?.logoUrl ? metadata.logoUrl : defaultIcon;
             </div>
           </a>
         </div>
-        <div class="flex items-end gap-2 overflow-hidden text-xs">
+        <div class="flex items-end gap-2 overflow-hidden text-xs text-black">
           <ul class="line-clamp-1 flex items-center gap-2">
             {
               languages
@@ -98,7 +98,7 @@ const icon = metadata?.logoUrl ? metadata.logoUrl : defaultIcon;
           </ul>
           <div
             class={tooManyLangs
-              ? `w-fit rounded-xl border-2 border-gray-200 bg-gray-100 p-1 text-sm font-semibold`
+              ? `w-fit rounded-xl border-2 border-gray-200 bg-gray-100 p-1 text-xs font-semibold dark:border-zinc-500 dark:bg-zinc-600 dark:text-white`
               : ""}
           >
             {tooManyLangs && `+${languages.length - langLimit}`}
@@ -118,7 +118,7 @@ const icon = metadata?.logoUrl ? metadata.logoUrl : defaultIcon;
     </p>
     <a
       href={projectUrl}
-      class="flex justify-center gap-0.5 rounded-md bg-blue-400 px-3 py-2 font-bold text-white"
+      class="border-1 flex justify-center gap-0.5 rounded-md bg-gradient-to-br from-blue-400 to-sky-400 px-3 py-2 font-bold text-white"
       >Więcej <Image
         src={icon_arrow_right}
         width={20}
