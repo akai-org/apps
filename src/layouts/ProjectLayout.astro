@@ -16,6 +16,9 @@ const hasTechnologies =
   metadata.technologies && metadata.technologies?.length > 0;
 
 const finalTitle = placeWhitespaces(metadata?.name ? metadata.name : name);
+const finalDescription = metadata?.description
+  ? metadata.description
+  : description;
 ---
 
 <section class="flex w-full justify-center">
@@ -70,11 +73,9 @@ const finalTitle = placeWhitespaces(metadata?.name ? metadata.name : name);
       </section>
     </header>
     <article
-      class="prose mx-auto max-w-4xl prose-img:mx-auto prose-img:max-w-sm"
+      class="prose prose-neutral mx-auto max-w-4xl dark:prose-invert prose-img:mx-auto prose-img:max-w-sm"
     >
-      <Fragment
-        set:html={metadata?.description ? metadata.description : description}
-      />
+      <Fragment set:html={finalDescription} />
     </article>
   </main>
 </section>
