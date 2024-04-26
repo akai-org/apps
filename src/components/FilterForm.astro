@@ -71,21 +71,9 @@ const { languages } = Astro.props;
     };
   }
 
-  function handleURLChange(
-    filters: FiltersGroups = { search: "", languages: [] },
-  ) {
-    if (filters.search.length === 0) {
-      filterParams.delete("search");
-    } else {
-      filterParams.set("search", filters.search);
-    }
-
-    filterParams.delete("language");
-    for (const language of filters.languages) {
-      filterParams.append("language", language);
-    }
-
-    window.history.replaceState({}, "", `${location.pathname}?${filterParams}`);
+  function handleURLChange(formdata: FormData = new FormData()) {
+    const query = new URLSearchParams(formdata as any).toString();
+    window.history.replaceState({}, "", `${location.pathname}?${query}`);
   }
   function handleURLFilters() {
     const filters: FiltersGroups = {
@@ -112,7 +100,7 @@ const { languages } = Astro.props;
     const data = new FormData(form);
     const filters: FiltersGroups = groupFormData(data);
     const areFiltersEmpty = data.has("language") && data.get("search") != "";
-    handleURLChange(filters);
+    handleURLChange(data);
     filterProjects(filters, projects, areFiltersEmpty);
   });
   form?.addEventListener("reset", () => {
@@ -120,6 +108,8 @@ const { languages } = Astro.props;
     filterProjects({ search: "", languages: [] }, projects);
   });
   window.addEventListener("DOMContentLoaded", handleURLFilters);
+
+  class UrlHandler {}
 
   class FilterData {
     search: string;
@@ -133,15 +123,34 @@ const { languages } = Astro.props;
     }
   }
 
-  class SortHandler {}
+  class SortHandler {
+    constructor() {}
+    sort() {}
+  }
 
   class FilterHandler {
-    containerClass: string;
-    containers: Element[];
+    projectClass: string;
+    projects: Element[];
+    filterData: FilterData;
 
     constructor(containerClass: string) {
-      this.containerClass = containerClass;
-      this.containers = [...document.getElementsByClassName(containerClass)];
+      this.projectClass = containerClass;
+      this.projects = [...document.getElementsByClassName(containerClass)];
+      this.filterData = new FilterData(new FormData());
+    }
+    filter(filterData: FilterData) {
+      this.filterData = filterData;
+      this.projects.flatMap((project) => {});
+    }
+    hasTitle(projectTitle: string) {
+      const search = this.filterData.search;
+      return search ? projectTitle?.indexOf(search) !== -1 : true;
+    }
+    hasLang(projectLangs: string[]) {
+      const langs = this.filterData.languages;
+      return langs.length !== 0
+        ? projectLangs.some((lang) => langs.includes(lang!))
+        : true;
     }
   }
 
