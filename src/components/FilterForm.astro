@@ -1,11 +1,12 @@
 ---
 import LanguageFilter from "./filters/LanguageFilter.astro";
 import SearchFilter from "./filters/SearchFilter.astro";
+import Sort from "./filters/Sort.astro";
 const { languages } = Astro.props;
 ---
 
 <script>
-  type Filters = {
+  type FiltersGroups = {
     search: string;
     languages: string[];
   };
@@ -22,14 +23,14 @@ const { languages } = Astro.props;
       };
     },
   );
-  const form = document.getElementById("filterForm") as HTMLFormElement | null;
+  const form = document.getElementById("formFilter") as HTMLFormElement | null;
   const shownCounter = document.getElementById("shown-counter");
   // DO UPORZADKOWANIA (kiedys)
   function getHiddenProjects() {
     return [...document.querySelectorAll(`.hidden`)];
   }
   function filterProjects(
-    filters: Filters,
+    filters: FiltersGroups,
     projects: Project[],
     areFiltersEmpty: boolean = true,
   ) {
@@ -63,14 +64,16 @@ const { languages } = Astro.props;
     if (shownCounter) shownCounter.textContent = counter.toString();
   }
 
-  function groupFormData(data: FormData): Filters {
+  function groupFormData(data: FormData): FiltersGroups {
     return {
-      search: data.values().next().value.toLowerCase(),
-      languages: [...data].slice(1).map((entry) => entry[1]) as string[],
+      search: data.get("search") as string,
+      languages: data.getAll("language") as string[],
     };
   }
 
-  function handleURLChange(filters: Filters = { search: "", languages: [] }) {
+  function handleURLChange(
+    filters: FiltersGroups = { search: "", languages: [] },
+  ) {
     if (filters.search.length === 0) {
       filterParams.delete("search");
     } else {
@@ -85,7 +88,7 @@ const { languages } = Astro.props;
     window.history.replaceState({}, "", `${location.pathname}?${filterParams}`);
   }
   function handleURLFilters() {
-    const filters: Filters = {
+    const filters: FiltersGroups = {
       search: "",
       languages: [],
     };
@@ -107,8 +110,8 @@ const { languages } = Astro.props;
   const filterParams = new URLSearchParams(window.location.search);
   form?.addEventListener("input", () => {
     const data = new FormData(form);
-    const filters: Filters = groupFormData(data);
-    const areFiltersEmpty = data.entries().next().done;
+    const filters: FiltersGroups = groupFormData(data);
+    const areFiltersEmpty = data.has("language") && data.get("search") != "";
     handleURLChange(filters);
     filterProjects(filters, projects, areFiltersEmpty);
   });
@@ -117,13 +120,60 @@ const { languages } = Astro.props;
     filterProjects({ search: "", languages: [] }, projects);
   });
   window.addEventListener("DOMContentLoaded", handleURLFilters);
+
+  class FilterData {
+    search: string;
+    languages: string[];
+    constructor(data: FormData) {
+      this.search = data.get("search") as string;
+      this.languages = data.getAll("language") as string[];
+    }
+    areFiltersEmpty(): boolean {
+      return this.languages.length == 0 && this.search == "";
+    }
+  }
+
+  class SortHandler {}
+
+  class FilterHandler {
+    containerClass: string;
+    containers: Element[];
+
+    constructor(containerClass: string) {
+      this.containerClass = containerClass;
+      this.containers = [...document.getElementsByClassName(containerClass)];
+    }
+  }
+
+  class FormHandler {
+    filterForm: HTMLFormElement;
+    sortForm: HTMLFormElement;
+    constructor(filterFormId: string, sortFormId: string) {
+      this.filterForm = document.getElementById(
+        filterFormId,
+      ) as HTMLFormElement;
+      this.sortForm = document.getElementById(sortFormId) as HTMLFormElement;
+      this.setupListeners();
+    }
+    setupListeners() {
+      const sortHandler = new SortHandler();
+      this.sortForm.addEventListener("change", (event) => {});
+      const filterHandler = new FilterHandler("project");
+      this.filterForm.addEventListener("change", (event) => {});
+    }
+  }
 </script>
-<form id="filterForm" class="grid gap-y-3 text-black accent-yellow-500">
-  <SearchFilter />
-  <LanguageFilter languages={languages} />
-  <input
-    type="reset"
-    value="Wyczyść"
-    class="w-fit rounded-lg bg-amber-400 px-3 py-2 font-bold text-white hover:cursor-pointer"
-  />
-</form>
+<div id="form" class="grid gap-y-3 text-black accent-yellow-500">
+  <form id="formSort">
+    <Sort />
+  </form>
+  <form id="formFilter" class="grid gap-y-3">
+    <SearchFilter />
+    <LanguageFilter languages={languages} />
+    <input
+      type="reset"
+      value="Wyczyść"
+      class="w-fit rounded-lg bg-amber-400 px-3 py-2 font-bold text-white hover:cursor-pointer"
+    />
+  </form>
+</div>
