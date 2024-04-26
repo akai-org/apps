@@ -12,6 +12,7 @@ const { languages } = Astro.props;
   };
   type Project = {
     project: Element;
+    title: string;
     languages: string[] | undefined;
   };
 
@@ -19,6 +20,7 @@ const { languages } = Astro.props;
     (project) => {
       return {
         project: project,
+        title: project.getAttribute("data-title")?.toLowerCase() as string,
         languages: project.getAttribute("data-langs")?.split(","),
       };
     },
@@ -109,7 +111,16 @@ const { languages } = Astro.props;
   });
   window.addEventListener("DOMContentLoaded", handleURLFilters);
 
-  class UrlHandler {}
+  class UrlHandler {
+    params: URLSearchParams;
+    constructor() {
+      this.params = new URLSearchParams(window.location.search);
+      this.setupListeners();
+    }
+    setupListeners() {
+      window.addEventListener("DOMContentLoaded", function () {});
+    }
+  }
 
   class FilterData {
     search: string;
@@ -130,26 +141,64 @@ const { languages } = Astro.props;
 
   class FilterHandler {
     projectClass: string;
-    projects: Element[];
+    projects: Project[];
     filterData: FilterData;
+    hiddenProjects: Element[];
 
     constructor(containerClass: string) {
       this.projectClass = containerClass;
-      this.projects = [...document.getElementsByClassName(containerClass)];
+      this.projects = [...document.getElementsByClassName("project")].map(
+        (project) => {
+          return {
+            project: project,
+            title: project.getAttribute("data-title")?.toLowerCase() as string,
+            languages: project.getAttribute("data-langs")?.split(","),
+          };
+        },
+      );
       this.filterData = new FilterData(new FormData());
+      this.hiddenProjects = [];
+    }
+    clearFilters() {
+      for (const project of this.hiddenProjects) {
+        this.toggleVisibility(project, true);
+      }
+      this.hiddenProjects = [];
     }
     filter(filterData: FilterData) {
       this.filterData = filterData;
-      this.projects.flatMap((project) => {});
+      this.projects = [];
+      for (const project of this.projects) {
+        const projectTitle = project.title;
+        const projectLangs = project.languages;
+
+        const hasTitle = this.hasTitle(projectTitle);
+        const hasLang = this.hasLangs(projectLangs);
+
+        if (!hasLang || !hasTitle) {
+          this.toggleVisibility(project.project, false);
+          this.hiddenProjects.push(project.project);
+        }
+        if (hasTitle && hasLang) {
+          this.toggleVisibility(project.project, true);
+        }
+      }
+    }
+    toggleVisibility(project: Element, visible: boolean) {
+      if (visible) {
+        project.classList.remove("hidden");
+      } else {
+        project.classList.add("hidden");
+      }
     }
     hasTitle(projectTitle: string) {
       const search = this.filterData.search;
       return search ? projectTitle?.indexOf(search) !== -1 : true;
     }
-    hasLang(projectLangs: string[]) {
+    hasLangs(projectLangs: string[] | undefined) {
       const langs = this.filterData.languages;
-      return langs.length !== 0
-        ? projectLangs.some((lang) => langs.includes(lang!))
+      return langs.length !== 0 || !langs
+        ? projectLangs?.some((lang) => langs.includes(lang!))
         : true;
     }
   }
@@ -166,9 +215,14 @@ const { languages } = Astro.props;
     }
     setupListeners() {
       const sortHandler = new SortHandler();
-      this.sortForm.addEventListener("change", (event) => {});
+      this.sortForm.addEventListener("change", (_) => {});
+
       const filterHandler = new FilterHandler("project");
-      this.filterForm.addEventListener("change", (event) => {});
+      this.filterForm.addEventListener("change", (_) => {
+        const filterData = new FilterData(new FormData(this.filterForm));
+        filterHandler.filter(filterData);
+      });
+      this.filterForm.addEventListener("reset", filterHandler.clearFilters);
     }
   }
 </script>
