@@ -98,27 +98,65 @@ const { languages } = Astro.props;
     filterProjects(filters, projects, false);
   }
   const filterParams = new URLSearchParams(window.location.search);
-  form?.addEventListener("input", () => {
-    const data = new FormData(form);
-    const filters: FiltersGroups = groupFormData(data);
-    const areFiltersEmpty = data.has("language") && data.get("search") != "";
-    handleURLChange(data);
-    filterProjects(filters, projects, areFiltersEmpty);
-  });
-  form?.addEventListener("reset", () => {
-    handleURLChange();
-    filterProjects({ search: "", languages: [] }, projects);
-  });
-  window.addEventListener("DOMContentLoaded", handleURLFilters);
+  //form?.addEventListener("input", () => {
+  //  const data = new FormData(form);
+  //  const filters: FiltersGroups = groupFormData(data);
+  //  const areFiltersEmpty = data.has("language") && data.get("search") != "";
+  //  handleURLChange(data);
+  //  filterProjects(filters, projects, areFiltersEmpty);
+  //});
+  //form?.addEventListener("reset", () => {
+  //  handleURLChange();
+  //  filterProjects({ search: "", languages: [] }, projects);
+  //});
+  //window.addEventListener("DOMContentLoaded", handleURLFilters);
 
   class UrlHandler {
     params: URLSearchParams;
-    constructor() {
+    filterHandler: FilterHandler;
+    constructor(filterHandler: FilterHandler) {
       this.params = new URLSearchParams(window.location.search);
+      this.filterHandler = filterHandler;
       this.setupListeners();
     }
+    hasSearch(): boolean {
+      return this.params.get("search") !== "";
+    }
+    hasLangs(): boolean {
+      return this.params.has("language");
+    }
+    applyFilters() {
+      if (this.hasSearch()) {
+        const input: HTMLInputElement = document.querySelector(`#search`)!;
+        input.value = filterParams.get("search")!;
+      }
+      if (this.hasLangs()) {
+        for (const language of this.params.getAll("language")) {
+          const inputId = `lang-${language.toLowerCase()}`;
+          const input: HTMLInputElement = document.querySelector(
+            `#${inputId}`,
+          )!;
+          input.checked = true;
+        }
+      }
+      const data = new FilterData(this.params as any);
+      this.filterHandler.filter(data);
+    }
     setupListeners() {
-      window.addEventListener("DOMContentLoaded", function () {});
+      document.addEventListener("url_change", (e) => {
+        this.changeState(e);
+      });
+      window.addEventListener("DOMContentLoaded", (_) => {
+        this.applyFilters();
+      });
+    }
+    changeState(event: any) {
+      this.params = new URLSearchParams(event.detail.data);
+      window.history.replaceState(
+        {},
+        "",
+        `${location.pathname}?${this.params.toString()}`,
+      );
     }
   }
 
@@ -167,7 +205,7 @@ const { languages } = Astro.props;
     }
     filter(filterData: FilterData) {
       this.filterData = filterData;
-      this.projects = [];
+      this.hiddenProjects = [];
       for (const project of this.projects) {
         const projectTitle = project.title;
         const projectLangs = project.languages;
@@ -175,7 +213,11 @@ const { languages } = Astro.props;
         const hasTitle = this.hasTitle(projectTitle);
         const hasLang = this.hasLangs(projectLangs);
 
-        if (!hasLang || !hasTitle) {
+        if (!hasLang) {
+          this.toggleVisibility(project.project, false);
+          this.hiddenProjects.push(project.project);
+        }
+        if (!hasTitle) {
           this.toggleVisibility(project.project, false);
           this.hiddenProjects.push(project.project);
         }
@@ -218,13 +260,24 @@ const { languages } = Astro.props;
       this.sortForm.addEventListener("change", (_) => {});
 
       const filterHandler = new FilterHandler("project");
-      this.filterForm.addEventListener("change", (_) => {
-        const filterData = new FilterData(new FormData(this.filterForm));
+      this.filterForm.addEventListener("change", (e) => {
+        const formData = new FormData(this.filterForm);
+        const filterData = new FilterData(formData);
+
         filterHandler.filter(filterData);
+
+        const event = new CustomEvent("url_change", {
+          bubbles: true,
+          detail: { data: formData },
+        });
+        e.target?.dispatchEvent(event);
       });
       this.filterForm.addEventListener("reset", filterHandler.clearFilters);
+
+      const urlHandler = new UrlHandler(filterHandler);
     }
   }
+  const formHandler = new FormHandler("formFilter", "formSort");
 </script>
 <div id="form" class="grid gap-y-3 text-black accent-yellow-500">
   <form id="formSort">
