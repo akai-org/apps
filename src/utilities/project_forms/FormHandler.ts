@@ -44,8 +44,8 @@ class FormHandler {
     });
     this.filterForm.addEventListener("reset", filterHandler.clearFilters);
 
-    const urlHandler = new UrlHandler(filterHandler);
+    new UrlHandler(filterHandler);
   }
 }
 
-const formHandler = new FormHandler("formFilter", "formSort");
+new FormHandler("formFilter", "formSort");

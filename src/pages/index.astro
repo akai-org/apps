@@ -29,18 +29,22 @@ const languages = new Set(projects.map((project) => project.languages).flat());
 ---
 
 <script>
-  const archivedCont =document.getElementById("cont_archived"); 
+  const archivedCont = document.getElementById("cont_archived");
   const validCont = document.getElementById("cont_valid");
   const totalCounter = document.getElementById("totalShownCounter");
   const validCounter = document.getElementById("validCounter");
   const archivedCounter = document.getElementById("archivedCounter");
   document.addEventListener("count_change", (_) => {
-    const archivedCount = archivedCont.childElementCount - archivedCont.querySelectorAll(":scope > .hidden").length;
-    const validCount = validCont.childElementCount - validCont.querySelectorAll(":scope > .hidden").length;
-    const totalCount = archivedCount + validCount;
-    totalCounter.textContent = totalCount;
-    validCounter.textContent = validCount;
-    archivedCounter.textContent = archivedCount;
+    const archivedCount =
+      archivedCont!.childElementCount -
+      archivedCont!.querySelectorAll(":scope > .hidden").length;
+    const validCount =
+      validCont!.childElementCount -
+      validCont!.querySelectorAll(":scope > .hidden").length;
+    const totalCount: number = archivedCount + validCount;
+    totalCounter!.textContent = totalCount.toString();
+    validCounter!.textContent = validCount.toString();
+    archivedCounter!.textContent = archivedCount.toString();
   });
 </script>
 <PageLayout title="AKAI Apps">
@@ -72,7 +76,9 @@ const languages = new Set(projects.map((project) => project.languages).flat());
       </details>
       <details open>
         <summary class="cursor-pointer"
-          >Zarchiwizowane - <span id="archivedCounter">{countArchivedProjects}</span> projekty</summary
+          >Zarchiwizowane - <span id="archivedCounter"
+            >{countArchivedProjects}</span
+          > projekty</summary
         >
         <ul
           class="projects_cont grid gap-6 p-1 sm:p-6 2xl:grid-cols-2"
