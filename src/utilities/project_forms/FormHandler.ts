@@ -42,7 +42,18 @@ class FormHandler {
       });
       e.target?.dispatchEvent(countChangeEvent);
     });
-    this.filterForm.addEventListener("reset", filterHandler.clearFilters);
+    this.filterForm.addEventListener("reset", (e) => {
+      filterHandler.clearFilters();
+      const urlChangeEvent = new CustomEvent("url_change", {
+        bubbles: true,
+        detail: { data: new FormData() },
+      });
+      const countChangeEvent = new CustomEvent("count_change", {
+        bubbles: true,
+      });
+      e.target?.dispatchEvent(countChangeEvent);
+      e.target?.dispatchEvent(urlChangeEvent);
+    });
 
     new UrlHandler(filterHandler);
   }
