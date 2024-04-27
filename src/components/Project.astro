@@ -42,6 +42,8 @@ const icon = metadata?.logoUrl ? metadata.logoUrl : defaultIcon;
   class="project box-border flex min-w-0 flex-col justify-between gap-2 rounded border-2 border-gray-100 p-5 dark:border-zinc-600 dark:bg-neutral-700"
   data-langs={languages}
   data-title={finalTitle}
+  data-stars={stargazerCount}
+  data-updateDate={updatedAt}
 >
   <div class="grid grid-cols-1 gap-y-2">
     <div class="flex items-center justify-between gap-2">
@@ -109,11 +111,7 @@ const icon = metadata?.logoUrl ? metadata.logoUrl : defaultIcon;
     </div>
     {description && <p class=" line-clamp-2 ">{description}</p>}
   </div>
-  <div
-    class="flex items-end justify-between"
-    id="updateDate"
-    data-updateDate={updatedAt}
-  >
+  <div class="flex items-end justify-between" id="updateDate">
     <p class="cursor-help text-sm" title={updateDate}>
       Ostatnia akutalizacja: <i>{timeFromUpdate}</i>
     </p>

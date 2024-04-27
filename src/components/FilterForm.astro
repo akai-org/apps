@@ -6,110 +6,13 @@ const { languages } = Astro.props;
 ---
 
 <script>
-  type FiltersGroups = {
-    search: string;
-    languages: string[];
-  };
   type Project = {
     project: Element;
     title: string;
-    languages: string[] | undefined;
+    languages?: string[] | undefined;
+    starCount?: number;
+    updateDate?: number;
   };
-
-  const projects = [...document.getElementsByClassName("project")].map(
-    (project) => {
-      return {
-        project: project,
-        title: project.getAttribute("data-title")?.toLowerCase() as string,
-        languages: project.getAttribute("data-langs")?.split(","),
-      };
-    },
-  );
-  const form = document.getElementById("formFilter") as HTMLFormElement | null;
-  const shownCounter = document.getElementById("shown-counter");
-  // DO UPORZADKOWANIA (kiedys)
-  function getHiddenProjects() {
-    return [...document.querySelectorAll(`.hidden`)];
-  }
-  function filterProjects(
-    filters: FiltersGroups,
-    projects: Project[],
-    areFiltersEmpty: boolean = true,
-  ) {
-    if (areFiltersEmpty) {
-      getHiddenProjects().map((project) => project.classList.remove("hidden"));
-      if (shownCounter) shownCounter.textContent = projects.length.toString();
-      return;
-    }
-    let counter = 0;
-    for (const p of projects) {
-      const project = p.project;
-      const hasLangs =
-        filters.languages.length !== 0
-          ? p.languages?.some((lang) => filters.languages.includes(lang!))
-          : true;
-      const title = project.querySelector("#title")?.textContent?.toLowerCase();
-      const hasTitle = filters.search
-        ? title?.indexOf(filters.search) !== -1
-        : true;
-      if (!hasLangs) {
-        project?.classList.add("hidden");
-      }
-      if (!hasTitle) {
-        project?.classList.add("hidden");
-      }
-      if (hasLangs && hasTitle) {
-        counter++;
-        project?.classList.remove("hidden");
-      }
-    }
-    if (shownCounter) shownCounter.textContent = counter.toString();
-  }
-
-  function groupFormData(data: FormData): FiltersGroups {
-    return {
-      search: data.get("search") as string,
-      languages: data.getAll("language") as string[],
-    };
-  }
-
-  function handleURLChange(formdata: FormData = new FormData()) {
-    const query = new URLSearchParams(formdata as any).toString();
-    window.history.replaceState({}, "", `${location.pathname}?${query}`);
-  }
-  function handleURLFilters() {
-    const filters: FiltersGroups = {
-      search: "",
-      languages: [],
-    };
-    if (filterParams.get("search")) {
-      filters.search = filterParams.get("search")!.toLowerCase();
-      const input: HTMLInputElement = document.querySelector(`#search`)!;
-      input.value = filterParams.get("search")!;
-    }
-    if (filterParams.getAll("language")) {
-      filters.languages = filterParams.getAll("language")!;
-      for (const language of filters.languages) {
-        const inputId = `lang-${language.toLowerCase()}`;
-        const input: HTMLInputElement = document.querySelector(`#${inputId}`)!;
-        input.checked = true;
-      }
-    }
-    filterProjects(filters, projects, false);
-  }
-  const filterParams = new URLSearchParams(window.location.search);
-  //form?.addEventListener("input", () => {
-  //  const data = new FormData(form);
-  //  const filters: FiltersGroups = groupFormData(data);
-  //  const areFiltersEmpty = data.has("language") && data.get("search") != "";
-  //  handleURLChange(data);
-  //  filterProjects(filters, projects, areFiltersEmpty);
-  //});
-  //form?.addEventListener("reset", () => {
-  //  handleURLChange();
-  //  filterProjects({ search: "", languages: [] }, projects);
-  //});
-  //window.addEventListener("DOMContentLoaded", handleURLFilters);
 
   class UrlHandler {
     params: URLSearchParams;
@@ -128,7 +31,7 @@ const { languages } = Astro.props;
     applyFilters() {
       if (this.hasSearch()) {
         const input: HTMLInputElement = document.querySelector(`#search`)!;
-        input.value = filterParams.get("search")!;
+        input.value = this.params.get("search")!;
       }
       if (this.hasLangs()) {
         for (const language of this.params.getAll("language")) {
@@ -159,6 +62,80 @@ const { languages } = Astro.props;
       );
     }
   }
+  class SortData {
+    sortType: string;
+    sortOrder: string;
+    constructor(data: FormData) {
+      const dataSplitted = data.get("sort")?.toString().split("_")!;
+      this.sortType = dataSplitted[0];
+      this.sortOrder = dataSplitted[1];
+    }
+  }
+
+  class SortHandler {
+    projectsCont: Project[][]; // Array of arrays because we are sorting separately projects which are grouped in two different containers
+    containerEls: Element[];
+    constructor() {
+      this.projectsCont = [[], []];
+      this.containerEls = [...document.getElementsByClassName("projects_cont")];
+      for (const [idx, cont] of this.containerEls.entries()) {
+        const projects = [...cont.querySelectorAll(".project")];
+        for (const projectEl of projects) {
+          const project: Project = {
+            project: projectEl,
+            title: projectEl
+              .getAttribute("data-title")
+              ?.toLowerCase() as string,
+            starCount: parseInt(projectEl.getAttribute("data-stars")!),
+            updateDate: new Date(
+              projectEl.getAttribute("data-updateDate")!,
+            ).getTime(),
+          };
+          this.projectsCont[idx].push(project);
+        }
+      }
+      this.sort({ sortType: "alpha", sortOrder: "ascend" });
+    }
+    sort(sortData: SortData) {
+      const isDescending = sortData.sortOrder === "descend";
+      let sortFunction: (a: Project, b: Project) => number;
+      switch (sortData.sortType) {
+        case "alpha":
+          sortFunction = this.sortAlpha;
+          break;
+        case "star":
+          sortFunction = this.sortStars;
+          break;
+        case "date":
+          sortFunction = this.sortDate;
+          break;
+      }
+      this.projectsCont.forEach((container) => {
+        container.sort(sortFunction);
+        if (isDescending) container.reverse();
+      });
+      this.applySort();
+    }
+    applySort() {
+      for (const [idx, cont] of this.containerEls.entries()) {
+        for (const project of this.projectsCont[idx]) {
+          cont.appendChild(project.project);
+        }
+      }
+    }
+    sortAlpha(a: Project, b: Project): number {
+      if (a.title === b.title) return 0;
+      return a.title > b.title ? 1 : -1;
+    }
+    sortStars(a: Project, b: Project): number {
+      if (a.starCount === b.starCount) return 0;
+      return a.starCount! > b.starCount! ? 1 : -1;
+    }
+    sortDate(a: Project, b: Project): number {
+      if (a.updateDate === b.updateDate) return 0;
+      return a.updateDate! > b.updateDate! ? 1 : -1;
+    }
+  }
 
   class FilterData {
     search: string;
@@ -167,16 +144,7 @@ const { languages } = Astro.props;
       this.search = data.get("search") as string;
       this.languages = data.getAll("language") as string[];
     }
-    areFiltersEmpty(): boolean {
-      return this.languages.length == 0 && this.search == "";
-    }
   }
-
-  class SortHandler {
-    constructor() {}
-    sort() {}
-  }
-
   class FilterHandler {
     projectClass: string;
     projects: Project[];
@@ -185,7 +153,7 @@ const { languages } = Astro.props;
 
     constructor(containerClass: string) {
       this.projectClass = containerClass;
-      this.projects = [...document.getElementsByClassName("project")].map(
+      this.projects = [...document.getElementsByClassName(containerClass)].map(
         (project) => {
           return {
             project: project,
@@ -257,10 +225,18 @@ const { languages } = Astro.props;
     }
     setupListeners() {
       const sortHandler = new SortHandler();
-      this.sortForm.addEventListener("change", (_) => {});
+      this.sortForm.addEventListener("change", (_) => {
+        const formData = new FormData(this.sortForm);
+        const sortData = new SortData(formData);
+
+        sortHandler.sort(sortData);
+      });
 
       const filterHandler = new FilterHandler("project");
-      this.filterForm.addEventListener("change", (e) => {
+      this.filterForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+      });
+      this.filterForm.addEventListener("input", (e) => {
         const formData = new FormData(this.filterForm);
         const filterData = new FilterData(formData);
 

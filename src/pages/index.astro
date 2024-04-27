@@ -1,6 +1,5 @@
 ---
 import { getProjects, type Project } from "@utilities/data";
-import Sort from "@components/filters/Sort.astro";
 import ProjectCard from "@components/Project.astro";
 import PageLayout from "@layouts/PageLayout.astro";
 import HomePageLayout from "@layouts/HomePageLayout.astro";
@@ -32,7 +31,6 @@ const languages = new Set(projects.map((project) => project.languages).flat());
 <PageLayout title="AKAI Apps">
   <HomePageLayout>
     <search slot="filters" class="sticky top-0">
-      <Sort />
       <FilterForm languages={languages} />
     </search>
     <div slot="projects">

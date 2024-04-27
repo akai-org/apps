@@ -36,28 +36,28 @@
     if (a_time == b_time) return 0;
     return a_time > b_time ? 1 : -1;
   }
-  sort_input.addEventListener("change", () => {
-    for (const projects_container of projects_containers) {
-      let projects = [...projects_container?.children];
-      const isDescending = sort_input?.value.includes("descend");
-      const sort_type = sort_input?.value.split("_")[0];
-      switch (sort_type) {
-        case "alpha":
-          projects = projects.toSorted(sortAlpha);
-          break;
-        case "star":
-          projects = projects.toSorted(sortStars);
-          break;
-        case "date":
-          projects = projects.toSorted(sortUpdateDate);
-          break;
-      }
-      if (isDescending) projects.reverse();
-      for (const project of projects) {
-        projects_container?.appendChild(project);
-      }
-    }
-  });
+  //sort_input.addEventListener("change", () => {
+  //  for (const projects_container of projects_containers) {
+  //    let projects = [...projects_container?.children];
+  //    const isDescending = sort_input?.value.includes("descend");
+  //    const sort_type = sort_input?.value.split("_")[0];
+  //    switch (sort_type) {
+  //      case "alpha":
+  //        projects = projects.toSorted(sortAlpha);
+  //        break;
+  //      case "star":
+  //        projects = projects.toSorted(sortStars);
+  //        break;
+  //      case "date":
+  //        projects = projects.toSorted(sortUpdateDate);
+  //        break;
+  //    }
+  //    if (isDescending) projects.reverse();
+  //    for (const project of projects) {
+  //      projects_container?.appendChild(project);
+  //    }
+  //  }
+  //});
 </script>
 <label class="grid gap-y-1 text-black dark:text-white">
   <span class="font-semibold">Sortuj</span>
