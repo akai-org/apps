@@ -28,6 +28,21 @@ const countArchivedProjects = projects.length - countValidProjects!;
 const languages = new Set(projects.map((project) => project.languages).flat());
 ---
 
+<script>
+  const archivedCont =document.getElementById("cont_archived"); 
+  const validCont = document.getElementById("cont_valid");
+  const totalCounter = document.getElementById("totalShownCounter");
+  const validCounter = document.getElementById("validCounter");
+  const archivedCounter = document.getElementById("archivedCounter");
+  document.addEventListener("count_change", (_) => {
+    const archivedCount = archivedCont.childElementCount - archivedCont.querySelectorAll(":scope > .hidden").length;
+    const validCount = validCont.childElementCount - validCont.querySelectorAll(":scope > .hidden").length;
+    const totalCount = archivedCount + validCount;
+    totalCounter.textContent = totalCount;
+    validCounter.textContent = validCount;
+    archivedCounter.textContent = archivedCount;
+  });
+</script>
 <PageLayout title="AKAI Apps">
   <HomePageLayout>
     <search slot="filters" class="sticky top-0">
@@ -36,15 +51,18 @@ const languages = new Set(projects.map((project) => project.languages).flat());
     <div slot="projects">
       <div class="flex gap-2">
         <span
-          >Wyświetlono: <span id="shown-counter">{projects.length}</span>
+          >Wyświetlono: <span id="totalShownCounter">{projects.length}</span>
           projekty</span
         >
       </div>
       <details open>
         <summary class="cursor-pointer"
-          >Aktualne - {countValidProjects} projekty</summary
+          >Aktualne - <span id="validCounter">{countValidProjects}</span> projekty</summary
         >
-        <ul class="projects_cont grid gap-6 p-1 sm:p-6 2xl:grid-cols-2">
+        <ul
+          class="projects_cont grid gap-6 p-1 sm:p-6 2xl:grid-cols-2"
+          id="cont_valid"
+        >
           {
             projectGroups["valid"]?.map((project) => (
               <ProjectCard {...project} />
@@ -54,9 +72,12 @@ const languages = new Set(projects.map((project) => project.languages).flat());
       </details>
       <details open>
         <summary class="cursor-pointer"
-          >Zarchiwizowane - {countArchivedProjects} projekty</summary
+          >Zarchiwizowane - <span id="archivedCounter">{countArchivedProjects}</span> projekty</summary
         >
-        <ul class="projects_cont grid gap-6 p-1 sm:p-6 2xl:grid-cols-2">
+        <ul
+          class="projects_cont grid gap-6 p-1 sm:p-6 2xl:grid-cols-2"
+          id="cont_archived"
+        >
           {
             projectGroups["archived"]?.map((project) => (
               <ProjectCard {...project} />

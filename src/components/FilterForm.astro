@@ -44,6 +44,10 @@ const { languages } = Astro.props;
       }
       const data = new FilterData(this.params as any);
       this.filterHandler.filter(data);
+      const countChangeEvent = new CustomEvent("count_change", {
+        bubbles: true,
+      });
+      document.dispatchEvent(countChangeEvent);
     }
     setupListeners() {
       document.addEventListener("url_change", (e) => {
@@ -242,11 +246,16 @@ const { languages } = Astro.props;
 
         filterHandler.filter(filterData);
 
-        const event = new CustomEvent("url_change", {
+        const urlChangeEvent = new CustomEvent("url_change", {
           bubbles: true,
           detail: { data: formData },
         });
-        e.target?.dispatchEvent(event);
+        e.target?.dispatchEvent(urlChangeEvent);
+
+        const countChangeEvent = new CustomEvent("count_change", {
+          bubbles: true,
+        });
+        e.target?.dispatchEvent(countChangeEvent);
       });
       this.filterForm.addEventListener("reset", filterHandler.clearFilters);
 
