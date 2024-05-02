@@ -1,7 +1,8 @@
 ---
 import Header from "@components/Header.astro";
 import "@fontsource/quicksand";
-const { title } = Astro.props;
+const { title, ogImageUrl } = Astro.props;
+console.log(ogImageUrl);
 ---
 
 <html lang="pl">
@@ -10,6 +11,7 @@ const { title } = Astro.props;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
+    <meta property="og:image" content={ogImageUrl} />
     <title>{title}</title>
   </head>
   <body class="dark:bg-neutral-800 dark:text-white">
