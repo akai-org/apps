@@ -26,7 +26,6 @@ export async function getStaticPaths() {
 const { name } = Astro.params;
 const { languages, url, stargazerCount, description, metadata } = Astro.props;
 const ogImageUrl = new URL(`/project/${name}-og.png`, Astro.site).href;
-console.log(ogImageUrl);
 ---
 
 <PageLayout title={`Akai Apps | ${capitalize(name)}`} ogImageUrl={ogImageUrl}>
