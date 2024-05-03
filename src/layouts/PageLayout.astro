@@ -1,7 +1,7 @@
 ---
 import Header from "@components/Header.astro";
 import "@fontsource/quicksand";
-const { title, ogImageUrl } = Astro.props;
+const { title, ogImageUrl, description } = Astro.props;
 console.log(ogImageUrl);
 ---
 
@@ -11,8 +11,25 @@ console.log(ogImageUrl);
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
+    <meta property="og:site_name" content="AKAI apps" />
+    <meta property="og:description" content={description} />
+    <meta property="og:title" content={title} />
     <meta property="og:image" content={ogImageUrl} />
-    <title>{title}</title>
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="twitter:domain" content="apps.akai.org.pl" />
+    <meta
+      property="twitter:url"
+      content="https://apps.akai.org.pl/projects/apps"
+    />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta
+      name="twitter:image"
+      content="https://apps.akai.org.pl/project/apps-og.png"
+    />
+
+    <title>AKAI apps | {title}</title>
   </head>
   <body class="dark:bg-neutral-800 dark:text-white">
     <Header />
