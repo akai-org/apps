@@ -28,7 +28,7 @@ const { languages, url, stargazerCount, description, metadata } = Astro.props;
 const ogImageUrl = new URL(`/project/${name}-og.png`, Astro.site).href;
 ---
 
-<PageLayout title={capitalize(name)} ogImageUrl={ogImageUrl} description={description}>
+<PageLayout title={`Akai Apps | ${capitalize(name)}`} ogImageUrl={ogImageUrl}>
   <ProjectLayout
     name={name}
     languages={languages}
@@ -39,6 +39,4 @@ const ogImageUrl = new URL(`/project/${name}-og.png`, Astro.site).href;
   />
 </PageLayout>
 />
-
-
 
