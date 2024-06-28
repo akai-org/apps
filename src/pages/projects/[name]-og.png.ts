@@ -23,11 +23,8 @@ type Props = {
   description: string;
 };
 
-export const GET: APIRoute = async function ({ props }) {
-  const satoriImg = await satori(
-    Template({ ...(props as Props) }),
-    await templateOptions(),
-  );
+export const GET: APIRoute<Props> = async function ({ props }) {
+  const satoriImg = await satori(Template(props), await templateOptions());
   const image = sharp(Buffer.from(satoriImg)).png();
   const imageData = await image.toBuffer();
   return new Response(imageData, {
