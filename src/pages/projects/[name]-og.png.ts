@@ -6,15 +6,15 @@ import { getProjects } from "@utilities/data";
 
 export async function getStaticPaths() {
   const projects = await getProjects();
-  const projectData = projects.map(project => {
+  const projectData = projects.map((project) => {
     return {
       params: { name: project.name },
       props: {
-        name: project.metadata.name && project.name,
-        description: project.description
-      }
-    }
-  })
+        name: project.metadata.name || project.name,
+        description: project.description,
+      },
+    };
+  });
   return projectData;
 }
 
@@ -23,14 +23,17 @@ type Props = {
   description: string;
 };
 
-export const GET: APIRoute = async function({ props }) {
-  const satoriImg = await satori(Template({ ...(props as Props) }), await templateOptions());
+export const GET: APIRoute = async function ({ props }) {
+  const satoriImg = await satori(
+    Template({ ...(props as Props) }),
+    await templateOptions(),
+  );
   const image = sharp(Buffer.from(satoriImg)).png();
   const imageData = await image.toBuffer();
   return new Response(imageData, {
     status: 200,
     headers: {
-      "Content-type": "image/png"
-    }
+      "Content-type": "image/png",
+    },
   });
-}
+};

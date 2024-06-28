@@ -1,7 +1,7 @@
 import { Octokit } from "octokit";
-import { paginateGraphql } from "@octokit/plugin-paginate-graphql";
+import { paginateGraphQL } from "@octokit/plugin-paginate-graphql";
 
-const OctokitExtended = Octokit.plugin(paginateGraphql);
+const OctokitExtended = Octokit.plugin(paginateGraphQL);
 export const octokit = new OctokitExtended({
   auth: import.meta.env.GH_API_TOKEN,
 });
