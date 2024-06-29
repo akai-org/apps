@@ -25,8 +25,9 @@ export enum Duration {
 }
 
 /**
- * Converts seconds to the largest appropriate unit
+ * Converts milliseconds to the largest appropriate unit and rounds the value down
  *
+ * @example getTimeUnit(1000 * 2.5) // { unit: "second", time: 2 } -> 2.5 seconds is rounded down to 2 seconds
  * @param time milliseconds
  * @param smallestDuration minimum duration to return
  * @returns time in the largest appropriate unit + the unit itself
