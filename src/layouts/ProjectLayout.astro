@@ -2,20 +2,21 @@
 import type { Project } from "@utilities/data";
 import LanguageTag from "@components/LanguageTag.astro";
 import TechTag from "@components/TechTag.astro";
-
-type Props = Omit<Project, "hasData" | "updatedAt">;
 import { Image } from "astro:assets";
 import icon_star from "@assets/icon_star.svg";
 import icon_github_white from "@assets/icon_github_white.svg";
-import { placeWhitespaces } from "@utilities/stringUtils";
 
-const { name, description, stargazerCount, languages, url, metadata } =
+interface Props extends Omit<Project, "hasData" | "updatedAt"> {
+  formattedName: string;
+}
+
+const { formattedName, description, stargazerCount, languages, url, metadata } =
   Astro.props;
 
 const hasTechnologies =
   metadata.technologies && metadata.technologies?.length > 0;
 
-const finalTitle = placeWhitespaces(metadata?.name ? metadata.name : name);
+const finalTitle = metadata?.name ? metadata.name : formattedName;
 const finalDescription = metadata?.description
   ? metadata.description
   : description;
@@ -25,7 +26,7 @@ const finalDescription = metadata?.description
   <main class="grid w-11/12 gap-y-3 p-3 md:w-3/4">
     <header class="grid gap-y-2">
       <section class="flex items-baseline justify-between">
-        <h1 class="text-left text-5xl font-bold capitalize">
+        <h1 class="text-left text-5xl font-bold">
           {finalTitle}
         </h1><a href={url} class="flex w-fit rounded-lg bg-zinc-800">
           <div

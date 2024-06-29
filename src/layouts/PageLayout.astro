@@ -32,7 +32,7 @@ const { title, ogImageUrl, description } = Astro.props;
       content="https://apps.akai.org.pl/project/apps-og.png"
     />
 
-    <title>AKAI apps | {title}</title>
+    <title>AKAI Apps{title && ` | ${title}`}</title>
   </head>
   <body class="dark:bg-neutral-800 dark:text-white">
     <Header />

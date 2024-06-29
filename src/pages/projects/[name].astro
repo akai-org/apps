@@ -1,11 +1,13 @@
 ---
 import { getProjects } from "@utilities/data";
-import { capitalize } from "@utilities/stringUtils";
+import { capitalize, placeWhitespaces } from "@utilities/stringUtils";
 import PageLayout from "@layouts/PageLayout.astro";
 import ProjectLayout from "@layouts/ProjectLayout.astro";
 import type { Project } from "@utilities/data";
 
-type Props = Omit<Project, "name">;
+interface Props extends Omit<Project, "name"> {
+  formattedName: string;
+}
 
 export async function getStaticPaths() {
   const projects = await getProjects();
@@ -13,6 +15,7 @@ export async function getStaticPaths() {
     return {
       params: { name: project.name },
       props: {
+        formattedName: capitalize(placeWhitespaces(project.name)),
         description: project.description,
         stargazerCount: project.stargazerCount,
         languages: project.languages,
@@ -24,12 +27,18 @@ export async function getStaticPaths() {
   return project_paths;
 }
 const { name } = Astro.params;
-const { languages, url, stargazerCount, description, metadata } = Astro.props;
+const { formattedName, languages, url, stargazerCount, description, metadata } =
+  Astro.props;
 const ogImageUrl = new URL(`/projects/${name}-og.png`, Astro.site).href;
 ---
 
-<PageLayout title={capitalize(name)} ogImageUrl={ogImageUrl} description={description}>
+<PageLayout
+  title={formattedName}
+  ogImageUrl={ogImageUrl}
+  description={description}
+>
   <ProjectLayout
+    formattedName={formattedName}
     name={name}
     languages={languages}
     url={url}
@@ -38,4 +47,3 @@ const ogImageUrl = new URL(`/projects/${name}-og.png`, Astro.site).href;
     metadata={metadata}
   />
 </PageLayout>
-
