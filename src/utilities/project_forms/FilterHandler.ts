@@ -1,12 +1,17 @@
 import type { Project } from "./types";
+
 export class FilterData {
   search: string;
   languages: string[];
   constructor(data: FormData) {
-    this.search = data.get("search") as string;
-    this.languages = data.getAll("language") as string[];
+    const search = data.get("search");
+    this.search = typeof search === "string" ? search : "";
+    this.languages = data
+      .getAll("language")
+      .filter((value) => typeof value === "string");
   }
 }
+
 export class FilterHandler {
   projectClass: string;
   projects: Project[];
@@ -45,14 +50,14 @@ export class FilterHandler {
 
       if (!hasLang) {
         this.toggleVisibility(project.project, false);
-        this.hiddenProjects.push(project.project);
       }
       if (!hasTitle) {
         this.toggleVisibility(project.project, false);
-        this.hiddenProjects.push(project.project);
       }
       if (hasTitle && hasLang) {
         this.toggleVisibility(project.project, true);
+      } else {
+        this.hiddenProjects.push(project.project);
       }
     }
   }
@@ -64,8 +69,10 @@ export class FilterHandler {
     }
   }
   hasTitle(projectTitle: string) {
-    const search = this.filterData.search;
-    return search ? projectTitle?.indexOf(search) !== -1 : true;
+    const search = this.filterData.search.toLocaleLowerCase();
+    return search
+      ? projectTitle.toLocaleLowerCase()?.indexOf(search) !== -1
+      : true;
   }
   hasLangs(projectLangs: string[] | undefined) {
     const langs = this.filterData.languages;

@@ -1,34 +1,27 @@
 import { FilterHandler, FilterData } from "./FilterHandler";
 
 export class UrlHandler {
-  params: URLSearchParams;
   filterHandler: FilterHandler;
   constructor(filterHandler: FilterHandler) {
-    this.params = new URLSearchParams(window.location.search);
     this.filterHandler = filterHandler;
     this.setupListeners();
   }
-  hasSearch(): boolean {
-    return this.params.get("search") !== "";
-  }
-  hasLangs(): boolean {
-    return this.params.has("language");
-  }
   applyFilters() {
-    if (this.hasSearch()) {
+    const params = new URLSearchParams(window.location.search);
+    if (params.has("search") && params.get("search") !== "") {
       const input: HTMLInputElement = document.querySelector(`#search`)!;
-      input.value = this.params.get("search")!;
+      input.value = params.get("search") ?? "";
     }
-    if (this.hasLangs()) {
-      for (const language of this.params.getAll("language")) {
+    if (params.has("language")) {
+      for (const language of params.getAll("language")) {
         const inputId = `lang-${language.toLowerCase()}`;
-        const input: HTMLInputElement = document.querySelector(
-          `#${inputId}`,
-        )!;
-        input.checked = true;
+        const input = document.querySelector<HTMLInputElement>(`#${inputId}`);
+        if (input) {
+          input.checked = true;
+        }
       }
     }
-    const data = new FilterData(this.params as any);
+    const data = new FilterData(params as any);
     this.filterHandler.filter(data);
     const countChangeEvent = new CustomEvent("count_change", {
       bubbles: true,
@@ -39,16 +32,25 @@ export class UrlHandler {
     document.addEventListener("url_change", (e) => {
       this.changeState(e);
     });
-    window.addEventListener("DOMContentLoaded", (_) => {
+    window.addEventListener("DOMContentLoaded", () => {
       this.applyFilters();
     });
   }
-  changeState(event: any) {
-    this.params = new URLSearchParams(event.detail.data);
+  changeState(event: DocumentEventMap["url_change"]) {
     window.history.replaceState(
-      {},
+      null,
       "",
-      `${location.pathname}?${this.params.toString()}`,
+      `${location.pathname}${formDataToQueryParams(event.detail.data)}`,
     );
   }
+}
+
+function formDataToQueryParams(formData: FormData): string {
+  const convertedFormEntries = Array.from(formData, ([key, value]) => [
+    key,
+    typeof value === "string" ? value : "",
+  ]).filter(([_, value]) => value !== "");
+  const params = new URLSearchParams(convertedFormEntries);
+  const paramsStr = params.toString();
+  return paramsStr ? `?${paramsStr}` : "";
 }

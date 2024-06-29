@@ -34,7 +34,7 @@ const languages = new Set(projects.map((project) => project.languages).flat());
   const totalCounter = document.getElementById("totalShownCounter");
   const validCounter = document.getElementById("validCounter");
   const archivedCounter = document.getElementById("archivedCounter");
-  document.addEventListener("count_change", (_) => {
+  document.addEventListener("count_change", () => {
     const archivedCount =
       archivedCont!.childElementCount -
       archivedCont!.querySelectorAll(":scope > .hidden").length;
