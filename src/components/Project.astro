@@ -7,7 +7,7 @@ import LanguageTag from "./LanguageTag.astro";
 import icon_star from "@assets/icon_star.svg";
 import icon_arrow_right from "@assets/icon_chevron_right.svg";
 import icon_github_white from "@assets/icon_github_white.svg";
-import { getTimeFromUpdate } from "@utilities/getTimeFromUpdate";
+import { Duration, getRelativeTime } from "@utilities/getRelativeTime";
 import { placeWhitespaces } from "@utilities/stringUtils";
 
 type Props = Project;
@@ -28,7 +28,7 @@ const projectUrl = new URL(
 const langLimit = 5;
 const tooManyLangs = languages.length > langLimit;
 
-const timeFromUpdate = getTimeFromUpdate(updatedAt);
+const timeFromUpdate = getRelativeTime(updatedAt, Duration.Day);
 const updateDate = new Date(updatedAt).toLocaleDateString("en-GB", {
   timeZone: "Europe/Warsaw",
 });

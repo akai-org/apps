@@ -5,7 +5,7 @@ on:
     branches: [main]
   workflow_dispatch: # Allows to run this workflow manually from the Actions tab on GitHub.
   schedule:
-    - cron: "30 6,14,22 * * *" # at 7:30, 15:30 and 23:30 in GMT+1 (every 8 hours)
+    - cron: "30 5,13,21 * * *" # at 6:30, 14:30 and 22:30 in GMT+1 (every 8 hours)
 
 # Allow this job to clone the repo and create a page deployment
 permissions:
