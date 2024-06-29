@@ -2,7 +2,7 @@
 const { languages } = Astro.props;
 ---
 
-<label class="grid gap-y-1">
+<div class="grid gap-y-1">
   <span class="font-semibold dark:text-white">Języki programowania</span>
   <div
     class="grid max-h-64 grid-cols-2 gap-1 overflow-y-scroll rounded-lg border-2 border-zinc-200 bg-gray-100 p-3 sm:grid-cols-3 md:grid-cols-1 dark:border-zinc-500 dark:bg-neutral-600"
@@ -12,7 +12,7 @@ const { languages } = Astro.props;
         return (
           <label
             for={`lang-${lang.toLowerCase()}`}
-            class=" cursor-pointer rounded-lg border-2 border-neutral-200 bg-white px-3 py-2 has-[:checked]:border-yellow-300 has-[:checked]:bg-yellow-100 has-[:checked]:text-black dark:border-neutral-400 dark:bg-neutral-500 dark:text-white"
+            class="cursor-pointer rounded-lg border-2 border-neutral-200 bg-white px-3 py-2 has-[:checked]:border-yellow-300 has-[:checked]:bg-yellow-100 has-[:checked]:text-black dark:border-neutral-400 dark:bg-neutral-500 dark:text-white"
           >
             <input
               type="checkbox"
@@ -26,4 +26,4 @@ const { languages } = Astro.props;
       })
     }
   </div>
-</label>
+</div>

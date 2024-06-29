@@ -6,9 +6,7 @@ class FormHandler {
   filterForm: HTMLFormElement;
   sortForm: HTMLFormElement;
   constructor(filterFormId: string, sortFormId: string) {
-    this.filterForm = document.getElementById(
-      filterFormId,
-    ) as HTMLFormElement;
+    this.filterForm = document.getElementById(filterFormId) as HTMLFormElement;
     this.sortForm = document.getElementById(sortFormId) as HTMLFormElement;
     this.setupListeners();
   }

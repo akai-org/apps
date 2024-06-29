@@ -1,4 +1,4 @@
-export const languageColors: { [key: string]: string } = {
+export const languageColors: Record<string, string> = {
   onec_enterprise: "#814CCC",
   two_dimensional_array: "#38761D",
   fourd: "#004289",
@@ -570,4 +570,4 @@ export const languageColors: { [key: string]: string } = {
   restructuredtext: "#141414",
   sed: "#64b970",
   wisp: "#7582D1",
-}
+};
