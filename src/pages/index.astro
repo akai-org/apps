@@ -46,8 +46,6 @@ const languages = new Set(projects.map((project) => project.languages).flat());
   const totalCounter = document.getElementById("totalShownCounter");
   const validCounter = document.getElementById("validCounter");
   const archivedCounter = document.getElementById("archivedCounter");
-  
-
 
   const getChildrenCount = (parent: HTMLElement): number => parent.childElementCount - parent.querySelectorAll(":scope > .hidden").length; 
   const getCountSummary = (count: number): string => count > 0 ? `${count} ${formatSummary(count)}` : "brak"; 
