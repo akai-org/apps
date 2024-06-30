@@ -60,7 +60,9 @@ const icon = metadata?.logoUrl ? metadata.logoUrl : defaultIcon;
         <div class="flex w-full items-center justify-between gap-3">
           <div class="min-w-0 flex-1">
             <h2 id="title" class="truncate text-2xl font-bold capitalize">
-              {finalTitle}
+              <a href={projectUrl} class="hover:underline">
+                {finalTitle}
+              </a>
             </h2>
           </div>
           <a
