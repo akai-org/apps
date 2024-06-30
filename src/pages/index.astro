@@ -29,22 +29,38 @@ const languages = new Set(projects.map((project) => project.languages).flat());
 ---
 
 <script>
+  function formatSummary(count: number): string {
+    const unityNumber = count % 10;
+    let summary = "";
+    if(count === 1) {
+      summary = "projekt";
+    } else if(count >= 5 && (unityNumber <= 1 || (unityNumber >= 5 && unityNumber <= 9))) {
+      summary = "projektów";
+    } else if (unityNumber <= 4 && unityNumber > 0) {
+      summary = "projekty";
+    }
+    return summary;
+  }
   const archivedCont = document.getElementById("cont_archived");
   const validCont = document.getElementById("cont_valid");
   const totalCounter = document.getElementById("totalShownCounter");
   const validCounter = document.getElementById("validCounter");
   const archivedCounter = document.getElementById("archivedCounter");
+  
+
+
+  const getChildrenCount = (parent: HTMLElement): number => parent.childElementCount - parent.querySelectorAll(":scope > .hidden").length; 
+  const getCountSummary = (count: number): string => count > 0 ? `${count} ${formatSummary(count)}` : "brak"; 
+
   document.addEventListener("count_change", () => {
-    const archivedCount =
-      archivedCont!.childElementCount -
-      archivedCont!.querySelectorAll(":scope > .hidden").length;
-    const validCount =
-      validCont!.childElementCount -
-      validCont!.querySelectorAll(":scope > .hidden").length;
-    const totalCount: number = archivedCount + validCount;
-    totalCounter!.textContent = totalCount.toString();
-    validCounter!.textContent = validCount.toString();
-    archivedCounter!.textContent = archivedCount.toString();
+    const archivedCount = getChildrenCount(archivedCont!);
+    const validCount = getChildrenCount(validCont!);
+    const totalCount = archivedCount + validCount;
+    
+    totalCounter!.textContent = getCountSummary(totalCount);
+    validCounter!.textContent = getCountSummary(validCount);
+    archivedCounter!.textContent = getCountSummary(archivedCount);
+  
   });
 </script>
 <PageLayout title="portfolio koła AKAI">
@@ -55,13 +71,13 @@ const languages = new Set(projects.map((project) => project.languages).flat());
     <div slot="projects">
       <div class="flex gap-2">
         <span
-          >Wyświetlono: <span id="totalShownCounter">{projects.length}</span>
-          projekty</span
+          >Wyświetlono: <span id="totalShownCounter">{projects.length} projekty</span>
+          </span
         >
       </div>
       <details open>
         <summary class="cursor-pointer"
-          >Aktualne - <span id="validCounter">{countValidProjects}</span> projekty</summary
+          >Aktualne: <span id="validCounter">{countValidProjects} projekty</span></summary
         >
         <ul
           class="projects_cont grid gap-6 p-1 sm:p-6 2xl:grid-cols-2"
@@ -76,9 +92,9 @@ const languages = new Set(projects.map((project) => project.languages).flat());
       </details>
       <details open>
         <summary class="cursor-pointer"
-          >Zarchiwizowane - <span id="archivedCounter"
-            >{countArchivedProjects}</span
-          > projekty</summary
+          >Zarchiwizowane: <span id="archivedCounter"
+            >{countArchivedProjects} projekty</span
+          ></summary
         >
         <ul
           class="projects_cont grid gap-6 p-1 sm:p-6 2xl:grid-cols-2"
