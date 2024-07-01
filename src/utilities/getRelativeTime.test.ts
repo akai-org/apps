@@ -1,5 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { Duration, getRelativeTime } from "./getRelativeTime";
+import { getRelativeTime } from "./getRelativeTime";
+import { Duration } from "./Duration.enum";
 
 const now = new Date("2024-01-01");
 const nowInMs = now.getTime();
