@@ -54,30 +54,53 @@ const languages = new Set(projects.map((project) => project.languages).flat());
   const getCountSummary = (count: number): string =>
     count > 0 ? `${count} ${formatSummary(count)}` : "brak";
 
-  const updateCounters = () => {
-    const archivedCont = document.getElementById("cont_archived");
-    const validCont = document.getElementById("cont_valid");
-    const totalCounter = document.getElementById("totalShownCounter");
-    const validCounter = document.getElementById("validCounter");
-    const archivedCounter = document.getElementById("archivedCounter");
+  const preventClick = (e: Event) => {e.preventDefault()};
+  const archivedCont = document.getElementById("cont_archived");
+  const validCont = document.getElementById("cont_valid");
+  const totalCounter = document.getElementById("totalShownCounter");
+  const validCounter = document.getElementById("validCounter");
+  const archivedCounter = document.getElementById("archivedCounter");
+  const archivedContToggle = document.getElementById("archivedContToggle");
+  const validContToggle = document.getElementById("validContToggle");
+  
+  const countChangeHandler = () => {
     if (
       !archivedCont ||
       !validCont ||
       !totalCounter ||
       !validCounter ||
-      !archivedCounter
+      !archivedCounter ||
+      !validContToggle ||
+      !archivedContToggle
     ) {
       return;
     }
+
     const archivedCount = getChildrenCount(archivedCont);
     const validCount = getChildrenCount(validCont);
     const totalCount = archivedCount + validCount;
+    
+    if(archivedCount === 0) {
+      archivedContToggle.removeAttribute("open");
+      archivedContToggle.addEventListener("click", preventClick)
+    }else {
+      archivedContToggle.setAttribute("open", "true");
+      archivedContToggle.removeEventListener("click", preventClick)
+    }
+    if(validCount === 0) {
+      validContToggle.removeAttribute("open");
+      validContToggle.addEventListener("click", preventClick)
+    } else {
+      validContToggle.setAttribute("open", "true");
+      validContToggle.removeEventListener("click", preventClick);
+    }
+    
     totalCounter.textContent = getCountSummary(totalCount);
     validCounter.textContent = getCountSummary(validCount);
     archivedCounter.textContent = getCountSummary(archivedCount);
   };
-
-  document.addEventListener("count_change", updateCounters);
+  countChangeHandler();
+  document.addEventListener("count_change", countChangeHandler);
 </script>
 <PageLayout title="portfolio koła AKAI">
   <HomePageLayout>
@@ -92,7 +115,7 @@ const languages = new Set(projects.map((project) => project.languages).flat());
           >
         </span>
       </div>
-      <details open>
+      <details open id="validContToggle">
         <summary class="cursor-pointer"
           >Aktualne: <span id="validCounter">{countValidProjects} projekty</span
           ></summary
@@ -108,7 +131,7 @@ const languages = new Set(projects.map((project) => project.languages).flat());
           }
         </ul>
       </details>
-      <details open>
+      <details open id="archivedContToggle">
         <summary class="cursor-pointer"
           >Zarchiwizowane: <span id="archivedCounter"
             >{countArchivedProjects} projekty</span
