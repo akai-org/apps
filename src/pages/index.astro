@@ -34,6 +34,8 @@ const languages = new Set(projects.map((project) => project.languages).flat());
     let summary = "";
     if (count === 1) {
       summary = "projekt";
+    } else if (count >= 10 && count <= 21) {
+      summary = "projektów";
     } else if (
       count >= 5 &&
       (unityNumber <= 1 || (unityNumber >= 5 && unityNumber <= 9))

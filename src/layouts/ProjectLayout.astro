@@ -30,15 +30,15 @@ const finalDescription = metadata?.description
 ---
 
 <section class="flex w-full justify-center">
-  <main class="grid w-11/12 gap-y-3 p-3 md:w-3/4">
+  <main class="grid w-11/12 gap-y-3 p-1 md:p-3 md:w-3/4">
     <header class="grid gap-y-2">
-      <section class="flex items-baseline justify-between">
+      <section class="flex items-baseline justify-between w-full gap-1">
         <h1
-          class="text-left text-5xl font-bold"
+          class="text-left text-3xl md:text-5xl font-bold flex-initial min-w-0"
           transition:name={`${name}-title`}
         >
           {finalTitle}
-        </h1><a href={url} class="flex w-fit rounded-lg bg-zinc-800">
+        </h1><a href={url} class="flex w-fit rounded-lg bg-zinc-800 flex-[1_0_auto] max-w-fit">
           <div
             id="stars"
             class="flex items-center justify-center gap-1 rounded-lg bg-zinc-700 p-1 text-lg font-black text-white"
@@ -61,7 +61,7 @@ const finalDescription = metadata?.description
       <section class="grid gap-y-1">
         <div>
           <p><strong>Języki</strong></p>
-          <ul class="flex gap-2">
+          <ul class="flex gap-2 flex-wrap">
             {
               languages.map((lang) => {
                 return <LanguageTag language={lang} />;
@@ -70,8 +70,8 @@ const finalDescription = metadata?.description
           </ul>
         </div>
         <div>
-          <p><strong>Technologie</strong></p>
-          <ul class="flex gap-2">
+          { hasTechnologies && <p><strong>Technologie</strong></p>}
+          <ul class="flex gap-2 flex-wrap">
             {
               hasTechnologies
                 ? metadata.technologies?.map((tech) => {
