@@ -10,8 +10,15 @@ interface Props extends Omit<Project, "hasData" | "updatedAt"> {
   formattedName: string;
 }
 
-const { formattedName, description, stargazerCount, languages, url, metadata } =
-  Astro.props;
+const {
+  name,
+  formattedName,
+  description,
+  stargazerCount,
+  languages,
+  url,
+  metadata,
+} = Astro.props;
 
 const hasTechnologies =
   metadata.technologies && metadata.technologies?.length > 0;
@@ -26,7 +33,10 @@ const finalDescription = metadata?.description
   <main class="grid w-11/12 gap-y-3 p-3 md:w-3/4">
     <header class="grid gap-y-2">
       <section class="flex items-baseline justify-between">
-        <h1 class="text-left text-5xl font-bold">
+        <h1
+          class="text-left text-5xl font-bold"
+          transition:name={`${name}-title`}
+        >
           {finalTitle}
         </h1><a href={url} class="flex w-fit rounded-lg bg-zinc-800">
           <div

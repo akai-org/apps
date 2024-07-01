@@ -1,6 +1,8 @@
 import { marked } from "marked";
 import { akaiOrgName } from "./constants";
 import { gql, octokit } from "./github";
+import { cache } from "./cache";
+import { Duration } from "./Duration.enum";
 
 interface Metadata {
   name?: string;
@@ -27,10 +29,10 @@ interface RepositoryResponse {
         text?: string;
       };
     }[];
-  }
+  };
 }
 
-type RepositoryTemp = Omit<RepositoryResponse, "metadata" | "languages">
+type RepositoryTemp = Omit<RepositoryResponse, "metadata" | "languages">;
 
 interface TRepository extends RepositoryTemp {
   metadata: Metadata;
@@ -56,7 +58,7 @@ const orgReposQuery = gql`
           url
           stargazerCount
           updatedAt: pushedAt
-          metadata: object(expression: "main:.akai/"){
+          metadata: object(expression: "main:.akai/") {
             ... on Tree {
               entries {
                 name
@@ -84,22 +86,30 @@ const orgReposQuery = gql`
 `;
 
 export async function getOrgRepos() {
-  const { organization } = await octokit.graphql.paginate<OrgReposResponse>(
-    orgReposQuery,
-    {
+  const {
+    organization: { repositories },
+  } = await cache({
+    key: "orgRepos",
+    queryFn: octokit.graphql.paginate<OrgReposResponse>(orgReposQuery, {
       orgName: akaiOrgName,
-    },
-  );
+    }),
+    ttl: 60 * Duration.Minute,
+    condition: process.env.NODE_ENV === "development",
+  });
 
-  return organization.repositories.nodes.map((repo: RepositoryResponse) => {
+  return repositories.nodes.map((repo: RepositoryResponse) => {
     let config: Metadata = {};
     const metadata = repo.metadata;
     let hasData = false;
     if (metadata) {
       hasData = true;
-      for (const entry of metadata.entries) { // entries jest w oryginalnym responsie z githuba
+      for (const entry of metadata.entries) {
+        // entries jest w oryginalnym responsie z githuba
         if (entry.name == "logo.png") {
-          config.logoUrl = new URL(`${repo.name}/main/.akai/logo.png`, "https://raw.githubusercontent.com/akai-org/").toString();
+          config.logoUrl = new URL(
+            `${repo.name}/main/.akai/logo.png`,
+            "https://raw.githubusercontent.com/akai-org/",
+          ).toString();
         }
         if (entry.name == "config.json") {
           config = { ...JSON.parse(entry.object.text!) };
@@ -115,8 +125,8 @@ export async function getOrgRepos() {
       metadata: config,
       hasData: hasData,
       languages: repo.languages.nodes.map((lang) => lang.name),
-    }
+    };
   });
 }
 
-export type Repository = TRepository; 
+export type Repository = TRepository;

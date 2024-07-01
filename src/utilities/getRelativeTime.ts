@@ -1,3 +1,5 @@
+import { Duration } from "./Duration.enum";
+
 export const relativeTimeFormatter = new Intl.RelativeTimeFormat("pl", {
   numeric: "auto",
 });
@@ -10,18 +12,6 @@ export function getRelativeTime(
   const { unit, time } = getTimeUnit(timeDifferenceInMs, smallestDuration);
   const formatedTime = relativeTimeFormatter.format(-time, unit);
   return formatedTime;
-}
-
-/**
- * Duration in milliseconds
- */
-export enum Duration {
-  Second = 1000,
-  Minute = 1000 * 60,
-  Hour = 1000 * 60 * 60,
-  Day = 1000 * 60 * 60 * 24,
-  Month = (1000 * 60 * 60 * 24 * 365) / 12,
-  Year = 1000 * 60 * 60 * 24 * 365,
 }
 
 /**

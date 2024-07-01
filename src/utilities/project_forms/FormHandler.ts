@@ -8,6 +8,7 @@ class FormHandler {
   constructor(filterFormId: string, sortFormId: string) {
     this.filterForm = document.getElementById(filterFormId) as HTMLFormElement;
     this.sortForm = document.getElementById(sortFormId) as HTMLFormElement;
+    if (!this.filterForm || !this.sortForm) return;
     this.setupListeners();
   }
   setupListeners() {
@@ -57,4 +58,8 @@ class FormHandler {
   }
 }
 
-new FormHandler("formFilter", "formSort");
+const initFormHandler = () => {
+  new FormHandler("formFilter", "formSort");
+};
+
+document.addEventListener("astro:page-load", initFormHandler);

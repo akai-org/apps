@@ -29,12 +29,8 @@ export class UrlHandler {
     document.dispatchEvent(countChangeEvent);
   }
   setupListeners() {
-    document.addEventListener("url_change", (e) => {
-      this.changeState(e);
-    });
-    window.addEventListener("DOMContentLoaded", () => {
-      this.applyFilters();
-    });
+    document.addEventListener("url_change", this.changeState);
+    window.addEventListener("DOMContentLoaded", this.applyFilters);
   }
   changeState(event: DocumentEventMap["url_change"]) {
     window.history.replaceState(

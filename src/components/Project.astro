@@ -7,8 +7,9 @@ import LanguageTag from "./LanguageTag.astro";
 import icon_star from "@assets/icon_star.svg";
 import icon_arrow_right from "@assets/icon_chevron_right.svg";
 import icon_github_white from "@assets/icon_github_white.svg";
-import { Duration, getRelativeTime } from "@utilities/getRelativeTime";
+import { getRelativeTime } from "@utilities/getRelativeTime";
 import { placeWhitespaces } from "@utilities/stringUtils";
+import { Duration } from "@utilities/Duration.enum";
 
 type Props = Project;
 const {
@@ -59,7 +60,11 @@ const icon = metadata?.logoUrl ? metadata.logoUrl : defaultIcon;
       <div class="grid w-full grid-cols-1 gap-y-1">
         <div class="flex w-full items-center justify-between gap-3">
           <div class="min-w-0 flex-1">
-            <h2 id="title" class="truncate text-2xl font-bold capitalize">
+            <h2
+              id="title"
+              class="truncate text-2xl font-bold capitalize"
+              transition:name={`${name}-title`}
+            >
               <a href={projectUrl} class="hover:underline">
                 {finalTitle}
               </a>
@@ -111,7 +116,7 @@ const icon = metadata?.logoUrl ? metadata.logoUrl : defaultIcon;
         </div>
       </div>
     </div>
-    {description && <p class=" line-clamp-2 ">{description}</p>}
+    {description && <p class="line-clamp-2">{description}</p>}
   </div>
   <div class="flex items-end justify-between" id="updateDate">
     <p class="cursor-help text-sm" title={updateDate}>

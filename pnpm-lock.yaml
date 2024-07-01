@@ -20,6 +20,9 @@ importers:
       '@fontsource/quicksand':
         specifier: ^5.0.18
         version: 5.0.18
+      '@isaacs/ttlcache':
+        specifier: ^1.4.1
+        version: 1.4.1
       '@octokit/plugin-paginate-graphql':
         specifier: ^5.2.2
         version: 5.2.2(@octokit/core@6.1.2)
@@ -770,6 +773,10 @@ packages:
 
   '@isaacs/cliui@8.0.2':
     resolution: {integrity: sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA==}
+    engines: {node: '>=12'}
+
+  '@isaacs/ttlcache@1.4.1':
+    resolution: {integrity: sha512-RQgQ4uQ+pLbqXfOmieB91ejmLwvSgv9nLx6sT6sD83s7umBypgg+OIBOBbEUiJXrfpnp9j0mRhYYdzp9uqq3lA==}
     engines: {node: '>=12'}
 
   '@jest/schemas@29.6.3':
@@ -3595,6 +3602,8 @@ snapshots:
       strip-ansi-cjs: strip-ansi@6.0.1
       wrap-ansi: 8.1.0
       wrap-ansi-cjs: wrap-ansi@7.0.0
+
+  '@isaacs/ttlcache@1.4.1': {}
 
   '@jest/schemas@29.6.3':
     dependencies:
