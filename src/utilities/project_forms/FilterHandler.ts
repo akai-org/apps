@@ -8,7 +8,7 @@ export class FilterData {
     this.search = typeof search === "string" ? search : "";
     this.languages = data
       .getAll("language")
-      .filter((value) => typeof value === "string");
+      .filter((value) => typeof value === "string") as string[];
   }
 }
 

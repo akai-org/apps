@@ -7,6 +7,10 @@ import react from "@astrojs/react";
 export default defineConfig({
   integrations: [tailwind(), react()],
   site: "https://apps.akai.org.pl",
+  i18n: {
+    defaultLocale: "pl",
+    locales: ["pl", "en"]
+  },
   experimental: {
     env: {
       schema: {
