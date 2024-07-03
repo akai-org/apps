@@ -3,6 +3,9 @@ import { getLangFromUrl, useTranslations } from "@i18n/utils";
 
 const currentLang = getLangFromUrl(Astro.url);
 const translate = useTranslations(currentLang);
+
+const translatedURL = Astro.url.toString().replace(currentLang, currentLang === "pl" ? "en" : "pl");
+
 ---
 <header class="flex items-center justify-between p-2 sm:px-10 sm:py-3">
   <h1 class="flex items-center gap-10 text-5xl">
@@ -74,7 +77,8 @@ const translate = useTranslations(currentLang);
       {translate("header.title")}
     </p>
   </h1>
-
+  <div class="flex items-center">
+  <a href={translatedURL} class=" underline font-bold">{currentLang === "pl" ? "EN" : "PL"}</a>
   <button
     id="themeToggle"
     class="rounded-lg px-3 py-2 text-black"
@@ -91,4 +95,5 @@ const translate = useTranslations(currentLang);
     </div>
     </button
   >
+</div>
 </header>
