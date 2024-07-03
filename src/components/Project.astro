@@ -10,6 +10,7 @@ import icon_github_white from "@assets/icon_github_white.svg";
 import { getRelativeTime } from "@utilities/getRelativeTime";
 import { placeWhitespaces } from "@utilities/stringUtils";
 import { Duration } from "@utilities/Duration.enum";
+import { getLangFromUrl } from "@i18n/utils";
 
 type Props = Project;
 const {
@@ -21,8 +22,9 @@ const {
   description,
   updatedAt,
 } = Astro.props;
-const projectUrl = new URL(
-  `projects/${name}`,
+
+const currentLang = getLangFromUrl(Astro.url);
+const projectUrl = new URL(`${currentLang}/projects/${name}`,
   isProd ? Astro.site : "http://localhost:4321",
 );
 

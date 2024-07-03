@@ -1,0 +1,49 @@
+---
+import { getProjects } from "@utilities/data";
+import { capitalize, placeWhitespaces } from "@utilities/stringUtils";
+import PageLayout from "@layouts/PageLayout.astro";
+import ProjectLayout from "@layouts/ProjectLayout.astro";
+import type { Project } from "@utilities/data";
+
+interface Props extends Omit<Project, "name"> {
+  formattedName: string;
+}
+
+export async function getStaticPaths() {
+  const projects = await getProjects();
+  const project_paths = projects.map((project) => {
+    return {
+      params: { name: project.name },
+      props: {
+        formattedName: capitalize(placeWhitespaces(project.name)),
+        description: project.description,
+        stargazerCount: project.stargazerCount,
+        languages: project.languages,
+        url: project.url,
+        metadata: project.metadata,
+      },
+    };
+  });
+  return project_paths;
+}
+const { name } = Astro.params;
+const { formattedName, languages, url, stargazerCount, description, metadata } =
+  Astro.props;
+const ogImageUrl = new URL(`pl/projects/${name}-og.png`, Astro.site).href;
+---
+
+<PageLayout
+  title={formattedName}
+  ogImageUrl={ogImageUrl}
+  description={description}
+>
+  <ProjectLayout
+    formattedName={formattedName}
+    name={name}
+    languages={languages}
+    url={url}
+    stargazerCount={stargazerCount}
+    description={description}
+    metadata={metadata}
+  />
+</PageLayout>

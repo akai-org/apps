@@ -9,7 +9,8 @@ export default defineConfig({
   site: "https://apps.akai.org.pl",
   i18n: {
     defaultLocale: "pl",
-    locales: ["pl", "en"]
+    locales: ["pl", "en"],
+    prefixDefaultLocale: true,
   },
   experimental: {
     env: {
