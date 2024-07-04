@@ -1,9 +1,9 @@
 import { Duration } from "./Duration.enum";
 
 export function getRelativeTime(
+  lang: string,
   date: string | number | Date,
   smallestDuration: Duration = Duration.Second,
-  lang: string
 ) {
   const relativeTimeFormatter = new Intl.RelativeTimeFormat(lang, {
     numeric: "auto",

@@ -16,36 +16,36 @@ afterEach(() => {
 
 describe("getRelativeTime", () => {
   it("should handle seconds", () => {
-    expect(getRelativeTime(nowInMs - Duration.Second)).toBe("1 sekundę temu");
+    expect(getRelativeTime("pl", nowInMs - Duration.Second)).toBe("1 sekundę temu");
   });
   it("should handle minutes", () => {
-    expect(getRelativeTime(nowInMs - Duration.Minute)).toBe("1 minutę temu");
+    expect(getRelativeTime("pl", nowInMs - Duration.Minute)).toBe("1 minutę temu");
   });
   it("should handle hours", () => {
-    expect(getRelativeTime(nowInMs - Duration.Hour)).toBe("1 godzinę temu");
+    expect(getRelativeTime("pl", nowInMs - Duration.Hour)).toBe("1 godzinę temu");
   });
   it("should handle days", () => {
-    expect(getRelativeTime(nowInMs - Duration.Day)).toBe("wczoraj");
-    expect(getRelativeTime(nowInMs - Duration.Hour * 47)).toBe("wczoraj");
-    expect(getRelativeTime(nowInMs - Duration.Hour * 48)).toBe("przedwczoraj");
+    expect(getRelativeTime("pl", nowInMs - Duration.Day)).toBe("wczoraj");
+    expect(getRelativeTime("pl", nowInMs - Duration.Hour * 47)).toBe("wczoraj");
+    expect(getRelativeTime("pl", nowInMs - Duration.Hour * 48)).toBe("przedwczoraj");
   });
   it("should handle months", () => {
-    expect(getRelativeTime(nowInMs - Duration.Month)).toBe(
+    expect(getRelativeTime("pl", nowInMs - Duration.Month)).toBe(
       "w zeszłym miesiącu",
     );
-    expect(getRelativeTime(nowInMs - Duration.Month * 2)).toBe(
+    expect(getRelativeTime("pl", nowInMs - Duration.Month * 2)).toBe(
       "2 miesiące temu",
     );
   });
   it("should handle years", () => {
-    expect(getRelativeTime(nowInMs - Duration.Year)).toBe("w zeszłym roku");
-    expect(getRelativeTime(nowInMs - Duration.Year * 2)).toBe("2 lata temu");
+    expect(getRelativeTime("pl", nowInMs - Duration.Year)).toBe("w zeszłym roku");
+    expect(getRelativeTime("pl", nowInMs - Duration.Year * 2)).toBe("2 lata temu");
   });
 });
 
 describe("getRelativeTime with smallestDuration equal to day", () => {
   const getRelativeTimeWithDay = (date: string | number | Date) =>
-    getRelativeTime(date, Duration.Day);
+    getRelativeTime("pl", date, Duration.Day);
 
   it("should handle seconds", () => {
     expect(getRelativeTimeWithDay(nowInMs - Duration.Second)).toBe("dzisiaj");

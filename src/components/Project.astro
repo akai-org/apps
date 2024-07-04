@@ -33,7 +33,7 @@ const projectUrl = new URL(`${currentLang}/projects/${name}`,
 const langLimit = 5;
 const tooManyLangs = languages.length > langLimit;
 
-const timeFromUpdate = getRelativeTime(updatedAt, Duration.Day, currentLang);
+const timeFromUpdate = getRelativeTime(currentLang, updatedAt, Duration.Day);
 const updateDate = new Date(updatedAt).toLocaleDateString("en-GB", {
   timeZone: "Europe/Warsaw",
 });
