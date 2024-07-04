@@ -10,7 +10,7 @@ import icon_github_white from "@assets/icon_github_white.svg";
 import { getRelativeTime } from "@utilities/getRelativeTime";
 import { placeWhitespaces } from "@utilities/stringUtils";
 import { Duration } from "@utilities/Duration.enum";
-import { getLangFromUrl } from "@i18n/utils";
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
 
 type Props = Project;
 const {
@@ -24,6 +24,8 @@ const {
 } = Astro.props;
 
 const currentLang = getLangFromUrl(Astro.url) as string;
+const translate = useTranslations(currentLang);
+
 const projectUrl = new URL(`${currentLang}/projects/${name}`,
   isProd ? Astro.site : "http://localhost:4321",
 );
@@ -31,7 +33,7 @@ const projectUrl = new URL(`${currentLang}/projects/${name}`,
 const langLimit = 5;
 const tooManyLangs = languages.length > langLimit;
 
-const timeFromUpdate = getRelativeTime(updatedAt, Duration.Day);
+const timeFromUpdate = getRelativeTime(updatedAt, Duration.Day, currentLang);
 const updateDate = new Date(updatedAt).toLocaleDateString("en-GB", {
   timeZone: "Europe/Warsaw",
 });
@@ -122,12 +124,12 @@ const icon = metadata?.logoUrl ? metadata.logoUrl : defaultIcon;
   </div>
   <div class="flex items-end justify-between" id="updateDate">
     <p class="cursor-help text-sm" title={updateDate}>
-      Ostatnia akutalizacja: <i>{timeFromUpdate}</i>
+      {translate("project.lastUpdate")}: <i>{timeFromUpdate}</i>
     </p>
     <a
       href={projectUrl}
       class="border-1 flex justify-center gap-0.5 rounded-md bg-gradient-to-br from-blue-400 to-sky-400 px-3 py-2 font-bold text-white"
-      >Więcej <Image
+      >{translate("project.more")} <Image
         src={icon_arrow_right}
         width={20}
         alt={"strzałka skierowana w prawo"}

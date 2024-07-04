@@ -1,4 +1,6 @@
 ---
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
+const translate = useTranslations(getLangFromUrl(Astro.url));
 const current_time = new Date().toLocaleString("en-GB", {
   timeZone: "Europe/Warsaw",
 });
@@ -14,7 +16,7 @@ const current_time = new Date().toLocaleString("en-GB", {
 </section>
 <footer class="p-2 text-center text-sm">
   <p>
-    Dane aktualizowane ostatni raz: <span class="font-mono">{current_time}</span
+    {translate("page.lastUpdate")}: <span class="font-mono">{current_time}</span
     >
   </p>
 </footer>

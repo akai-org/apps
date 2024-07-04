@@ -1,13 +1,13 @@
 import { Duration } from "./Duration.enum";
 
-export const relativeTimeFormatter = new Intl.RelativeTimeFormat("pl", {
-  numeric: "auto",
-});
-
 export function getRelativeTime(
   date: string | number | Date,
   smallestDuration: Duration = Duration.Second,
+  lang: string
 ) {
+  const relativeTimeFormatter = new Intl.RelativeTimeFormat(lang, {
+    numeric: "auto",
+  });
   const timeDifferenceInMs = new Date().getTime() - new Date(date).getTime();
   const { unit, time } = getTimeUnit(timeDifferenceInMs, smallestDuration);
   const formatedTime = relativeTimeFormatter.format(-time, unit);

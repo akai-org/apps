@@ -1,15 +1,19 @@
+---
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
+const translate = useTranslations(getLangFromUrl(Astro.url));
+---
 <label class="grid gap-y-1 text-black dark:text-white">
-  <span class="font-semibold">Sortuj</span>
+  <span class="font-semibold">{translate("filters.sort")}</span>
   <select
     name="sort"
     id="sort"
     class="rounded-lg border-2 p-3 dark:border-zinc-500 dark:bg-neutral-600 dark:text-white"
   >
-    <option value="alpha_ascend">Nazwa: od A do Z</option>
-    <option value="alpha_descend">Nazwa: od Z do A</option>
-    <option value="star_ascend">Gwiazdki: rosnąco</option>
-    <option value="star_descend">Gwiazdki: malejąco</option>
-    <option value="date_ascend">Data: od najwcześniejszych</option>
-    <option value="date_descend">Data: od najpóźniejszych</option>
+    <option value="alpha_ascend">{translate("sort.AlphaAsc")}</option>
+    <option value="alpha_descend">{translate("sort.AlphaDesc")}</option>
+    <option value="star_ascend">{translate("sort.StarsAsc")}</option>
+    <option value="star_descend">{translate("sort.StarsDesc")}</option>
+    <option value="date_ascend">{translate("sort.DateAsc")}</option>
+    <option value="date_descend">{translate("sort.DateDesc")}</option>
   </select>
 </label>
