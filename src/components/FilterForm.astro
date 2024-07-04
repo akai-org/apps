@@ -1,8 +1,11 @@
 ---
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import LanguageFilter from "./filters/LanguageFilter.astro";
 import SearchFilter from "./filters/SearchFilter.astro";
 import Sort from "./filters/Sort.astro";
 const { languages } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const translate = useTranslations(lang);
 ---
 
 <script src="../utilities/project_forms/FormHandler.ts"></script>
@@ -15,7 +18,7 @@ const { languages } = Astro.props;
     <LanguageFilter languages={languages} />
     <input
       type="reset"
-      value="Wyczyść"
+      value={translate("filters.clear")}
       class="w-fit rounded-lg bg-amber-400 px-3 py-2 font-bold text-white hover:cursor-pointer"
     />
   </form>

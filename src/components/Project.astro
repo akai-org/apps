@@ -23,7 +23,7 @@ const {
   updatedAt,
 } = Astro.props;
 
-const currentLang = getLangFromUrl(Astro.url);
+const currentLang = getLangFromUrl(Astro.url) as string;
 const projectUrl = new URL(`${currentLang}/projects/${name}`,
   isProd ? Astro.site : "http://localhost:4321",
 );
@@ -105,7 +105,7 @@ const icon = metadata?.logoUrl ? metadata.logoUrl : defaultIcon;
             {
               languages
                 .slice(0, langLimit)
-                .map((language) => <LanguageTag language={language} />)
+                .map((language: string) => <LanguageTag language={language} />)
             }
           </ul>
           <div

@@ -1,5 +1,9 @@
+---
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
+const translate = useTranslations(getLangFromUrl(Astro.url));
+---
 <label class="grid gap-y-1">
-  <span class="font-semibold dark:text-white">Szukaj nazwę projektu</span>
+  <span class="font-semibold dark:text-white">{translate("filters.byName")}</span>
   <input
     type="search"
     id="search"

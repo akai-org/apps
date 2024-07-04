@@ -1,7 +1,7 @@
 import { getLangFromUrl } from "@i18n/utils";
 
 function getCurrentLang(): string {
-    return getLangFromUrl(new URL(window.location.href));
+    return getLangFromUrl(new URL(window.location.href)) as string;
 }
 function getPolishSummary(count: number): string {
     let summary = "";

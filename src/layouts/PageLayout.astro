@@ -1,11 +1,13 @@
 ---
 import Header from "@components/Header.astro";
 import "@fontsource/quicksand";
+import { getLangFromUrl } from "@i18n/utils";
 import { ViewTransitions } from "astro:transitions";
 const { title, ogImageUrl, description } = Astro.props;
+const currentLang = getLangFromUrl(Astro.url) as string;
 ---
 
-<html lang="pl" class="dark:[color-scheme:dark]">
+<html lang={currentLang} class="dark:[color-scheme:dark]">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />

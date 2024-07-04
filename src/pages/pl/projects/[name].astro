@@ -31,7 +31,7 @@ const { name } = Astro.params;
 const { formattedName, languages, url, stargazerCount, description, metadata } =
   Astro.props;
 
-const currentLang = getLangFromUrl(Astro.url);
+const currentLang = getLangFromUrl(Astro.url) as string;
 const ogImageUrl = new URL(`${currentLang}/projects/${name}-og.png`, Astro.site).href;
 ---
 
