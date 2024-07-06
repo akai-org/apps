@@ -1,8 +1,8 @@
 {
   "name": "AKAI Apps",
   "technologies": ["Astro", "TailwindCSS", "Vite", "Satori"],
-  "description_pl": "",
-  "description_en": "",
+  "description_pl": "Przedstawia najświeższe projekty AKAI",
+  "description_en": "Displays best and latest AKAI projects",
   "contributors": [
     {
       "name": "HWTjac0",
