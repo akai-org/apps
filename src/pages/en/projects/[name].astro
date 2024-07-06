@@ -1,16 +1,15 @@
 ---
-import { getProjects } from "@utilities/data";
+import { projects } from "@utilities/projectsData";
 import { capitalize, placeWhitespaces } from "@utilities/stringUtils";
 import PageLayout from "@layouts/PageLayout.astro";
 import ProjectLayout from "@layouts/ProjectLayout.astro";
-import type { Project } from "@utilities/data";
+import type { Project } from "@utilities/types";
 
 interface Props extends Omit<Project, "name"> {
   formattedName: string;
 }
 
 export async function getStaticPaths() {
-  const projects = await getProjects();
   const project_paths = projects.map((project) => {
     return {
       params: { name: project.name },

@@ -1,12 +1,13 @@
 ---
-import type { Project } from "@utilities/data";
+import type { Project } from "@utilities/types";
 import LanguageTag from "@components/LanguageTag.astro";
 import TechTag from "@components/TechTag.astro";
 import { Image } from "astro:assets";
 import icon_star from "@assets/icon_star.svg";
 import icon_github_white from "@assets/icon_github_white.svg";
+import { getLangFromUrl } from "@i18n/utils";
 
-interface Props extends Omit<Project, "hasData" | "updatedAt"> {
+interface Props extends Omit<Project, "updatedAt"> {
   formattedName: string;
 }
 
@@ -20,13 +21,44 @@ const {
   metadata,
 } = Astro.props;
 
-const hasTechnologies =
-  metadata.technologies && metadata.technologies?.length > 0;
+const availableMeta = {
+  technologies: false,
+  readmePl: false,
+  readmeEn: false,
+  contributors: false,
+  name: false,
+}
+let m, c;
+if(metadata.ok) {
+  m = metadata.value;
+  if(m.readmeEn.ok) {
+    availableMeta.readmeEn = true;
+  }
+  if(m.readmePl.ok) {
+    availableMeta.readmePl = true;
+  }
+  if(m.config.ok) {
+    c = m.config.value;
+    if(c.contributors && c.contributors?.length > 0) {
+      availableMeta.contributors = true;
+    }
+    if(c.technologies && c.technologies?.length > 0) {
+      availableMeta.technologies = true;
+    }
+    if(c.name) {
+      availableMeta.name = true;
+    }
+  }
+} 
 
-const finalTitle = metadata?.name ? metadata.name : formattedName;
-const finalDescription = metadata?.description
-  ? metadata.description
-  : description;
+const lang = getLangFromUrl(Astro.url)
+let finalDescription;
+if(lang === "pl") {
+  finalDescription = availableMeta.readmePl ? m?.readmePl : description;
+} else {
+  finalDescription = availableMeta.readmeEn ? m?.readmeEn : description;
+}
+
 ---
 
 <section class="flex w-full justify-center">
@@ -37,7 +69,7 @@ const finalDescription = metadata?.description
           class="text-left text-3xl md:text-5xl font-bold flex-initial min-w-0"
           transition:name={`${name}-title`}
         >
-          {finalTitle}
+          {availableMeta.name ? c?.name : formattedName}
         </h1><a href={url} class="flex w-fit rounded-lg bg-zinc-800 flex-[1_0_auto] max-w-fit">
           <div
             id="stars"
@@ -70,14 +102,13 @@ const finalDescription = metadata?.description
           </ul>
         </div>
         <div>
-          { hasTechnologies && <p><strong>Technologie</strong></p>}
+          { availableMeta.technologies && <p><strong>Technologie</strong></p>}
           <ul class="flex gap-2 flex-wrap">
             {
-              hasTechnologies
-                ? metadata.technologies?.map((tech) => {
+              availableMeta.technologies && 
+              c?.technologies!.map((tech) => {
                     return <TechTag technology={tech} color="#FFA500" />;
                   })
-                : ""
             }
           </ul>
         </div>

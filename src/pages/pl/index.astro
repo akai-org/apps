@@ -1,32 +1,10 @@
 ---
-import { getProjects, type Project } from "@utilities/data";
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import ProjectCard from "@components/Project.astro";
 import PageLayout from "@layouts/PageLayout.astro";
 import HomePageLayout from "@layouts/HomePageLayout.astro";
 import FilterForm from "@components/FilterForm.astro";
-
-const projects = await getProjects();
-
-type ProjectGroups = {
-  valid: Project[];
-  archived: Project[];
-};
-
-const projectGroups: ProjectGroups = {
-  valid: [],
-  archived: [],
-};
-for (const project of projects) {
-  if (project.hasData) {
-    projectGroups.valid.push(project);
-  } else {
-    projectGroups.archived.push(project);
-  }
-}
-const countValidProjects = projectGroups["valid"]?.length;
-const countArchivedProjects = projects.length - countValidProjects!;
-const languages = new Set(projects.map((project) => project.languages).flat());
+import { projects, countArchivedProjects, countValidProjects, projectGroups, languages } from "@utilities/projectsData";
 
 const currentLang = getLangFromUrl(Astro.url);
 const translate = useTranslations(currentLang);

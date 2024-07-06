@@ -2,7 +2,7 @@
 import { Image } from "astro:assets";
 import defaultIcon from "@assets/default_icon.png";
 import { isProd } from "@utilities/env";
-import { type Project } from "@utilities/data";
+import { type Project } from "@utilities/types";
 import LanguageTag from "./LanguageTag.astro";
 import icon_star from "@assets/icon_star.svg";
 import icon_arrow_right from "@assets/icon_chevron_right.svg";
@@ -38,9 +38,23 @@ const updateDate = new Date(updatedAt).toLocaleDateString("en-GB", {
   timeZone: "Europe/Warsaw",
 });
 
-const finalTitle = placeWhitespaces(metadata?.name ? metadata.name : name);
+let finalTitle = name;
+let logo: ImageMetadata | string = defaultIcon;
 
-const icon = metadata?.logoUrl ? metadata.logoUrl : defaultIcon;
+let m, c;
+if(metadata.ok) {
+  m = metadata.value;
+  if(m.config.ok) {
+    c = m.config.value;
+    if(c.name) {
+      finalTitle = c.name; 
+    }
+  }
+  if(m.logoUrl.ok) {
+    logo = m.logoUrl.value;
+  }
+}
+finalTitle = placeWhitespaces(finalTitle);
 ---
 
 <div
@@ -54,7 +68,7 @@ const icon = metadata?.logoUrl ? metadata.logoUrl : defaultIcon;
     <div class="flex items-center justify-between gap-2">
       <div class="hidden sm:block">
         <Image
-          src={icon as ImageMetadata}
+          src={logo as ImageMetadata}
           alt={"domyślne logo"}
           height={80}
           width={80}

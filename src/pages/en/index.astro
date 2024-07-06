@@ -1,36 +1,15 @@
 ---
-import { getProjects, type Project } from "@utilities/data";
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import ProjectCard from "@components/Project.astro";
 import PageLayout from "@layouts/PageLayout.astro";
 import HomePageLayout from "@layouts/HomePageLayout.astro";
 import FilterForm from "@components/FilterForm.astro";
-
-const projects = await getProjects();
-
-type ProjectGroups = {
-  valid: Project[];
-  archived: Project[];
-};
-
-const projectGroups: ProjectGroups = {
-  valid: [],
-  archived: [],
-};
-for (const project of projects) {
-  if (project.hasData) {
-    projectGroups.valid.push(project);
-  } else {
-    projectGroups.archived.push(project);
-  }
-}
-const countValidProjects = projectGroups["valid"]?.length;
-const countArchivedProjects = projects.length - countValidProjects!;
-const languages = new Set(projects.map((project) => project.languages).flat());
+import { projects, countArchivedProjects, countValidProjects, projectGroups, languages } from "@utilities/projectsData";
 
 const currentLang = getLangFromUrl(Astro.url);
 const translate = useTranslations(currentLang);
 ---
+
 <script src="../../utilities/countChangeHandler.ts"></script>
 <PageLayout title="portfolio koła AKAI">
   <HomePageLayout>
@@ -41,13 +20,13 @@ const translate = useTranslations(currentLang);
       <div class="flex gap-2">
         <span
           >{translate("projects.total")}: <span id="totalShownCounter"
-            >{projects.length}  {translate("projects.noun")}</span
+            >{projects.length} {translate("projects.noun")}</span
           >
         </span>
       </div>
       <details open id="validContToggle">
         <summary class="cursor-pointer"
-          >{translate("projects.valid")}: <span id="validCounter">{countValidProjects}  {translate("projects.noun")}</span
+          >{translate("projects.valid")}: <span id="validCounter">{countValidProjects} {translate("projects.noun")}</span
           ></summary
         >
         <ul
@@ -64,7 +43,7 @@ const translate = useTranslations(currentLang);
       <details open id="archivedContToggle">
         <summary class="cursor-pointer"
           >{translate("projects.archived")}: <span id="archivedCounter"
-            >{countArchivedProjects}  {translate("projects.noun")}</span
+            >{countArchivedProjects} {translate("projects.noun")}</span
           ></summary
         >
         <ul

@@ -1,9 +1,9 @@
 ---
-import { getProjects } from "@utilities/data";
+import { getProjects } from "@utilities/projectsData";
 import { capitalize, placeWhitespaces } from "@utilities/stringUtils";
 import PageLayout from "@layouts/PageLayout.astro";
 import ProjectLayout from "@layouts/ProjectLayout.astro";
-import type { Project } from "@utilities/data";
+import type { Project } from "@utilities/types";
 import { getLangFromUrl } from "@i18n/utils";
 
 interface Props extends Omit<Project, "name"> {

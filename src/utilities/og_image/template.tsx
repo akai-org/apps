@@ -94,7 +94,7 @@ declare module "react" {
 export function Template(props: TemplateProps) {
   return (
     <div
-      tw="flex flex-col item-center justify-center border-[9px] border-yellow-500 w-full h-full px-6 bg-white"
+      tw="flex flex-col items-center justify-center border-[9px] border-yellow-500 w-full h-full px-6 bg-white"
       style={{
         fontFamily: '"Quicksand", "Quicksand Ext"',
         backgroundImage: `url(data:image/png;base64,${bg})`,

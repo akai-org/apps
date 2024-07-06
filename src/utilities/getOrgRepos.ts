@@ -1,15 +1,9 @@
-import { marked } from "marked";
 import { akaiOrgName } from "./constants";
 import { gql, octokit } from "./github";
 import { cache } from "./cache";
 import { Duration } from "./Duration.enum";
-
-interface Metadata {
-  name?: string;
-  description?: string;
-  technologies?: string[];
-  logoUrl?: string;
-}
+import { Metadata } from "./repoMetadata";
+import { Ok, Err, type Result } from "./types";
 
 interface RepositoryResponse {
   name: string;
@@ -35,9 +29,8 @@ interface RepositoryResponse {
 type RepositoryTemp = Omit<RepositoryResponse, "metadata" | "languages">;
 
 interface TRepository extends RepositoryTemp {
-  metadata: Metadata;
+  metadata: Result<Metadata>;
   languages: string[];
-  hasData: boolean;
 }
 
 interface OrgReposResponse {
@@ -98,32 +91,20 @@ export async function getOrgRepos() {
   });
 
   return repositories.nodes.map((repo: RepositoryResponse) => {
-    let config: Metadata = {};
-    const metadata = repo.metadata;
-    let hasData = false;
-    if (metadata) {
-      hasData = true;
-      for (const entry of metadata.entries) {
-        // entries jest w oryginalnym responsie z githuba
-        if (entry.name == "logo.png") {
-          config.logoUrl = new URL(
-            `${repo.name}/main/.akai/logo.png`,
-            "https://raw.githubusercontent.com/akai-org/",
-          ).toString();
-        }
-        if (entry.name == "config.json") {
-          config = { ...JSON.parse(entry.object.text!) };
-        }
-        if (entry.name.toLowerCase() == "readme.md") {
-          const html = marked.parse(entry.object.text!);
-          config.description = html.toString();
-        }
-      }
+    let config: Result<Metadata>;
+   
+    if(!repo.metadata) {
+      config = Err();
+    } else {
+      const metaEntries = Object.fromEntries(repo.metadata.entries.map(item => {
+        return [item.name.split(".")[0], [item.name, item.object]];
+      }));
+      config = Ok(new Metadata(repo.name, metaEntries));
     }
+
     return {
       ...repo,
       metadata: config,
-      hasData: hasData,
       languages: repo.languages.nodes.map((lang) => lang.name),
     };
   });
