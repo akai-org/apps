@@ -1,4 +1,16 @@
 {
   "name": "AKAI Apps",
-  "technologies": ["Astro", "TailwindCSS", "Vite"]
+  "technologies": ["Astro", "TailwindCSS", "Vite"],
+  "description_pl": "",
+  "description_en": "",
+  "contributors": [
+    {
+      "name": "Jakub Młynarczyk",
+      "url": "https://www.github.com/HWTjac0"
+    },
+    {
+      "name": "Filip Sauer",
+      "url": "https://www.github.com/srflp"
+    }    
+  ]
 }
