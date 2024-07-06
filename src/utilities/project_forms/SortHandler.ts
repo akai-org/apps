@@ -55,9 +55,11 @@ export class SortHandler {
   }
   applySort() {
     for (const [idx, cont] of this.containerEls.entries()) {
+      const frag = document.createDocumentFragment();
       for (const project of this.projectsCont[idx]) {
-        cont.appendChild(project.project);
+        frag.appendChild(project.project);
       }
+      cont.appendChild(frag);
     }
   }
   sortAlpha(a: Project, b: Project): number {
