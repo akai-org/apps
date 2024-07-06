@@ -1,4 +1,4 @@
-# Przykładowy heading
+# Example Heading
 
 [Odnośnik do githuba](https://github.com/akai-org/apps)
 
