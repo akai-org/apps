@@ -32,7 +32,6 @@ export class Metadata {
     readmePl: Result<string>;
     readmeEn: Result<string>;
     constructor(repoName: string, entries: any){
-        console.log(entries);
             this.logoUrl = this.#setLogoUrl(repoName, entries["logo"]);
             this.config = this.#setConfig(entries["config"]);
             this.readmePl = this.#setReadmePolish(entries["readmePl"]);
@@ -44,7 +43,6 @@ export class Metadata {
         }
         logo = logo[0];
         const imageEndpoint = `${repoName}/main/.akai/${logo}`;
-        console.log(imageEndpoint)
         const baseUrl = "https://raw.githubusercontent.com/akai-org/";
         return Ok(new URL(imageEndpoint, baseUrl).toString());
     }
