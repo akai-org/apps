@@ -5,8 +5,9 @@ import { getRelativeLocaleUrl } from 'astro:i18n';
 const currentLang = getLangFromUrl(Astro.url) as string;
 const translate = useTranslations(currentLang);
 
-const translatedURL = getRelativeLocaleUrl(getNextLang(currentLang), "");
-
+const currentPathname = Astro.url.pathname;
+const nextPathname = currentPathname.slice(4, currentPathname.length);
+const translatedURL = new URL(`/${getNextLang(currentLang)}/${nextPathname}`, Astro.url.origin);
 ---
 <header class="flex items-center justify-between p-2 sm:px-10 sm:py-3">
   <h1 class="flex items-center gap-10 text-5xl">

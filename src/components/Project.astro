@@ -55,6 +55,13 @@ if(metadata.ok) {
   }
 }
 finalTitle = placeWhitespaces(finalTitle);
+
+let finalDescription = description;
+if(currentLang === "pl") {
+  finalDescription = c?.description_pl ? c.description_pl : description;
+} else {
+  finalDescription = c?.description_en ? c.description_en : description;
+}
 ---
 
 <div
@@ -134,7 +141,7 @@ finalTitle = placeWhitespaces(finalTitle);
         </div>
       </div>
     </div>
-    {description && <p class="line-clamp-2">{description}</p>}
+    {finalDescription && <p class="line-clamp-2">{finalDescription}</p>}
   </div>
   <div class="flex items-end justify-between" id="updateDate">
     <p class="cursor-help text-sm" title={updateDate}>

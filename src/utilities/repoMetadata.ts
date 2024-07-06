@@ -63,10 +63,12 @@ export class Metadata {
         }
     }
     #setReadmePolish(readme: any): Result<string>{
-        return readme ? Ok(marked(readme[1].text) as string) : Err();  
+        const parsed = marked(readme[1].text).toString();
+        return readme ? Ok(parsed) : Err();  
     }
     #setReadmeEnglish(readme: any): Result<string>{
-        return readme ? Ok(marked(readme[1].text) as string) : Err();  
+        const parsed = marked(readme[1].text).toString();
+        return readme ? Ok(parsed) : Err();  
     }
 }
 

@@ -54,9 +54,15 @@ if(metadata.ok) {
 const lang = getLangFromUrl(Astro.url)
 let finalDescription;
 if(lang === "pl") {
-  finalDescription = availableMeta.readmePl ? m?.readmePl : description;
+  finalDescription = (
+    availableMeta.readmePl && m?.readmePl.ok ? 
+      m?.readmePl.value : 
+      description);
 } else {
-  finalDescription = availableMeta.readmeEn ? m?.readmeEn : description;
+  finalDescription = (
+    availableMeta.readmeEn && m?.readmeEn.ok ? 
+      m?.readmeEn.value : 
+      description);
 }
 
 ---
